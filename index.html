@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #4a5568;
+            --background-color: #f0f4f8;
+            --text-color: #2d3748;
+            --white-color: #ffffff;
+            --light-gray: #e2e8f0;
+            --success-color: #48bb78;
+            --warning-color: #f6ad55;
+            --info-color: #4299e1;
+            --danger-color: #f56565;
+        }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--background-color); margin: 0; padding: 20px; color: var(--text-color); }
+        .container { max-width: 1600px; margin: auto; }
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
+        header h1 { color: var(--secondary-color); font-weight: 700; margin: 0; }
+        .controls { background-color: var(--white-color); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 25px; }
+        .control-group { flex: 2 1 300px; }
+        .control-group.small { flex: 1 1 150px; }
+        .control-group label { display: block; font-size: 0.85rem; color: var(--secondary-color); font-weight: 600; margin-bottom: 5px; }
+        .search-box { position: relative; }
+        .search-box input, .control-group select, .control-group input[type="date"], .refresh-btn { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--light-gray); font-family: 'Cairo', sans-serif; font-size: 16px; box-sizing: border-box; }
+        .search-box input { padding-right: 45px; }
+        .search-box i { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: var(--primary-color); }
+        .refresh-btn { background-color: var(--primary-color); color: var(--white-color); cursor: pointer; border: none; }
+        .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .card { background-color: var(--white-color); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 20px; border-left: 5px solid; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .card .icon { font-size: 2.5rem; }
+        .card .info h3 { margin: 0 0 5px 0; color: var(--text-color); font-size: 1rem; }
+        .card .info .count { font-size: 2.2rem; font-weight: 700; }
+        #total-orders { border-color: var(--info-color); } #total-orders .icon { color: var(--info-color); }
+        #new-orders { border-color: var(--danger-color); } #new-orders .icon { color: var(--danger-color); }
+        #pending-orders { border-color: var(--warning-color); } #pending-orders .icon { color: var(--warning-color); }
+        #completed-orders { border-color: var(--success-color); } #completed-orders .icon { color: var(--success-color); }
+        .orders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+        .order-card { background-color: var(--white-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); cursor: pointer; border-left: 5px solid; }
+        .order-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .order-card-header h3 { margin: 0; font-size: 1.2rem; }
+        .order-card-body p { margin: 4px 0; color: #718096; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .order-card-body strong { color: var(--secondary-color); }
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
+        .modal-overlay { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content { background-color: #fefefe; padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: scale(0.9); transition: all 0.3s ease; }
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-gray); padding-bottom: 15px; margin-bottom: 20px; }
+        .modal-header h2 { margin: 0; }
+        .modal-header .close-btn { font-size: 28px; cursor: pointer; }
+        .detail-item { display: flex; margin-bottom: 12px; align-items: flex-start; }
+        .detail-item .label { font-weight: 600; min-width: 120px; color: var(--secondary-color); }
+        .modal-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--light-gray); display: flex; justify-content: flex-end; }
+        .whatsapp-btn { background-color: #25D366; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .loader { text-align: center; padding: 50px; font-size: 20px; color: var(--primary-color); }
+    </style>
+</head>
+<body>
+    <div id="password-protection" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(45,55,72,0.95); display:flex; justify-content:center; align-items:center; z-index: 2000;">
+        <div style="background:white; padding:40px; border-radius:12px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <h3 style="color: var(--secondary-color); margin-top:0;">لوحة التحكم المحمية</h3>
+            <p style="color: #718096; margin-bottom: 20px;">الرجاء إدخال كلمة المرور للدخول</p>
+            <input type="password" id="password-input" style="padding:12px; margin-bottom:20px; border:1px solid var(--light-gray); border-radius:8px; width: 250px; text-align: center;">
+            <br>
+            <button onclick="checkPassword()" class="transition-all" style="padding:12px 30px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-size: 1rem;">دخول</button>
+        </div>
+    </div>
+
+    <div id="app-content" style="display:none;">
+        <div class="container">
+            <header><h1><i class="fas fa-chart-line" style="color: var(--primary-color);"></i> لوحة تحكم الطلبات</h1></header>
+            <div class="stats-cards">
+                <div class="card transition-all" id="total-orders"><div class="icon"><i class="fas fa-box-open"></i></div><div class="info"><h3>إجمالي الطلبات</h3><p class="count">0</p></div></div>
+                <div class="card transition-all" id="new-orders"><div class="icon"><i class="fas fa-bell"></i></div><div class="info"><h3>طلبات جديدة</h3><p class="count">0</p></div></div>
+                <div class="card transition-all" id="pending-orders"><div class="icon"><i class="fas fa-shipping-fast"></i></div><div class="info"><h3>قيد التسليم</h3><p class="count">0</p></div></div>
+                <div class="card transition-all" id="completed-orders"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="info"><h3>طلبات مكتملة</h3><p class="count">0</p></div></div>
+            </div>
+            <div class="controls">
+                <div class="control-group"><label for="searchInput">بحث</label><div class="search-box"><input type="text" id="searchInput" onkeyup="filterOrders()" placeholder="ابحث بالاسم، رقم الموبايل..."><i class="fas fa-search"></i></div></div>
+                <div class="control-group small"><label for="statusFilter">فلترة حسب الحالة</label><select id="statusFilter" onchange="filterOrders()"><option value="">(الكل)</option><option value="طلب جديد">طلب جديد</option><option value="تم الحجز (لم يستلم)">تم الحجز (لم يستلم)</option><option value="تم الاستلام">تم الاستلام</option><option value="لم يتم التأكيد">لم يتم التأكيد</option></select></div>
+                <div class="control-group small"><label for="dateFrom">من تاريخ</label><input type="date" id="dateFrom" onchange="filterOrders()"></div>
+                <div class="control-group small"><label for="dateTo">إلى تاريخ</label><input type="date" id="dateTo" onchange="filterOrders()"></div>
+                <div class="control-group small"><label> </label><button class="refresh-btn transition-all" onclick="fetchOrders()"><i class="fas fa-sync-alt"></i> تحديث</button></div>
+            </div>
+            <div class="orders-grid" id="ordersGrid"></div>
+            <div class="loader" id="loader"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الطلبات...</div>
+        </div>
+    </div>
+    <div id="detailsModal" class="modal-overlay">
+      <div class="modal-content transition-all">
+        <div class="modal-header"><h2 id="modal-title">تفاصيل الطلب</h2><span class="close-btn" onclick="closeModal()">×</span></div>
+        <div class="modal-body">
+            <div class="detail-item"><div class="label">تاريخ الطلب:</div><div id="modal-date"></div></div>
+            <div class="detail-item"><div class="label">اسم العميل:</div><div id="modal-name"></div></div>
+            <div class="detail-item"><div class="label">رقم الموبايل:</div><div id="modal-phone"></div></div>
+            <div class="detail-item"><div class="label">العنوان:</div><div id="modal-address" style="white-space:normal;"></div></div>
+            <div class="detail-item" id="modal-location-container" style="display: none;">
+                <div class="label">رابط الموقع:</div>
+                <div id="modal-location"></div>
+            </div>
+            <hr style="border:0; border-top:1px solid var(--light-gray); margin: 20px 0;">
+            <div class="detail-item"><div class="label">المنتجات:</div><div id="modal-products" style="white-space:normal;"></div></div>
+            <div class="detail-item"><div class="label">نوع التوصيل:</div><div id="modal-delivery-type"></div></div>
+            <div class="detail-item"><div class="label">الإجمالي:</div><strong id="modal-total-price" style="font-size:1.2rem; color: var(--success-color);"></strong></div>
+        </div>
+        <div class="modal-footer"><button id="whatsappBtn" class="whatsapp-btn transition-all"><i class="fab fa-whatsapp"></i> نسخ للمندوب</button></div>
+      </div>
+    </div>
+
+    <script>
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvPzOa6paLV2sHRHRGmJhYrt5eO6bM3YNNI7vOoHMTBiUehWSZzWUi0vA2QIdWzTU/exec";
+        let allOrders = [];
+        
+        document.addEventListener('DOMContentLoaded', () => {
+             // We wait for the password to be entered before fetching
+        });
+
+        function checkPassword() {
+            const correctPassword = "12345";
+            if (document.getElementById('password-input').value === correctPassword) {
+                document.getElementById('password-protection').style.display = 'none';
+                document.getElementById('app-content').style.display = 'block';
+                fetchOrders();
+            } else { alert("كلمة المرور غير صحيحة!"); }
+        }
+
+        function fetchOrders() {
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('ordersGrid').innerHTML = '';
+            fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`)
+                .then(res => res.json())
+                .then(data => {
+                    allOrders = Array.isArray(data) ? data.reverse() : [];
+                    filterOrders();
+                    updateStats();
+                    document.getElementById('loader').style.display = 'none';
+                }).catch(err => {
+                    document.getElementById('loader').innerHTML = "فشل تحميل البيانات.";
+                });
+        }
+
+        function renderOrders(orders) {
+            const grid = document.getElementById('ordersGrid');
+            grid.innerHTML = '';
+            if (orders.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">لا توجد طلبات تطابق معايير البحث.</p>';
+                return;
+            }
+            orders.forEach(order => {
+                const card = document.createElement('div');
+                card.className = 'order-card transition-all';
+                card.style.borderColor = getStatusColor(order['حالة الطلب']);
+                card.onclick = () => showOrderDetails(order.rowIndex);
+                card.innerHTML = `
+                    <div class="order-card-header">
+                        <h3>${order['الاسم الكامل'] || 'عميل'}</h3>
+                        <span class="status-badge" style="background-color: ${getStatusColor(order['حالة الطلب'])}">${order['حالة الطلب']}</span>
+                    </div>
+                    <div class="order-card-body">
+                        <p><i class="fas fa-phone" style="margin-left:5px; color: var(--primary-color);"></i><strong>الموبايل:</strong> ${order['رقم الموبايل']}</p>
+                        <p><i class="fas fa-map-marker-alt" style="margin-left:5px; color: var(--primary-color);"></i><strong>العنوان:</strong> ${order['العنوان بالتفصيل']}</p>
+                        <p><i class="fas fa-calendar-alt" style="margin-left:5px; color: var(--primary-color);"></i> ${new Date(order['تاريخ الطلب']).toLocaleString('ar-EG')}</p>
+                    </div>`;
+                grid.appendChild(card);
+            });
+        }
+        
+        function filterOrders() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            let filtered = allOrders.filter(order => {
+                const searchString = `${order['الاسم الكامل'] || ''} ${order['رقم الموبايل'] || ''}`.toLowerCase();
+                const matchesSearch = searchString.includes(searchInput);
+                const matchesStatus = (statusFilter === "" || (order['حالة الطلب'] && order['حالة الطلب'].trim() === statusFilter));
+                return matchesSearch && matchesStatus;
+            });
+            renderOrders(filtered);
+            updateStats();
+        }
+
+        function updateStats() {
+            document.querySelector('#total-orders .count').textContent = allOrders.length;
+            document.querySelector('#new-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'طلب جديد').length;
+            document.querySelector('#pending-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'تم الحجز (لم يستلم)').length;
+            document.querySelector('#completed-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'تم الاستلام').length;
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'طلب جديد': return 'var(--danger-color)';
+                case 'تم الحجز (لم يستلم)': return 'var(--warning-color)';
+                case 'تم الاستلام': return 'var(--success-color)';
+                default: return 'var(--secondary-color)';
+            }
+        }
+        
+        function showOrderDetails(rowIndex) {
+            const order = allOrders.find(o => o.rowIndex === rowIndex);
+            if (!order) return;
+            document.getElementById('modal-title').innerText = `تفاصيل طلب: ${order['الاسم الكامل']}`;
+            document.getElementById('modal-date').innerText = new Date(order['تاريخ الطلب']).toLocaleString('ar-EG');
+            document.getElementById('modal-name').innerText = order['الاسم الكامل'];
+            document.getElementById('modal-phone').innerHTML = `<a href="https://wa.me/2${order['رقم الموبايل']}" target="_blank">${order['رقم الموبايل']}</a>`;
+            document.getElementById('modal-address').innerText = order['العنوان بالتفصيل'];
+            document.getElementById('modal-products').innerText = order['المنتجات المطلوبة'];
+            document.getElementById('modal-delivery-type').innerText = order['نوع التوصيل'];
+            document.getElementById('modal-total-price').innerText = `${order['التكلفة الإجمالية']} جنيه`;
+            
+            const locationContainer = document.getElementById('modal-location-container');
+            const locationDiv = document.getElementById('modal-location');
+            const locationLink = order['رابط الموقع'];
+            
+            if (locationLink && locationLink.trim() !== '') {
+                locationDiv.innerHTML = `<a href="${locationLink}" target="_blank" style="color:var(--info-color);">افتح الرابط على الخرائط</a>`;
+                locationContainer.style.display = 'flex';
+            } else {
+                locationContainer.style.display = 'none';
+            }
+            
+            const whatsappBtn = document.getElementById('whatsappBtn');
+            whatsappBtn.onclick = () => copyForWhatsapp(order);
+            whatsappBtn.innerText = 'نسخ للمندوب';
+            
+            document.getElementById('detailsModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
+        function copyForWhatsapp(order) {
+            let textToCopy = `
+*اوردر جديد - Enjoy The Gifts*
+- - - - - - - - - - - - - - -
+*العميل:* ${order['الاسم الكامل']}
+*الموبايل:* ${order['رقم الموبايل']}
+*العنوان:* ${order['العنوان بالتفصيل']}
+            `.trim();
+
+            if (order['رابط الموقع'] && order['رابط الموقع'].trim() !== '') {
+                textToCopy += `\n*رابط الموقع:* ${order['رابط الموقع']}`;
+            }
+            
+            textToCopy += `
+- - - - - - - - - - - - - - -
+*المنتجات:*
+${order['المنتجات المطلوبة']}
+- - - - - - - - - - - - - - -
+*نوع التوصيل:* ${order['نوع التوصيل']}
+*المبلغ المطلوب تحصيله:* ${order['التكلفة الإجمالية']} جنيه
+            `.trim();
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const btn = document.getElementById('whatsappBtn');
+                btn.innerText = '✅ تم النسخ!';
+                setTimeout(() => { btn.innerText = 'نسخ للمندوب'; }, 2000);
+            });
+        }
+        
+        window.onclick = e => { if (e.target == document.getElementById('detailsModal')) closeModal(); }
+    </script>
+</body>
+</html>

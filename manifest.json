@@ -1,0 +1,16 @@
+{
+  "name": "لوحة تحكم الطلبات - Enjoy The Gifts",
+  "short_name": "طلبات Gifts",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f0f4f8",
+  "theme_color": "#667eea",
+  "description": "لوحة تحكم لإدارة طلبات متجر Enjoy The Gifts.",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
