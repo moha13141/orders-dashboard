@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <!-- FINAL COMPLETE VERSION - 16/07/2025 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admins - Enjoy The Gifts</title>
+    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
+    <!-- ** الأيقونة الجديدة للوحة التحكم ** -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v192c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32h-32zm-64-64c-25.89 0-49.88 10.55-67.88 28.12L28.12 284.12C10.55 302.1 0 326.11 0 352c0 17.67 14.33 32 32 32s32-14.33 32-32c0-16.78 6.89-32.44 18.88-44.12l128-128C222.1 169.8 238.2 160 256 160c17.67 0 32-14.33 32-32s-14.33-32-32-32z'/%3E%3C/svg%3E">
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,16 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --primary-color: #667eea;
-            --secondary-color: #4a5568;
-            --background-color: #f0f4f8;
-            --text-color: #2d3748;
-            --white-color: #ffffff;
-            --light-gray: #e2e8f0;
-            --success-color: #48bb78;
-            --warning-color: #f6ad55;
-            --info-color: #4299e1;
-            --danger-color: #f56565;
+            --primary-color: #667eea; --secondary-color: #4a5568; --background-color: #f0f4f8; --text-color: #2d3748; --white-color: #ffffff; --light-gray: #e2e8f0; --success-color: #48bb78; --warning-color: #f6ad55; --info-color: #4299e1; --danger-color: #f56565;
         }
         body { font-family: 'Cairo', sans-serif; background-color: var(--background-color); margin: 0; padding: 20px; color: var(--text-color); }
         .container { max-width: 1600px; margin: auto; }
@@ -28,11 +22,10 @@
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
         header h1 { color: var(--secondary-color); font-weight: 700; margin: 0; }
         .controls { background-color: var(--white-color); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 25px; }
-        .control-group { flex: 2 1 300px; }
-        .control-group.small { flex: 1 1 150px; }
+        .control-group { flex: 2 1 300px; } .control-group.small { flex: 1 1 150px; }
         .control-group label { display: block; font-size: 0.85rem; color: var(--secondary-color); font-weight: 600; margin-bottom: 5px; }
         .search-box { position: relative; }
-        .search-box input, .control-group select, .control-group input[type="date"], .refresh-btn { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--light-gray); font-family: 'Cairo', sans-serif; font-size: 16px; box-sizing: border-box; }
+        .search-box input, .control-group select, .control-group input, .refresh-btn { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--light-gray); font-family: 'Cairo', sans-serif; font-size: 16px; box-sizing: border-box; }
         .search-box input { padding-right: 45px; }
         .search-box i { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: var(--primary-color); }
         .refresh-btn { background-color: var(--primary-color); color: var(--white-color); cursor: pointer; border: none; }
@@ -47,10 +40,14 @@
         #pending-orders { border-color: var(--warning-color); } #pending-orders .icon { color: var(--warning-color); }
         #completed-orders { border-color: var(--success-color); } #completed-orders .icon { color: var(--success-color); }
         .orders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .order-card { background-color: var(--white-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); cursor: pointer; border-left: 5px solid; }
-        .order-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .order-card { background-color: var(--white-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-left: 5px solid; }
         .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .order-card-header h3 { margin: 0; font-size: 1.2rem; }
+        .order-card-header h3 { margin: 0; font-size: 1.2rem; cursor: pointer;}
+        .card-actions { display: flex; gap: 10px; }
+        .action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 5px; border-radius: 50%; width: 35px; height: 35px; line-height: 25px; text-align:center; }
+        .edit-btn { color: var(--info-color); } .edit-btn:hover { background-color: #e0f0ff; }
+        .delete-btn { color: var(--danger-color); } .delete-btn:hover { background-color: #fed7d7; }
+        .order-card-body { cursor: pointer;}
         .order-card-body p { margin: 4px 0; color: #718096; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .order-card-body strong { color: var(--secondary-color); }
         .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
@@ -61,11 +58,24 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-gray); padding-bottom: 15px; margin-bottom: 20px; }
         .modal-header h2 { margin: 0; }
         .modal-header .close-btn { font-size: 28px; cursor: pointer; }
-        .detail-item { display: flex; margin-bottom: 12px; align-items: flex-start; }
+        .detail-item { display: flex; margin-bottom: 12px; align-items: center; }
         .detail-item .label { font-weight: 600; min-width: 120px; color: var(--secondary-color); }
-        .modal-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--light-gray); display: flex; justify-content: flex-end; }
-        .whatsapp-btn { background-color: #25D366; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .modal-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--light-gray); display: flex; justify-content: flex-end; gap: 10px; }
+        .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .whatsapp-btn { background-color: #25D366; color: white; }
+        .confirm-delete-btn { background-color: var(--danger-color); color: white; }
+        .cancel-btn { background-color: var(--light-gray); color: var(--secondary-color); }
+        .save-btn { background-color: var(--success-color); color: white; }
         .loader { text-align: center; padding: 50px; font-size: 20px; color: var(--primary-color); }
+        /* ** Styles for Edit Modal Inputs ** */
+        .modal-body .control-group { margin-bottom: 15px; }
+        .modal-body .control-group label { display: block; margin-bottom: 5px; font-weight: 600; }
+        .modal-body .control-group input, .modal-body .control-group textarea, .modal-body .control-group select { width: 100%; padding: 10px; border: 1px solid var(--light-gray); border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 1rem; box-sizing: border-box; }
+        /* ** Styles for Professional Password Error ** */
+        #password-input.error { border-color: var(--danger-color); animation: shake 0.4s; }
+        #password-error { color: var(--danger-color); font-size: 0.9rem; height: 0; opacity: 0; transition: all 0.3s ease; margin-top: 5px;}
+        #password-error.show { height: auto; opacity: 1; }
+        @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
     </style>
 </head>
 <body>
@@ -73,9 +83,9 @@
         <div style="background:white; padding:40px; border-radius:12px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
             <h3 style="color: var(--secondary-color); margin-top:0;">لوحة التحكم المحمية</h3>
             <p style="color: #718096; margin-bottom: 20px;">الرجاء إدخال كلمة المرور للدخول</p>
-            <input type="password" id="password-input" style="padding:12px; margin-bottom:20px; border:1px solid var(--light-gray); border-radius:8px; width: 250px; text-align: center;">
-            <br>
-            <button onclick="checkPassword()" class="transition-all" style="padding:12px 30px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-size: 1rem;">دخول</button>
+            <input type="password" id="password-input" style="padding:12px; margin-bottom:5px; border:1px solid var(--light-gray); border-radius:8px; width: 250px; text-align: center;">
+            <p id="password-error"></p>
+            <button onclick="checkPassword()" class="transition-all" style="margin-top:10px; padding:12px 30px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-size: 1rem;">دخول</button>
         </div>
     </div>
 
@@ -99,25 +109,49 @@
             <div class="loader" id="loader"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الطلبات...</div>
         </div>
     </div>
+    
     <div id="detailsModal" class="modal-overlay">
-      <div class="modal-content transition-all">
-        <div class="modal-header"><h2 id="modal-title">تفاصيل الطلب</h2><span class="close-btn" onclick="closeModal()">×</span></div>
-        <div class="modal-body">
-            <div class="detail-item"><div class="label">تاريخ الطلب:</div><div id="modal-date"></div></div>
-            <div class="detail-item"><div class="label">اسم العميل:</div><div id="modal-name"></div></div>
-            <div class="detail-item"><div class="label">رقم الموبايل:</div><div id="modal-phone"></div></div>
-            <div class="detail-item"><div class="label">العنوان:</div><div id="modal-address" style="white-space:normal;"></div></div>
-            <div class="detail-item" id="modal-location-container" style="display: none;">
-                <div class="label">رابط الموقع:</div>
-                <div id="modal-location"></div>
+        <div class="modal-content transition-all">
+            <div class="modal-header"><h2 id="modal-title">تفاصيل الطلب</h2><span class="close-btn" onclick="closeModal('detailsModal')">×</span></div>
+            <div class="modal-body">
+                <div class="detail-item"><div class="label">تاريخ الطلب:</div><div id="modal-date"></div></div>
+                <div class="detail-item"><div class="label">اسم العميل:</div><div id="modal-name"></div></div>
+                <div class="detail-item"><div class="label">رقم الموبايل:</div><div id="modal-phone"></div></div>
+                <div class="detail-item"><div class="label">العنوان:</div><div id="modal-address" style="white-space:normal;"></div></div>
+                <div class="detail-item" id="modal-location-container" style="display: none;"><div class="label">رابط الموقع:</div><div id="modal-location"></div></div>
+                <hr style="border:0; border-top:1px solid var(--light-gray); margin: 20px 0;">
+                <div class="detail-item"><div class="label">المنتجات:</div><div id="modal-products" style="white-space:normal;"></div></div>
+                <div class="detail-item"><div class="label">نوع التوصيل:</div><div id="modal-delivery-type"></div></div>
+                <div class="detail-item"><div class="label">الإجمالي:</div><strong id="modal-total-price" style="font-size:1.2rem; color: var(--success-color);"></strong></div>
             </div>
-            <hr style="border:0; border-top:1px solid var(--light-gray); margin: 20px 0;">
-            <div class="detail-item"><div class="label">المنتجات:</div><div id="modal-products" style="white-space:normal;"></div></div>
-            <div class="detail-item"><div class="label">نوع التوصيل:</div><div id="modal-delivery-type"></div></div>
-            <div class="detail-item"><div class="label">الإجمالي:</div><strong id="modal-total-price" style="font-size:1.2rem; color: var(--success-color);"></strong></div>
+            <div class="modal-footer"><button id="whatsappBtn" class="modal-btn whatsapp-btn transition-all"><i class="fab fa-whatsapp"></i> نسخ للمندوب</button></div>
         </div>
-        <div class="modal-footer"><button id="whatsappBtn" class="whatsapp-btn transition-all"><i class="fab fa-whatsapp"></i> نسخ للمندوب</button></div>
-      </div>
+    </div>
+
+    <div id="editModal" class="modal-overlay">
+        <div class="modal-content transition-all">
+            <div class="modal-header"><h2>تعديل بيانات الطلب</h2><span class="close-btn" onclick="closeModal('editModal')">×</span></div>
+            <div class="modal-body">
+                <input type="hidden" id="editRowIndex">
+                <div class="control-group"><label for="editName">الاسم الكامل:</label><input type="text" id="editName"></div>
+                <div class="control-group"><label for="editPhone">رقم الموبايل:</label><input type="text" id="editPhone"></div>
+                <div class="control-group"><label for="editAddress">العنوان بالتفصيل:</label><textarea id="editAddress" rows="2"></textarea></div>
+                <div class="control-group"><label for="editProducts">المنتجات المطلوبة:</label><textarea id="editProducts" rows="2"></textarea></div>
+                <div class="control-group"><label for="editStatus">تغيير حالة الطلب:</label><select id="editStatus"><option value="طلب جديد">طلب جديد</option><option value="تم الحجز (لم يستلم)">تم الحجز (لم يستلم)</option><option value="تم الاستلام">تم الاستلام</option><option value="لم يتم التأكيد">لم يتم التأكيد</option></select></div>
+            </div>
+            <div class="modal-footer"><button onclick="saveChanges()" class="modal-btn save-btn transition-all"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
+        </div>
+    </div>
+    
+    <div id="deleteConfirmationModal" class="modal-overlay">
+        <div class="modal-content transition-all" style="max-width: 400px;">
+            <div class="modal-header"><h2>تأكيد الحذف</h2><span class="close-btn" onclick="closeModal('deleteConfirmationModal')">×</span></div>
+            <div class="modal-body"><p>هل أنت متأكد من حذف هذا الطلب نهائيًا؟</p></div>
+            <div class="modal-footer">
+                <button class="modal-btn cancel-btn" onclick="closeModal('deleteConfirmationModal')">إلغاء</button>
+                <button id="confirmDeleteBtn" class="modal-btn confirm-delete-btn">نعم، احذف</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -125,16 +159,25 @@
         let allOrders = [];
         
         document.addEventListener('DOMContentLoaded', () => {
-             // We wait for the password to be entered before fetching
+            const passwordInput = document.getElementById('password-input');
+            passwordInput.addEventListener('input', () => {
+                passwordInput.classList.remove('error');
+                document.getElementById('password-error').classList.remove('show');
+            });
         });
 
         function checkPassword() {
-            const correctPassword = "12345";
-            if (document.getElementById('password-input').value === correctPassword) {
+            const passwordInput = document.getElementById('password-input');
+            const errorElement = document.getElementById('password-error');
+            if (passwordInput.value === "12345") {
                 document.getElementById('password-protection').style.display = 'none';
                 document.getElementById('app-content').style.display = 'block';
                 fetchOrders();
-            } else { alert("كلمة المرور غير صحيحة!"); }
+            } else { 
+                passwordInput.classList.add('error');
+                errorElement.textContent = "كلمة المرور غير صحيحة!";
+                errorElement.classList.add('show');
+            }
         }
 
         function fetchOrders() {
@@ -145,10 +188,10 @@
                 .then(data => {
                     allOrders = Array.isArray(data) ? data.reverse() : [];
                     filterOrders();
-                    updateStats();
-                    document.getElementById('loader').style.display = 'none';
                 }).catch(err => {
                     document.getElementById('loader').innerHTML = "فشل تحميل البيانات.";
+                }).finally(() => {
+                    document.getElementById('loader').style.display = 'none';
                 });
         }
 
@@ -156,23 +199,25 @@
             const grid = document.getElementById('ordersGrid');
             grid.innerHTML = '';
             if (orders.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">لا توجد طلبات تطابق معايير البحث.</p>';
+                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">لا توجد طلبات.</p>';
                 return;
             }
             orders.forEach(order => {
                 const card = document.createElement('div');
                 card.className = 'order-card transition-all';
                 card.style.borderColor = getStatusColor(order['حالة الطلب']);
-                card.onclick = () => showOrderDetails(order.rowIndex);
                 card.innerHTML = `
                     <div class="order-card-header">
-                        <h3>${order['الاسم الكامل'] || 'عميل'}</h3>
-                        <span class="status-badge" style="background-color: ${getStatusColor(order['حالة الطلب'])}">${order['حالة الطلب']}</span>
+                        <h3 onclick="showOrderDetails(${order.rowIndex})">${order['الاسم الكامل'] || 'عميل'}</h3>
+                        <div class="card-actions">
+                            <button class="action-btn edit-btn" title="تعديل" onclick="openEditModal(event, ${order.rowIndex})"><i class="fas fa-pencil-alt"></i></button>
+                            <button class="action-btn delete-btn" title="حذف" onclick="showDeleteConfirmation(event, ${order.rowIndex})"><i class="fas fa-trash-alt"></i></button>
+                        </div>
                     </div>
-                    <div class="order-card-body">
-                        <p><i class="fas fa-phone" style="margin-left:5px; color: var(--primary-color);"></i><strong>الموبايل:</strong> ${order['رقم الموبايل']}</p>
-                        <p><i class="fas fa-map-marker-alt" style="margin-left:5px; color: var(--primary-color);"></i><strong>العنوان:</strong> ${order['العنوان بالتفصيل']}</p>
-                        <p><i class="fas fa-calendar-alt" style="margin-left:5px; color: var(--primary-color);"></i> ${new Date(order['تاريخ الطلب']).toLocaleString('ar-EG')}</p>
+                    <div class="order-card-body" onclick="showOrderDetails(${order.rowIndex})">
+                        <p><i class="fas fa-phone" style="margin-left:5px;"></i><strong>الموبايل:</strong> ${order['رقم الموبايل']}</p>
+                        <p><i class="fas fa-map-marker-alt" style="margin-left:5px;"></i><strong>العنوان:</strong> ${order['العنوان بالتفصيل']}</p>
+                        <p><i class="fas fa-calendar-alt" style="margin-left:5px;"></i> ${new Date(order['تاريخ الطلب']).toLocaleString('ar-EG')}</p>
                     </div>`;
                 grid.appendChild(card);
             });
@@ -183,9 +228,7 @@
             const statusFilter = document.getElementById('statusFilter').value;
             let filtered = allOrders.filter(order => {
                 const searchString = `${order['الاسم الكامل'] || ''} ${order['رقم الموبايل'] || ''}`.toLowerCase();
-                const matchesSearch = searchString.includes(searchInput);
-                const matchesStatus = (statusFilter === "" || (order['حالة الطلب'] && order['حالة الطلب'].trim() === statusFilter));
-                return matchesSearch && matchesStatus;
+                return searchString.includes(searchInput) && (statusFilter === "" || (order['حالة الطلب'] && order['حالة الطلب'].trim() === statusFilter));
             });
             renderOrders(filtered);
             updateStats();
@@ -193,9 +236,9 @@
 
         function updateStats() {
             document.querySelector('#total-orders .count').textContent = allOrders.length;
-            document.querySelector('#new-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'طلب جديد').length;
-            document.querySelector('#pending-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'تم الحجز (لم يستلم)').length;
-            document.querySelector('#completed-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] && o['حالة الطلب'].trim() === 'تم الاستلام').length;
+            document.querySelector('#new-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'طلب جديد').length;
+            document.querySelector('#pending-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'تم الحجز (لم يستلم)').length;
+            document.querySelector('#completed-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'تم الاستلام').length;
         }
 
         function getStatusColor(status) {
@@ -220,48 +263,74 @@
             document.getElementById('modal-total-price').innerText = `${order['التكلفة الإجمالية']} جنيه`;
             
             const locationContainer = document.getElementById('modal-location-container');
-            const locationDiv = document.getElementById('modal-location');
-            const locationLink = order['رابط الموقع'];
-            
-            if (locationLink && locationLink.trim() !== '') {
-                locationDiv.innerHTML = `<a href="${locationLink}" target="_blank" style="color:var(--info-color);">افتح الرابط على الخرائط</a>`;
+            if (order['رابط الموقع'] && order['رابط الموقع'].trim() !== '') {
+                document.getElementById('modal-location').innerHTML = `<a href="${order['رابط الموقع']}" target="_blank" style="color:var(--info-color);">افتح الرابط</a>`;
                 locationContainer.style.display = 'flex';
             } else {
                 locationContainer.style.display = 'none';
             }
             
-            const whatsappBtn = document.getElementById('whatsappBtn');
-            whatsappBtn.onclick = () => copyForWhatsapp(order);
-            whatsappBtn.innerText = 'نسخ للمندوب';
-            
+            document.getElementById('whatsappBtn').onclick = () => copyForWhatsapp(order);
             document.getElementById('detailsModal').classList.add('active');
         }
         
-        function closeModal() {
-            document.getElementById('detailsModal').classList.remove('active');
+        function openEditModal(event, rowIndex) {
+            event.stopPropagation();
+            const order = allOrders.find(o => o.rowIndex === rowIndex);
+            if (!order) return;
+            document.getElementById('editRowIndex').value = rowIndex;
+            document.getElementById('editName').value = order['الاسم الكامل'];
+            document.getElementById('editPhone').value = order['رقم الموبايل'];
+            document.getElementById('editProducts').value = order['المنتجات المطلوبة'];
+            document.getElementById('editAddress').value = order['العنوان بالتفصيل'];
+            document.getElementById('editStatus').value = order['حالة الطلب'];
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function saveChanges() {
+            const rowIndex = document.getElementById('editRowIndex').value;
+            const form = new URLSearchParams({
+                action: 'editOrder',
+                rowIndex: rowIndex,
+                name: document.getElementById('editName').value,
+                phone: document.getElementById('editPhone').value,
+                products: document.getElementById('editProducts').value,
+                address: document.getElementById('editAddress').value,
+                status: document.getElementById('editStatus').value
+            });
+            fetch(SCRIPT_URL, { method: 'POST', body: form })
+                .then(res => res.json()).then(data => {
+                    if (data.result === 'success') {
+                        closeModal('editModal');
+                        fetchOrders();
+                    } else { alert('فشل حفظ التعديلات.'); }
+                });
+        }
+
+        function showDeleteConfirmation(event, rowIndex) {
+            event.stopPropagation();
+            const modal = document.getElementById('deleteConfirmationModal');
+            document.getElementById('confirmDeleteBtn').onclick = () => confirmDelete(rowIndex);
+            modal.classList.add('active');
+        }
+
+        function confirmDelete(rowIndex) {
+            closeModal('deleteConfirmationModal');
+            fetch(`${SCRIPT_URL}?action=deleteOrder&rowIndex=${rowIndex}`, { method: 'POST' })
+                .then(res => res.json()).then(data => {
+                    if (data.result === 'success') fetchOrders();
+                    else alert('فشل حذف الطلب.');
+                });
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
         }
 
         function copyForWhatsapp(order) {
-            let textToCopy = `
-*اوردر جديد - Enjoy The Gifts*
-- - - - - - - - - - - - - - -
-*العميل:* ${order['الاسم الكامل']}
-*الموبايل:* ${order['رقم الموبايل']}
-*العنوان:* ${order['العنوان بالتفصيل']}
-            `.trim();
-
-            if (order['رابط الموقع'] && order['رابط الموقع'].trim() !== '') {
-                textToCopy += `\n*رابط الموقع:* ${order['رابط الموقع']}`;
-            }
-            
-            textToCopy += `
-- - - - - - - - - - - - - - -
-*المنتجات:*
-${order['المنتجات المطلوبة']}
-- - - - - - - - - - - - - - -
-*نوع التوصيل:* ${order['نوع التوصيل']}
-*المبلغ المطلوب تحصيله:* ${order['التكلفة الإجمالية']} جنيه
-            `.trim();
+            let textToCopy = `*اوردر جديد - Enjoy The Gifts*\n------------------------------\n*العميل:* ${order['الاسم الكامل']}\n*الموبايل:* ${order['رقم الموبايل']}\n*العنوان:* ${order['العنوان بالتفصيل']}`;
+            if (order['رابط الموقع']) { textToCopy += `\n*رابط الموقع:* ${order['رابط الموقع']}`; }
+            textToCopy += `\n------------------------------\n*المنتجات:*\n${order['المنتجات المطلوبة']}\n------------------------------\n*نوع التوصيل:* ${order['نوع التوصيل']}\n*المبلغ المطلوب:* ${order['التكلفة الإجمالية']} جنيه`;
             
             navigator.clipboard.writeText(textToCopy).then(() => {
                 const btn = document.getElementById('whatsappBtn');
@@ -270,7 +339,11 @@ ${order['المنتجات المطلوبة']}
             });
         }
         
-        window.onclick = e => { if (e.target == document.getElementById('detailsModal')) closeModal(); }
+        window.onclick = e => { 
+            if (e.target.classList.contains('modal-overlay')) {
+                e.target.classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
