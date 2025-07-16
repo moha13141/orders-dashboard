@@ -1,347 +1,1917 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- FINAL COMPLETE VERSION - 16/07/2025 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admins - Enjoy The Gifts</title>
-    <!-- ** الأيقونة الجديدة للوحة التحكم ** -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v192c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32h-32zm-64-64c-25.89 0-49.88 10.55-67.88 28.12L28.12 284.12C10.55 302.1 0 326.11 0 352c0 17.67 14.33 32 32 32s32-14.33 32-32c0-16.78 6.89-32.44 18.88-44.12l128-128C222.1 169.8 238.2 160 256 160c17.67 0 32-14.33 32-32s-14.33-32-32-32z'/%3E%3C/svg%3E">
-    <link rel="manifest" href="manifest.json">
+    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H288zm-192 0c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32H192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H96zM0 64C0 46.33 14.33 32 32 32h192c17.67 0 32 14.33 32 32v96c0 17.67-14.33 32-32 32H32c-17.67 0-32-14.33-32-32V64z'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
         :root {
-            --primary-color: #667eea; --secondary-color: #4a5568; --background-color: #f0f4f8; --text-color: #2d3748; --white-color: #ffffff; --light-gray: #e2e8f0; --success-color: #48bb78; --warning-color: #f6ad55; --info-color: #4299e1; --danger-color: #f56565;
+            --primary-color: #667eea; /* لون أزرق بنفسجي */
+            --secondary-color: #764ba2; /* لون بنفسجي أغمق */
+            --accent-color: #a276e8; /* لون بنفسجي فاتح */
+            --background-color: #f4f7f6; /* خلفية فاتحة */
+            --card-background: #ffffff; /* خلفية البطاقات */
+            --text-color: #333333; /* لون النص الأساسي */
+            --light-text: #666666; /* لون النص الفاتح */
+            --border-color: #e0e0e0; /* لون الحدود */
+            --success-color: #28a745; /* لون النجاح */
+            --danger-color: #dc3545; /* لون الخطر */
+            --info-color: #17a2b8; /* لون المعلومات */
+            --warning-color: #ffc107; /* لون التحذير */
+            --new-order-color: #007bff; /* لون جديد للطلبات الجديدة */
+            --in-progress-color: #ffc107; /* لون قيد التنفيذ */
+            --not-confirmed-color: #6c757d; /* لون لم يتم التأكيد */
         }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--background-color); margin: 0; padding: 20px; color: var(--text-color); }
-        .container { max-width: 1600px; margin: auto; }
-        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 10px; }
-        header h1 { color: var(--secondary-color); font-weight: 700; margin: 0; }
-        .controls { background-color: var(--white-color); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 25px; }
-        .control-group { flex: 2 1 300px; } .control-group.small { flex: 1 1 150px; }
-        .control-group label { display: block; font-size: 0.85rem; color: var(--secondary-color); font-weight: 600; margin-bottom: 5px; }
-        .search-box { position: relative; }
-        .search-box input, .control-group select, .control-group input, .refresh-btn { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--light-gray); font-family: 'Cairo', sans-serif; font-size: 16px; box-sizing: border-box; }
-        .search-box input { padding-right: 45px; }
-        .search-box i { position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: var(--primary-color); }
-        .refresh-btn { background-color: var(--primary-color); color: var(--white-color); cursor: pointer; border: none; }
-        .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 25px; }
-        .card { background-color: var(--white-color); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; align-items: center; gap: 20px; border-left: 5px solid; }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .card .icon { font-size: 2.5rem; }
-        .card .info h3 { margin: 0 0 5px 0; color: var(--text-color); font-size: 1rem; }
-        .card .info .count { font-size: 2.2rem; font-weight: 700; }
-        #total-orders { border-color: var(--info-color); } #total-orders .icon { color: var(--info-color); }
-        #new-orders { border-color: var(--danger-color); } #new-orders .icon { color: var(--danger-color); }
-        #pending-orders { border-color: var(--warning-color); } #pending-orders .icon { color: var(--warning-color); }
-        #completed-orders { border-color: var(--success-color); } #completed-orders .icon { color: var(--success-color); }
-        .orders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
-        .order-card { background-color: var(--white-color); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); border-left: 5px solid; }
-        .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .order-card-header h3 { margin: 0; font-size: 1.2rem; cursor: pointer;}
-        .card-actions { display: flex; gap: 10px; }
-        .action-btn { background: none; border: none; cursor: pointer; font-size: 1.1rem; padding: 5px; border-radius: 50%; width: 35px; height: 35px; line-height: 25px; text-align:center; }
-        .edit-btn { color: var(--info-color); } .edit-btn:hover { background-color: #e0f0ff; }
-        .delete-btn { color: var(--danger-color); } .delete-btn:hover { background-color: #fed7d7; }
-        .order-card-body { cursor: pointer;}
-        .order-card-body p { margin: 4px 0; color: #718096; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .order-card-body strong { color: var(--secondary-color); }
-        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: white; }
-        .modal-overlay { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content { background-color: #fefefe; padding: 30px; border-radius: 15px; max-width: 600px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transform: scale(0.9); transition: all 0.3s ease; }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--light-gray); padding-bottom: 15px; margin-bottom: 20px; }
-        .modal-header h2 { margin: 0; }
-        .modal-header .close-btn { font-size: 28px; cursor: pointer; }
-        .detail-item { display: flex; margin-bottom: 12px; align-items: center; }
-        .detail-item .label { font-weight: 600; min-width: 120px; color: var(--secondary-color); }
-        .modal-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--light-gray); display: flex; justify-content: flex-end; gap: 10px; }
-        .modal-btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-size: 1rem; }
-        .whatsapp-btn { background-color: #25D366; color: white; }
-        .confirm-delete-btn { background-color: var(--danger-color); color: white; }
-        .cancel-btn { background-color: var(--light-gray); color: var(--secondary-color); }
-        .save-btn { background-color: var(--success-color); color: white; }
-        .loader { text-align: center; padding: 50px; font-size: 20px; color: var(--primary-color); }
-        /* ** Styles for Edit Modal Inputs ** */
-        .modal-body .control-group { margin-bottom: 15px; }
-        .modal-body .control-group label { display: block; margin-bottom: 5px; font-weight: 600; }
-        .modal-body .control-group input, .modal-body .control-group textarea, .modal-body .control-group select { width: 100%; padding: 10px; border: 1px solid var(--light-gray); border-radius: 8px; font-family: 'Cairo', sans-serif; font-size: 1rem; box-sizing: border-box; }
-        /* ** Styles for Professional Password Error ** */
-        #password-input.error { border-color: var(--danger-color); animation: shake 0.4s; }
-        #password-error { color: var(--danger-color); font-size: 0.9rem; height: 0; opacity: 0; transition: all 0.3s ease; margin-top: 5px;}
-        #password-error.show { height: auto; opacity: 1; }
-        @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(2px); } 30%, 50%, 70% { transform: translateX(-4px); } 40%, 60% { transform: translateX(4px); } }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            direction: rtl; /* من اليمين لليسار للعربية */
+            text-align: right; /* محاذاة النص لليمين */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--card-background);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 2rem;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: 900;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--card-background);
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Summary Cards Section */
+        .summary-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background-color: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+        }
+
+        .summary-card .details {
+            text-align: left;
+        }
+
+        .summary-card .details h3 {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            margin-bottom: 5px;
+        }
+
+        .summary-card .details .count {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--secondary-color);
+        }
+        .summary-card.total .icon { color: var(--primary-color); }
+        .summary-card.new .icon { color: var(--new-order-color); } /* Updated color */
+        .summary-card.processing .icon { color: var(--in-progress-color); } /* Updated color */
+        .summary-card.completed .icon { color: var(--success-color); }
+        .summary-card.not-confirmed .icon { color: var(--not-confirmed-color); } /* New color */
+
+
+        .filters-card {
+            background-color: var(--card-background);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .filters-card .filter-group:nth-child(1) { grid-column: span 1; order: 4; }
+        .filters-card .filter-group:nth-child(2) { grid-column: span 1; order: 1; }
+        .filters-card .filter-group:nth-child(3) { grid-column: span 1; order: 2; }
+        .filters-card .filter-group:nth-child(4) { grid-column: span 1; order: 3; }
+        .filters-card .filter-group:nth-child(5) { grid-column: span 1; order: 5; }
+
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filters-card label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--light-text);
+            font-size: 0.95rem;
+        }
+
+        .filters-card input[type="text"],
+        .filters-card input[type="date"],
+        .filters-card select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            transition: border-color 0.3s;
+        }
+
+        .filters-card input[type="text"]:focus,
+        .filters-card input[type="date"]:focus,
+        .filters-card select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .filters-card button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filters-card .apply-filters-btn {
+            background-color: var(--primary-color);
+            color: var(--card-background);
+        }
+
+        .filters-card .apply-filters-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .filters-card .clear-filters-btn {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+
+        .filters-card .clear-filters-btn:hover {
+            background-color: #dcdcdc;
+        }
+
+        /* New Order Cards Grid */
+        .orders-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .order-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Status bar on the right (RTL adjusted) */
+        .order-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 8px;
+            height: 100%;
+            background-color: var(--border-color);
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .order-card.status-new-order::before { background-color: var(--new-order-color); } /* New status color */
+        .order-card.status-in-progress::before { background-color: var(--in-progress-color); } /* New status color */
+        .order-card.status-completed-order::before { background-color: var(--success-color); } /* New status color */
+        .order-card.status-not-confirmed::before { background-color: var(--not-confirmed-color); } /* New status color */
+
+
+        .order-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+
+        .order-card-header .order-date {
+            font-size: 1rem;
+            color: var(--light-text);
+            font-weight: 600;
+        }
+
+        .order-card-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-card-actions .action-icon {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: color 0.2s ease;
+            padding: 5px;
+        }
+
+        .order-card-actions .action-icon:hover {
+            color: var(--primary-color);
+        }
+        .order-card-actions .action-icon.delete-icon:hover {
+            color: var(--danger-color);
+        }
+
+        .order-card-body p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            padding-left: 10px;
+        }
+
+        .order-card-body strong {
+            color: var(--secondary-color);
+        }
+
+        .order-card-body .order-status-text {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #fff;
+            text-align: center;
+            margin-right: 5px;
+        }
+        /* Updated status text colors */
+        .order-card-body .order-status-text.new-order { background-color: var(--new-order-color); }
+        .order-card-body .order-status-text.in-progress { background-color: var(--in-progress-color); }
+        .order-card-body .order-status-text.completed-order { background-color: var(--success-color); }
+        .order-card-body .order-status-text.not-confirmed { background-color: var(--not-confirmed-color); }
+
+
+        /* Modal Styles (for Order Details and Manual Invoice) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 3000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: slideIn 0.4s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-content .close-button {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-content .close-button:hover {
+            color: var(--danger-color);
+        }
+
+        /* Order Details Modal specific styling */
+        .order-details-modal-content {
+            text-align: right;
+            padding-bottom: 20px;
+        }
+
+        .order-details-modal-content h3 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .order-details-modal-content p {
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--light-text);
+        }
+
+        .order-details-modal-content strong {
+            color: var(--text-color);
+        }
+        
+        .order-details-modal-content .made-by {
+            font-size: 0.85rem;
+            color: #999;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* New Copy Button Style */
+        .copy-details-btn {
+            background-color: #4CAF50; /* A vibrant green */
+            color: white;
+            padding: 14px 30px; /* Bigger padding */
+            border-radius: 8px; /* Slightly rounded */
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem; /* Larger font size */
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex; /* To allow text and icon side by side */
+            align-items: center;
+            gap: 10px; /* Space between icon and text */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            /* Position to bottom-left within the modal-content */
+            position: absolute;
+            bottom: 20px;
+            right: 20px; /* RTL: right for left corner */
+            left: auto; /* Ensure it doesn't stretch */
+        }
+
+        .copy-details-btn:hover {
+            background-color: #45a049; /* Darker green on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .copy-details-btn.copied {
+            background-color: #388e3c; /* Even darker green when copied */
+            transform: translateY(0); /* Reset transform */
+            box-shadow: none; /* Remove shadow when copied */
+        }
+
+
+        /* Styles for the manual invoice form */
+        .manual-invoice-form-container {
+            text-align: right;
+        }
+
+        .manual-invoice-form-container h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .manual-invoice-form-container label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .manual-invoice-form-container input[type="text"],
+        .manual-invoice-form-container input[type="tel"],
+        .manual-invoice-form-container input[type="url"],
+        .manual-invoice-form-container input[type="number"],
+        .manual-invoice-form-container textarea,
+        .manual-invoice-form-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            background-color: var(--background-color);
+        }
+
+        /* Remove number input arrows */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+
+        .manual-invoice-form-container input:focus,
+        .manual-invoice-form-container textarea:focus,
+        .manual-invoice-form-container select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .manual-invoice-form-container textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .manual-invoice-form-container .modern-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: var(--background-color) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%20viewBox%3D%220%200%20292%20292%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.7%200-13.3%202.7-17.5%207c-4.3%204.3-6.9%2010.8-6.9%2017.5s2.7%2013.3%207%2017.5l128%20128c4.2%204.2%2010.8%206.9%2017.5%206.9s13.3-2.7%2017.5-6.9l128-128c4.2-4.2%206.9-10.8%206.9-17.5s-2.7-13.3-7-17.5z%22%2F%3E%3C%2Fsvg%3E') no-repeat right 15px center;
+            background-size: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 12px 45px 12px 15px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+
+        .manual-invoice-form-container .modern-select:hover {
+            border-color: var(--primary-color);
+        }
+
+        .manual-invoice-form-container .total-price-display {
+            background-color: var(--background-color);
+            border: 2px dashed var(--primary-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--secondary-color);
+        }
+
+        .manual-invoice-form-container .total-price-display span {
+            color: var(--success-color);
+            font-size: 1.5rem;
+        }
+        
+        .manual-invoice-form-container .delivery-note {
+            padding: 15px;
+            background-color: #e6f7ff;
+            border-right: 5px solid #3399ff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .manual-invoice-form-container .delivery-note.show {
+            opacity: 1;
+        }
+        .manual-invoice-form-container .delivery-note i {
+            color: #3399ff;
+            font-size: 1.2rem;
+        }
+        .manual-invoice-form-container .delivery-note strong {
+            color: var(--secondary-color);
+        }
+
+        /* Delete Confirmation Toast (specific to order cards) */
+        .delete-confirmation-toast {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 3001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .delete-confirmation-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delete-confirmation-toast p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .delete-confirmation-toast .toast-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .delete-confirmation-toast .toast-actions button {
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.2s ease;
+        }
+
+        .delete-confirmation-toast .toast-actions .confirm-delete {
+            background-color: var(--danger-color);
+            color: #fff;
+        }
+
+        .delete-confirmation-toast .toast-actions .confirm-delete:hover {
+            background-color: #c82333;
+        }
+
+        .delete-confirmation-toast .toast-actions .cancel-delete {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+        }
+
+        .delete-confirmation-toast .toast-actions .cancel-delete:hover {
+            background-color: #dcdcdc;
+        }
+
+
+        /* Login Modal Styles */
+        #loginModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 4000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #loginModal .login-content {
+            background: var(--card-background);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.4s;
+        }
+
+        #loginModal .login-content h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+        }
+
+        #loginModal .login-content input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        #loginModal .login-content button {
+            background-color: var(--primary-color);
+            color: var(--card-background);
+            padding: 12px 30px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #loginModal .login-content button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        #loginModal .login-content #loginError {
+            color: var(--danger-color);
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        /* General Purpose Alert Toast */
+        .general-alert-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px; /* RTL: right side */
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 5000; /* Higher than other modals */
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            min-width: 250px;
+            text-align: right; /* RTL */
+        }
+
+        .general-alert-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .general-alert-toast p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        /* Specific colors for general alerts */
+        .general-alert-toast.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        .general-alert-toast.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .general-alert-toast.info {
+            background-color: #e2e3e5;
+            color: #383d41;
+            border-color: #d6d8d9;
+        }
+
+        /* Loading Indicator Styles */
+        .loading-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 6000; /* Even higher */
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .loading-spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--primary-color);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+            .summary-cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .filters-card {
+                grid-template-columns: 1fr;
+            }
+            .filters-card .filter-group {
+                min-width: 100%;
+                order: unset;
+            }
+            .filters-card .filter-group:nth-child(1) { order: unset; }
+            .filters-card .filter-group:nth-child(2) { order: unset; }
+            .filters-card .filter-group:nth-child(3) { order: unset; }
+            .filters-card .filter-group:nth-child(4) { order: unset; }
+            .filters-card .filter-group:nth-child(5) { order: unset; }
+
+            .filters-card button {
+                width: 100%;
+            }
+            .orders-grid-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .order-card {
+                padding: 15px;
+            }
+            .order-card-header {
+                margin-bottom: 10px;
+            }
+            .order-card-header .order-date {
+                font-size: 0.9rem;
+            }
+            .order-card-actions .action-icon {
+                font-size: 1rem;
+            }
+            .order-card-body p {
+                font-size: 0.85rem;
+            }
+
+            .modal-content {
+                padding: 25px;
+                width: 95%;
+            }
+            .modal-content .close-button {
+                font-size: 1.5rem;
+                top: 10px;
+                left: 10px;
+            }
+            .manual-invoice-form-container h2 {
+                font-size: 1.5rem;
+            }
+            .manual-invoice-form-container label {
+                font-size: 0.9rem;
+            }
+            .manual-invoice-form-container input,
+            .manual-invoice-form-container textarea,
+            .manual-invoice-form-container select {
+                padding: 10px;
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+            }
+            .manual-invoice-form-container .total-price-display {
+                font-size: 1rem;
+            }
+            .manual-invoice-form-container .total-price-display span {
+                font-size: 1.3rem;
+            }
+            /* Order Details Modal copy button adjustment for mobile */
+            .copy-details-btn {
+                position: static;
+                width: 100%;
+                margin-top: 20px;
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div id="password-protection" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(45,55,72,0.95); display:flex; justify-content:center; align-items:center; z-index: 2000;">
-        <div style="background:white; padding:40px; border-radius:12px; text-align:center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-            <h3 style="color: var(--secondary-color); margin-top:0;">لوحة التحكم المحمية</h3>
-            <p style="color: #718096; margin-bottom: 20px;">الرجاء إدخال كلمة المرور للدخول</p>
-            <input type="password" id="password-input" style="padding:12px; margin-bottom:5px; border:1px solid var(--light-gray); border-radius:8px; width: 250px; text-align: center;">
-            <p id="password-error"></p>
-            <button onclick="checkPassword()" class="transition-all" style="margin-top:10px; padding:12px 30px; background: var(--primary-color); color:white; border:none; border-radius:8px; cursor:pointer; font-size: 1rem;">دخول</button>
+    <!-- Login Modal -->
+    <div id="loginModal">
+        <div class="login-content">
+            <h2>لوحة تحكم Enjoy The Gifts</h2>
+            <input type="password" id="passwordInput" placeholder="أدخل الرقم السري" autofocus>
+            <button onclick="checkPassword()">دخول</button>
+            <p id="loginError" style="display:none;">الرقم السري غير صحيح. حاول مرة أخرى.</p>
         </div>
     </div>
 
-    <div id="app-content" style="display:none;">
+    <!-- Main Content (hidden until logged in) -->
+    <div id="mainContent" style="display:none;">
+        <header>
+            <div class="container">
+                <a href="#" class="logo">
+                    <i class="fas fa-gift"></i>
+                    لوحة تحكم Enjoy The Gifts
+                </a>
+            </div>
+        </header>
+
         <div class="container">
-            <header><h1><i class="fas fa-chart-line" style="color: var(--primary-color);"></i> لوحة تحكم الطلبات</h1></header>
-            <div class="stats-cards">
-                <div class="card transition-all" id="total-orders"><div class="icon"><i class="fas fa-box-open"></i></div><div class="info"><h3>إجمالي الطلبات</h3><p class="count">0</p></div></div>
-                <div class="card transition-all" id="new-orders"><div class="icon"><i class="fas fa-bell"></i></div><div class="info"><h3>طلبات جديدة</h3><p class="count">0</p></div></div>
-                <div class="card transition-all" id="pending-orders"><div class="icon"><i class="fas fa-shipping-fast"></i></div><div class="info"><h3>قيد التسليم</h3><p class="count">0</p></div></div>
-                <div class="card transition-all" id="completed-orders"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="info"><h3>طلبات مكتملة</h3><p class="count">0</p></div></div>
+            <div class="dashboard-header">
+                <h1>إدارة الطلبات</h1>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button id="createManualInvoiceBtn" class="cta-button">
+                        <i class="fas fa-plus-circle"></i> إنشاء فاتورة يدوية
+                    </button>
+                    <button id="refreshOrdersBtn" class="cta-button" onclick="fetchOrdersFromGoogleSheet()">
+                        <i class="fas fa-sync-alt"></i> تحديث الطلبات
+                    </button>
+                </div>
             </div>
-            <div class="controls">
-                <div class="control-group"><label for="searchInput">بحث</label><div class="search-box"><input type="text" id="searchInput" onkeyup="filterOrders()" placeholder="ابحث بالاسم، رقم الموبايل..."><i class="fas fa-search"></i></div></div>
-                <div class="control-group small"><label for="statusFilter">فلترة حسب الحالة</label><select id="statusFilter" onchange="filterOrders()"><option value="">(الكل)</option><option value="طلب جديد">طلب جديد</option><option value="تم الحجز (لم يستلم)">تم الحجز (لم يستلم)</option><option value="تم الاستلام">تم الاستلام</option><option value="لم يتم التأكيد">لم يتم التأكيد</option></select></div>
-                <div class="control-group small"><label for="dateFrom">من تاريخ</label><input type="date" id="dateFrom" onchange="filterOrders()"></div>
-                <div class="control-group small"><label for="dateTo">إلى تاريخ</label><input type="date" id="dateTo" onchange="filterOrders()"></div>
-                <div class="control-group small"><label> </label><button class="refresh-btn transition-all" onclick="fetchOrders()"><i class="fas fa-sync-alt"></i> تحديث</button></div>
+
+            <!-- Summary Cards -->
+            <div class="summary-cards-grid">
+                <div class="summary-card total">
+                    <div class="icon"><i class="fas fa-box"></i></div>
+                    <div class="details">
+                        <h3>إجمالي الطلبات</h3>
+                        <span class="count" id="totalOrdersCount">0</span>
+                    </div>
+                </div>
+                <div class="summary-card new">
+                    <div class="icon"><i class="fas fa-bell"></i></div>
+                    <div class="details">
+                        <h3>طلبات جديدة</h3>
+                        <span class="count" id="newOrdersCount">0</span>
+                    </div>
+                </div>
+                <div class="summary-card processing">
+                    <div class="icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div class="details">
+                        <h3>قيد التنفيذ</h3>
+                        <span class="count" id="processingOrdersCount">0</span>
+                    </div>
+                </div>
+                <div class="summary-card completed">
+                    <div class="icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="details">
+                        <h3>طلبات مكتملة</h3>
+                        <span class="count" id="completedOrdersCount">0</span>
+                    </div>
+                </div>
+                <div class="summary-card not-confirmed">
+                    <div class="icon"><i class="fas fa-times-circle"></i></div>
+                    <div class="details">
+                        <h3>لم يتم التأكيد</h3>
+                        <span class="count" id="notConfirmedOrdersCount">0</span>
+                    </div>
+                </div>
             </div>
-            <div class="orders-grid" id="ordersGrid"></div>
-            <div class="loader" id="loader"><i class="fas fa-spinner fa-spin"></i> جاري تحميل الطلبات...</div>
+
+            <div class="filters-card">
+                <!-- Search by name/phone/address -->
+                <div class="filter-group">
+                    <label for="searchFilter">بحث بالاسم/الموبايل/العنوان:</label>
+                    <input type="text" id="searchFilter" placeholder="أدخل كلمة للبحث">
+                </div>
+                <div class="filter-group">
+                    <label for="fromDateFilter">من تاريخ:</label>
+                    <input type="date" id="fromDateFilter">
+                </div>
+                <div class="filter-group">
+                    <label for="toDateFilter">إلى تاريخ:</label>
+                    <input type="date" id="toDateFilter">
+                </div>
+                <div class="filter-group">
+                    <label for="statusFilter">تصفية حسب الحالة:</label>
+                    <select id="statusFilter">
+                        <option value="">الكل</option>
+                        <option value="طلب جديد">طلب جديد</option>
+                        <option value="قيد التنفيذ">قيد التنفيذ</option>
+                        <option value="طلب مكتمل">طلب مكتمل</option>
+                        <option value="لم يتم التأكيد">لم يتم التأكيد</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="cta-button apply-filters-btn" onclick="applyFilters()">تطبيق الفلاتر</button>
+                    <button class="clear-filters-btn" onclick="clearFilters()">مسح الفلاتر</button>
+                </div>
+            </div>
+
+            <!-- Orders Display Area -->
+            <div id="ordersGridContainer" class="orders-grid-container">
+                <!-- Order cards will be dynamically loaded here by JavaScript -->
+            </div>
+             <!-- Loading Indicator -->
+             <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>جاري تحميل الطلبات من جوجل شيت...</p>
+            </div>
         </div>
     </div>
-    
-    <div id="detailsModal" class="modal-overlay">
-        <div class="modal-content transition-all">
-            <div class="modal-header"><h2 id="modal-title">تفاصيل الطلب</h2><span class="close-btn" onclick="closeModal('detailsModal')">×</span></div>
-            <div class="modal-body">
-                <div class="detail-item"><div class="label">تاريخ الطلب:</div><div id="modal-date"></div></div>
-                <div class="detail-item"><div class="label">اسم العميل:</div><div id="modal-name"></div></div>
-                <div class="detail-item"><div class="label">رقم الموبايل:</div><div id="modal-phone"></div></div>
-                <div class="detail-item"><div class="label">العنوان:</div><div id="modal-address" style="white-space:normal;"></div></div>
-                <div class="detail-item" id="modal-location-container" style="display: none;"><div class="label">رابط الموقع:</div><div id="modal-location"></div></div>
-                <hr style="border:0; border-top:1px solid var(--light-gray); margin: 20px 0;">
-                <div class="detail-item"><div class="label">المنتجات:</div><div id="modal-products" style="white-space:normal;"></div></div>
-                <div class="detail-item"><div class="label">نوع التوصيل:</div><div id="modal-delivery-type"></div></div>
-                <div class="detail-item"><div class="label">الإجمالي:</div><strong id="modal-total-price" style="font-size:1.2rem; color: var(--success-color);"></strong></div>
+
+    <!-- Modal for Order Details (now centered) -->
+    <div id="orderDetailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeOrderDetailsModal()">&times;</span>
+            <div class="order-details-modal-content">
+                <h3>تفاصيل الطلب</h3>
+                <p><strong>تاريخ ووقت الطلب:</strong> <span id="modalOrderDateTime"></span></p>
+                <p><strong>الاسم الكامل:</strong> <span id="modalFullName"></span></p>
+                <p><strong>رقم الموبايل:</strong> <span id="modalPhoneNumber"></span></p>
+                <p><strong>المنتجات المطلوبة:</b> <span id="modalProducts"></span></p>
+                <p><strong>العنوان بالتفصيل:</strong> <span id="modalAddress"></span></p>
+                <p><strong>رابط الموقع:</b> <span id="modalSiteLink"></span></p>
+                <p><strong>المحافظة:</strong> <span id="modalGovernorate"></span></p>
+                <p><strong>نوع التوصيل:</b> <span id="modalDeliveryType"></span></p>
+                <p><strong>تكلفة الشحن:</strong> <span id="modalShippingCost"></span> جنيه</p>
+                <p><strong>سعر المنتجات:</strong> <span id="modalProductPrice"></span> جنيه</p>
+                <p><strong>التكلفة الإجمالية:</b> <span id="modalTotalCost"></span> جنيه</p>
+                <p><strong>الحالة:</strong> <span id="modalOrderStatus"></span></p>
+                <p class="made-by" id="modalMadeBy"></p>
             </div>
-            <div class="modal-footer"><button id="whatsappBtn" class="modal-btn whatsapp-btn transition-all"><i class="fab fa-whatsapp"></i> نسخ للمندوب</button></div>
+            <button class="copy-details-btn" id="copyDetailsButton" onclick="copyOrderDetailsFromModal()">
+                <i class="fas fa-copy"></i> نسخ تفاصيل الطلب
+            </button>
         </div>
     </div>
 
-    <div id="editModal" class="modal-overlay">
-        <div class="modal-content transition-all">
-            <div class="modal-header"><h2>تعديل بيانات الطلب</h2><span class="close-btn" onclick="closeModal('editModal')">×</span></div>
-            <div class="modal-body">
-                <input type="hidden" id="editRowIndex">
-                <div class="control-group"><label for="editName">الاسم الكامل:</label><input type="text" id="editName"></div>
-                <div class="control-group"><label for="editPhone">رقم الموبايل:</label><input type="text" id="editPhone"></div>
-                <div class="control-group"><label for="editAddress">العنوان بالتفصيل:</label><textarea id="editAddress" rows="2"></textarea></div>
-                <div class="control-group"><label for="editProducts">المنتجات المطلوبة:</label><textarea id="editProducts" rows="2"></textarea></div>
-                <div class="control-group"><label for="editStatus">تغيير حالة الطلب:</label><select id="editStatus"><option value="طلب جديد">طلب جديد</option><option value="تم الحجز (لم يستلم)">تم الحجز (لم يستلم)</option><option value="تم الاستلام">تم الاستلام</option><option value="لم يتم التأكيد">لم يتم التأكيد</option></select></div>
-            </div>
-            <div class="modal-footer"><button onclick="saveChanges()" class="modal-btn save-btn transition-all"><i class="fas fa-save"></i> حفظ التعديلات</button></div>
-        </div>
-    </div>
-    
-    <div id="deleteConfirmationModal" class="modal-overlay">
-        <div class="modal-content transition-all" style="max-width: 400px;">
-            <div class="modal-header"><h2>تأكيد الحذف</h2><span class="close-btn" onclick="closeModal('deleteConfirmationModal')">×</span></div>
-            <div class="modal-body"><p>هل أنت متأكد من حذف هذا الطلب نهائيًا؟</p></div>
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" onclick="closeModal('deleteConfirmationModal')">إلغاء</button>
-                <button id="confirmDeleteBtn" class="modal-btn confirm-delete-btn">نعم، احذف</button>
-            </div>
-        </div>
-    </div>
+    <!-- Modal for Manual Invoice Creation / Edit -->
+    <div id="manualInvoiceModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeManualInvoiceModal()">&times;</span>
+            <div class="manual-invoice-form-container">
+                <h2 id="manualInvoiceModalTitle">إنشاء فاتورة يدوية</h2>
+                <form id="manualInvoiceForm" method="POST">
+                    <!-- Hidden input to store original order ID for updates -->
+                    <input type="hidden" id="originalOrderId" name="originalOrderId">
 
-    <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvPzOa6paLV2sHRHRGmJhYrt5eO6bM3YNNI7vOoHMTBiUehWSZzWUi0vA2QIdWzTU/exec";
-        let allOrders = [];
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            const passwordInput = document.getElementById('password-input');
-            passwordInput.addEventListener('input', () => {
-                passwordInput.classList.remove('error');
-                document.getElementById('password-error').classList.remove('show');
-            });
-        });
+                    <label for="manualName"><i class="fas fa-user"></i> الاسم بالكامل:</label>
+                    <input type="text" id="manualName" name="name" required>
 
-        function checkPassword() {
-            const passwordInput = document.getElementById('password-input');
-            const errorElement = document.getElementById('password-error');
-            if (passwordInput.value === "12345") {
-                document.getElementById('password-protection').style.display = 'none';
-                document.getElementById('app-content').style.display = 'block';
-                fetchOrders();
-            } else { 
-                passwordInput.classList.add('error');
-                errorElement.textContent = "كلمة المرور غير صحيحة!";
-                errorElement.classList.add('show');
-            }
-        }
+                    <label for="manualPhone"><i class="fas fa-phone"></i> رقم الموبايل:</label>
+                    <input type="tel" id="manualPhone" name="phone" required>
 
-        function fetchOrders() {
-            document.getElementById('loader').style.display = 'block';
-            document.getElementById('ordersGrid').innerHTML = '';
-            fetch(`${SCRIPT_URL}?t=${new Date().getTime()}`)
-                .then(res => res.json())
-                .then(data => {
-                    allOrders = Array.isArray(data) ? data.reverse() : [];
-                    filterOrders();
-                }).catch(err => {
-                    document.getElementById('loader').innerHTML = "فشل تحميل البيانات.";
-                }).finally(() => {
-                    document.getElementById('loader').style.display = 'none';
-                });
-        }
+                    <label for="manualProducts"><i class="fas fa-gift"></i> المنتجات المطلوبة (اكتب كل منتج وسعره في سطر منفصل):</label>
+                    <textarea id="manualProducts" name="products" required></textarea>
 
-        function renderOrders(orders) {
-            const grid = document.getElementById('ordersGrid');
-            grid.innerHTML = '';
-            if (orders.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1 / -1; text-align:center;">لا توجد طلبات.</p>';
-                return;
-            }
-            orders.forEach(order => {
-                const card = document.createElement('div');
-                card.className = 'order-card transition-all';
-                card.style.borderColor = getStatusColor(order['حالة الطلب']);
-                card.innerHTML = `
-                    <div class="order-card-header">
-                        <h3 onclick="showOrderDetails(${order.rowIndex})">${order['الاسم الكامل'] || 'عميل'}</h3>
-                        <div class="card-actions">
-                            <button class="action-btn edit-btn" title="تعديل" onclick="openEditModal(event, ${order.rowIndex})"><i class="fas fa-pencil-alt"></i></button>
-                            <button class="action-btn delete-btn" title="حذف" onclick="showDeleteConfirmation(event, ${order.rowIndex})"><i class="fas fa-trash-alt"></i></button>
+                    <label for="manualProductPrice"><i class="fas fa-tag"></i> سعر المنتجات (بدون الشحن):</label>
+                    <input type="number" id="manualProductPrice" name="productPrice" required min="0" value="" oninput="updateManualTotal()">
+
+                    <label for="manualAddress"><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</label>
+                    <input type="text" id="manualAddress" name="address" required placeholder="مثال: حدائق القبة، شارع ...، عمارة ...، شقة ...">
+
+                    <label for="manualLocationLink"><i class="fas fa-map-pin"></i> رابط موقعك على الخريطة (اختياري):</label>
+                    <input type="url" id="manualLocationLink" name="siteLink" placeholder="انسخ رابط موقعك من خرائط جوجل هنا">
+                    
+                    <label for="manualGovernorateSelect"><i class="fas fa-building"></i> اختر المحافظة:</label>
+                    <select id="manualGovernorateSelect" class="modern-select" name="governorate" onchange="populateManualDeliveryMethods()" required>
+                        <option value="" disabled selected>-- اختر المحافظة --</option>
+                        <option value="cairo_giza">القاهرة والجيزة</option>
+                        <option value="other_governorates">باقي المحافظات</option>
+                    </select>
+
+                    <!-- مربع مدة التوصيل الديناميكي والمزين للفورم اليدوي - تم إخفاؤه -->
+                    <div id="manualDeliveryNotes" class="delivery-note" style="display: none;">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span id="manualDeliveryText"></span>
+                    </div>
+
+                    <!-- حقل اختيار المدينة/المحافظة لباقي المحافظات للفورم اليدوي -->
+                    <div class="manual-delivery-city-select" style="display:none;">
+                        <label for="manualDeliveryCitySelect">اختر المدينة/المحافظة:</label>
+                        <select id="manualDeliveryCitySelect" class="modern-select" name="deliveryCity" onchange="updateManualTotal()">
+                            <option value="" disabled selected>-- اختر المدينة/المحافظة --</option>
+                            <!-- Options will be dynamically loaded here -->
+                        </select>
+                    </div>
+
+                    <label for="manualDeliveryMethodSelect" id="manualDeliveryMethodLabel" style="display:none;"><i class="fas fa-truck"></i> طريقة التوصيل:</label>
+                    <select id="manualDeliveryMethodSelect" class="modern-select" name="deliveryType" onchange="updateManualTotal()" style="display:none;" required>
+                        <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
+                    </select>
+
+                    <label for="manualShippingCost"><i class="fas fa-truck-loading"></i> تكلفة الشحن:</label>
+                    <input type="number" id="manualShippingCost" name="shippingCost" required min="0" value="0" readonly> <!-- Readonly and auto-calculated -->
+
+                    <div id="manualTotalPriceContainer" style="display: none;">
+                        <div class="total-price-display">
+                            السعر الإجمالي (شامل التوصيل): <span id="manualTotalPriceValue">0</span> جنيه
                         </div>
                     </div>
-                    <div class="order-card-body" onclick="showOrderDetails(${order.rowIndex})">
-                        <p><i class="fas fa-phone" style="margin-left:5px;"></i><strong>الموبايل:</strong> ${order['رقم الموبايل']}</p>
-                        <p><i class="fas fa-map-marker-alt" style="margin-left:5px;"></i><strong>العنوان:</strong> ${order['العنوان بالتفصيل']}</p>
-                        <p><i class="fas fa-calendar-alt" style="margin-left:5px;"></i> ${new Date(order['تاريخ الطلب']).toLocaleString('ar-EG')}</p>
-                    </div>`;
-                grid.appendChild(card);
-            });
-        }
-        
-        function filterOrders() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            let filtered = allOrders.filter(order => {
-                const searchString = `${order['الاسم الكامل'] || ''} ${order['رقم الموبايل'] || ''}`.toLowerCase();
-                return searchString.includes(searchInput) && (statusFilter === "" || (order['حالة الطلب'] && order['حالة الطلب'].trim() === statusFilter));
-            });
-            renderOrders(filtered);
-            updateStats();
-        }
+                    <input type="hidden" id="manualTotalCostHidden" name="totalCost">
+                    <input type="hidden" name="orderSource" id="orderSourceHidden" value="يدوي">
+                    
+                    <label for="manualOrderStatusSelect"><i class="fas fa-info-circle"></i> حالة الطلب:</label>
+                    <select id="manualOrderStatusSelect" class="modern-select" name="orderStatus" required>
+                        <option value="طلب جديد">طلب جديد</option>
+                        <option value="قيد التنفيذ">قيد التنفيذ</option>
+                        <option value="طلب مكتمل">طلب مكتمل</option>
+                        <option value="لم يتم التأكيد">لم يتم التأكيد</option>
+                    </select>
 
-        function updateStats() {
-            document.querySelector('#total-orders .count').textContent = allOrders.length;
-            document.querySelector('#new-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'طلب جديد').length;
-            document.querySelector('#pending-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'تم الحجز (لم يستلم)').length;
-            document.querySelector('#completed-orders .count').textContent = allOrders.filter(o => o['حالة الطلب'] === 'تم الاستلام').length;
-        }
+                    <label for="createdBy"><i class="fas fa-user-edit"></i> تم الإنشاء بواسطة (اسمك):</label>
+                    <input type="text" id="createdBy" name="createdBy" required>
 
-        function getStatusColor(status) {
-            switch (status) {
-                case 'طلب جديد': return 'var(--danger-color)';
-                case 'تم الحجز (لم يستلم)': return 'var(--warning-color)';
-                case 'تم الاستلام': return 'var(--success-color)';
-                default: return 'var(--secondary-color)';
-            }
-        }
-        
-        function showOrderDetails(rowIndex) {
-            const order = allOrders.find(o => o.rowIndex === rowIndex);
-            if (!order) return;
-            document.getElementById('modal-title').innerText = `تفاصيل طلب: ${order['الاسم الكامل']}`;
-            document.getElementById('modal-date').innerText = new Date(order['تاريخ الطلب']).toLocaleString('ar-EG');
-            document.getElementById('modal-name').innerText = order['الاسم الكامل'];
-            document.getElementById('modal-phone').innerHTML = `<a href="https://wa.me/2${order['رقم الموبايل']}" target="_blank">${order['رقم الموبايل']}</a>`;
-            document.getElementById('modal-address').innerText = order['العنوان بالتفصيل'];
-            document.getElementById('modal-products').innerText = order['المنتجات المطلوبة'];
-            document.getElementById('modal-delivery-type').innerText = order['نوع التوصيل'];
-            document.getElementById('modal-total-price').innerText = `${order['التكلفة الإجمالية']} جنيه`;
+                    <button type="submit" class="cta-button" style="width: 100%; margin-top: 20px;" id="manualInvoiceSubmitBtn">
+                        <i class="fas fa-save"></i> حفظ الفاتورة اليدوية
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- General Purpose Custom Alert Toast -->
+    <div id="generalAlertToast" class="general-alert-toast" style="display: none;">
+        <p id="generalAlertText"></p>
+    </div>
+
+
+    <script>
+        // رابط تطبيق الويب الخاص بسكريبت Google Apps Script.
+        // **هام:** هذا هو الرابط الصحيح الذي قدمته، والذي ينتهي بـ "/exec".
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwMqhj68lLTH_UMMzLQ_Yl3eLiWXIs7yse554H24jWSu_zpyny30Fz3-iCuoJNHmheQ/exec"; 
+        const CORRECT_PASSWORD = "12345"; // الرقم السري المطلوب
+
+        // بيانات خيارات التوصيل
+        const deliveryOptionsData = {
+            cairo_giza: [
+                { text: 'توصيل للمنزل (60 جنيه)', value: 'توصيل للمنزل', cost: 60 },
+                { text: 'أقرب محطة مترو (40 جنيه)', value: 'أقرب محطة مترو', cost: 40 }
+            ],
+            other_governorates: [
+                { text: 'الإسكندرية: 90 جنيه', value: 'الإسكندرية', cost: 90 },
+                { text: 'القليوبية: 90 جنيه', value: 'القليوبية', cost: 90 },
+                { text: 'البحيرة: 90 جنيه', value: 'البحيرة', cost: 90 },
+                { text: 'الغربية: 90 جنيه', value: 'الغربية', cost: 90 },
+                { text: 'المنصورة: 90 جنيه', value: 'المنصورة', cost: 90 },
+                { text: 'طنطا: 90 جنيه', value: 'طنطا', cost: 90 },
+                { text: 'دمياط: 90 جنيه', value: 'دمياط', cost: 90 },
+                { text: 'كفر الشيخ: 90 جنيه', value: 'كفر الشيخ', cost: 90 },
+                { text: 'الإسماعيلية: 90 جنيه', value: 'الإسماعيلية', cost: 90 },
+                { text: 'بورسعيد: 90 جنيه', value: 'بورسعيد', cost: 90 },
+                { text: 'السويس: 90 جنيه', value: 'السويس', cost: 90 },
+                { text: 'الشرقية: 90 جنيه', value: 'الشرقية', cost: 90 },
+                { text: 'المنوفية: 90 جنيه', value: 'المنوفية', cost: 90 },
+                { text: 'محافظات الصعيد: 150 جنيه', value: 'محافظات الصعيد', cost: 150 },
+                { text: 'دهب: 200 جنيه', value: 'دهب', cost: 200 },
+                { text: 'الغردقة: 200 جنيه', value: 'الغردقة', cost: 200 },
+                { text: 'شرم الشيخ: 200 جنيه', value: 'شرم الشيخ', cost: 200 },
+                { text: 'البحر الأحمر: 180 جنيه', value: 'البحر الأحمر', cost: 180 },
+                { text: 'مرسى مطروح: 150 جنيه', value: 'مرسى مطروح', cost: 150 }
+            ]
+        };
+
+        // تحديث خريطة الحالات لتتناسب مع الطلب الجديد
+        const statusMap = {
+            'طلب جديد': 'new-order',
+            'قيد التنفيذ': 'in-progress',
+            'طلب مكتمل': 'completed-order',
+            'لم يتم التأكيد': 'not-confirmed'
+        };
+
+        let allOrdersData = []; // لتخزين جميع بيانات الطلبات التي تم جلبها
+        let currentOrderDetails = null; // متغير لتخزين بيانات الطلب المعروضة حالياً في المودال
+        let orderToDeleteId = null; // متغير لتخزين الـ ID (وقت وتاريخ الطلب) للطلب المراد حذفه
+        let deleteToastElementRef = null; // مرجع لعنصر التوست الخاص بالحذف
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('loginModal').style.display = 'flex';
+            document.getElementById('passwordInput').focus();
+
+            document.getElementById('createManualInvoiceBtn').addEventListener('click', () => openManualInvoiceModal(null)); // Pass null for new invoice
+            document.getElementById('manualInvoiceForm').addEventListener('submit', handleManualInvoiceSubmit);
+            document.getElementById('manualProductPrice').addEventListener('input', updateManualTotal);
             
-            const locationContainer = document.getElementById('modal-location-container');
-            if (order['رابط الموقع'] && order['رابط الموقع'].trim() !== '') {
-                document.getElementById('modal-location').innerHTML = `<a href="${order['رابط الموقع']}" target="_blank" style="color:var(--info-color);">افتح الرابط</a>`;
-                locationContainer.style.display = 'flex';
+            document.getElementById('manualGovernorateSelect').addEventListener('change', populateManualDeliveryMethods); // Changed to call populate for options
+            document.getElementById('manualDeliveryMethodSelect').addEventListener('change', updateManualTotal);
+            document.getElementById('manualDeliveryCitySelect').addEventListener('change', updateManualTotal);
+
+            updateManualTotal(); // تحديث الإجمالي لضمان القيم الافتراضية عند الفتح لأول مرة
+        });
+
+        // =======================================================
+        // وظائف تسجيل الدخول
+        // =======================================================
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const loginError = document.getElementById('loginError');
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                document.getElementById('loginModal').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                fetchOrdersFromGoogleSheet(); // جلب الطلبات بعد تسجيل الدخول
             } else {
-                locationContainer.style.display = 'none';
+                loginError.style.display = 'block';
+                passwordInput.value = '';
+                passwordInput.focus();
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        // =======================================================
+        // وظائف مساعدة لتنسيق التاريخ والوقت
+        // =======================================================
+        function formatDateTime(dateTimeString) {
+            if (!dateTimeString) return 'N/A';
+            const date = new Date(dateTimeString);
+            if (isNaN(date.getTime())) {
+                return dateTimeString;
+            }
+            const options = {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            };
+            return date.toLocaleString('ar-EG', options).replace(',', '');
+        }
+
+        // =======================================================
+        // وظائف جلب البيانات من جوجل شيت وعرضها
+        // =======================================================
+        async function fetchOrdersFromGoogleSheet() {
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'flex'; // إظهار مؤشر التحميل
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'GET'
+                });
+                const data = await response.json();
+                allOrdersData = data; // تخزين البيانات التي تم جلبها
+
+                renderOrders(allOrdersData); // عرض الطلبات
+                updateSummaryCards(); // تحديث بطاقات الملخص
+                showGeneralAlert('تم تحديث الطلبات بنجاح!', 'success'); // رسالة نجاح التحديث
+
+            } catch (error) {
+                console.error('Error fetching orders from Google Sheet:', error);
+                showGeneralAlert('حدث خطأ أثناء جلب الطلبات من جوجل شيت. يرجى التأكد من رابط السكريبت.', 'error');
+            } finally {
+                loadingIndicator.style.display = 'none'; // إخفاء مؤشر التحميل
+            }
+        }
+
+        function renderOrders(ordersToRender) {
+            const ordersGridContainer = document.getElementById('ordersGridContainer');
+            ordersGridContainer.innerHTML = ''; // مسح البطاقات الموجودة
+
+            if (ordersToRender.length === 0) {
+                ordersGridContainer.innerHTML = '<p style="text-align: center; color: var(--light-text); font-size: 1.2rem; margin-top: 50px;">لا توجد طلبات لعرضها.</p>';
+                return;
+            }
+
+            // ترتيب الطلبات من الأحدث للأقدم
+            ordersToRender.sort((a, b) => {
+                const dateA = new Date(a['وقت وتاريخ الطلب']);
+                const dateB = new Date(b['وقت وتاريخ الطلب']);
+                return dateB - dateA; // الأحدث أولاً
+            });
+
+            ordersToRender.forEach(order => {
+                // التأكد من أن جميع الحقول موجودة أو تعيين قيمة افتراضية
+                const orderDateTime = order['وقت وتاريخ الطلب'] || 'N/A';
+                const fullName = order['الاسم الكامل'] || 'N/A';
+                const phoneNumber = order['رقم الموبايل'] || 'N/A';
+                const products = order['المنتجات المطلوبة'] || 'N/A';
+                const address = order['العنوان بالتفصيل'] || 'N/A';
+                const siteLink = order['رابط الموقع'] || '';
+                const governorate = order['المحافظة'] || 'N/A';
+                const deliveryType = order['نوع التوصيل'] || 'N/A';
+                const shippingCost = order['تكلفة الشحن'] || '0';
+                const productPrice = order['سعر المنتجات'] || '0';
+                const totalCost = order['التكلفة الإجمالية'] || '0';
+                const orderStatus = order['حالة الطلب'] || 'طلب جديد'; // افتراضي لطلب جديد
+                const orderSource = order['مصدر الطلب'] || 'N/A';
+                const createdBy = order['تم الإنشاء بواسطة'] || '';
+
+                const statusClass = statusMap[orderStatus] || 'unknown'; // الحصول على الكلاس من الخريطة
+
+                const orderCard = document.createElement('div');
+                orderCard.className = `order-card status-${statusClass}`;
+                orderCard.dataset.orderId = orderDateTime; // استخدام وقت وتاريخ الطلب كمعرف فريد مؤقت
+
+                // Pass only the orderDateTime string to the functions
+                orderCard.setAttribute('onclick', `viewOrderDetails('${orderDateTime}')`);
+
+                orderCard.innerHTML = `
+                    <div class="order-card-header">
+                        <span class="order-date">${formatDateTime(orderDateTime)}</span>
+                        <div class="order-card-actions">
+                            <button class="action-icon edit-icon" onclick="event.stopPropagation(); editOrder('${orderDateTime}')"><i class="fas fa-pen"></i></button>
+                            <button class="action-icon delete-icon" onclick="event.stopPropagation(); confirmDeleteOrder(this, '${orderDateTime}', '${fullName}')"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
+                    <div class="order-card-body">
+                        <p><strong>العميل:</strong> ${fullName}</p>
+                        <p><strong>الموبايل:</strong> ${phoneNumber}</p>
+                        <p><strong>المحافظة:</strong> ${governorate}</p>
+                        <p><strong>التكلفة الإجمالية:</strong> ${totalCost} جنيه</p>
+                        <p><strong>الحالة:</strong> <span class="order-status-text ${statusClass}">${orderStatus}</span></p>
+                    </div>
+                    <div class="delete-confirmation-toast" style="display: none;">
+                        <p></p>
+                        <div class="toast-actions" style="display:none;">
+                            <button class="confirm-delete" onclick="executeDelete('${orderDateTime}')">حذف</button>
+                            <button class="cancel-delete" onclick="cancelDelete()">إلغاء</button>
+                        </div>
+                    </div>
+                `;
+                ordersGridContainer.appendChild(orderCard);
+            });
+        }
+
+
+        // =======================================================
+        // وظائف تحديث بطاقات الملخص
+        // =======================================================
+        function updateSummaryCards() {
+            let totalOrders = 0;
+            let newOrders = 0;
+            let inProgressOrders = 0;
+            let completedOrders = 0;
+            let notConfirmedOrders = 0;
+
+            allOrdersData.forEach(order => {
+                totalOrders++;
+                const status = order['حالة الطلب'];
+
+                switch (status) {
+                    case 'طلب جديد':
+                        newOrders++;
+                        break;
+                    case 'قيد التنفيذ':
+                        inProgressOrders++;
+                        break;
+                    case 'طلب مكتمل':
+                        completedOrders++;
+                        break;
+                    case 'لم يتم التأكيد':
+                        notConfirmedOrders++;
+                        break;
+                }
+            });
+
+            document.getElementById('totalOrdersCount').textContent = totalOrders;
+            document.getElementById('newOrdersCount').textContent = newOrders;
+            document.getElementById('processingOrdersCount').textContent = inProgressOrders;
+            document.getElementById('completedOrdersCount').textContent = completedOrders;
+            document.getElementById('notConfirmedOrdersCount').textContent = notConfirmedOrders;
+        }
+
+
+        // =======================================================
+        // وظائف مودال تفاصيل الطلب
+        // =======================================================
+        function viewOrderDetails(orderId) { // Accept orderId instead of full object
+            const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
+            if (!order) {
+                console.error('Order not found for details:', orderId);
+                showGeneralAlert('تعذر العثور على تفاصيل الطلب.', 'error');
+                return;
+            }
+            currentOrderDetails = order;
+
+            document.getElementById('modalOrderDateTime').textContent = formatDateTime(order['وقت وتاريخ الطلب']);
+            document.getElementById('modalFullName').textContent = order['الاسم الكامل'] || 'N/A';
+            document.getElementById('modalPhoneNumber').textContent = order['رقم الموبايل'] || 'N/A';
+            document.getElementById('modalProducts').textContent = order['المنتجات المطلوبة'] || 'N/A';
+            document.getElementById('modalAddress').textContent = order['العنوان بالتفصيل'] || 'N/A';
+            document.getElementById('modalSiteLink').textContent = order['رابط الموقع'] || 'N/A';
+            document.getElementById('modalGovernorate').textContent = order['المحافظة'] || 'N/A';
+            document.getElementById('modalDeliveryType').textContent = order['نوع التوصيل'] || 'N/A';
+            document.getElementById('modalShippingCost').textContent = order['تكلفة الشحن'] || '0';
+            document.getElementById('modalProductPrice').textContent = order['سعر المنتجات'] || '0';
+            document.getElementById('modalTotalCost').textContent = order['التكلفة الإجمالية'] || '0';
+            
+            const statusText = order['حالة الطلب'] || 'N/A';
+            const statusClass = statusMap[statusText] || 'unknown';
+            const statusBadge = document.getElementById('modalOrderStatus');
+            statusBadge.textContent = statusText;
+            statusBadge.className = 'order-status-text ' + statusClass; // Ensure correct class for styling
+
+            const madeByElement = document.getElementById('modalMadeBy');
+            if (order['مصدر الطلب'] === 'سكريبت') {
+                madeByElement.textContent = 'MADE BY SCRIPT';
+                madeByElement.style.display = 'block';
+            } else if (order['مصدر الطلب'] === 'يدوي' && order['تم الإنشاء بواسطة']) {
+                madeByElement.textContent = `MADE BY ${order['تم الإنشاء بواسطة']}`;
+                madeByElement.style.display = 'block';
+            } else {
+                madeByElement.style.display = 'none';
+            }
+
+            document.getElementById('orderDetailsModal').style.display = 'flex';
+        }
+
+        function closeOrderDetailsModal() {
+            document.getElementById('orderDetailsModal').style.display = 'none';
+            currentOrderDetails = null;
+            const copyBtn = document.getElementById('copyDetailsButton');
+            if (copyBtn) { // Add null check
+                copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ تفاصيل الطلب';
+                copyBtn.classList.remove('copied');
+            }
+        }
+
+        // =======================================================
+        // وظائف نسخ تفاصيل الطلب من المودال
+        // =======================================================
+        function copyOrderDetailsFromModal() {
+            if (!currentOrderDetails) return;
+
+            const order = currentOrderDetails;
+            let textToCopy = `*طلب جديد من Enjoy The Gifts*\n\n`;
+            textToCopy += `*تاريخ ووقت الطلب:* ${formatDateTime(order['وقت وتاريخ الطلب'])}\n`;
+            textToCopy += `*الاسم الكامل:* ${order['الاسم الكامل'] || 'N/A'}\n`;
+            textToCopy += `*رقم الموبايل:* ${order['رقم الموبايل'] || 'N/A'}\n`;
+            textToCopy += `*المنتجات المطلوبة:*\n${order['المنتجات المطلوبة'] || 'N/A'}\n`;
+            textToCopy += `*العنوان بالتفصيل:* ${order['العنوان بالتفصيل'] || 'N/A'}\n`;
+            if (order['رابط الموقع']) {
+                textToCopy += `*رابط الموقع:* ${order['رابط الموقع']}\n`;
+            }
+            textToCopy += `*المحافظة:* ${order['المحافظة'] || 'N/A'}\n`;
+            textToCopy += `*نوع التوصيل:* ${order['نوع التوصيل'] || 'N/A'}\n`;
+            textToCopy += `*تكلفة الشحن:* ${order['تكلفة الشحن'] || '0'} جنيه\n`;
+            textToCopy += `*سعر المنتجات:* ${order['سعر المنتجات'] || '0'} جنيه\n`;
+            textToCopy += `*التكلفة الإجمالية:* ${order['التكلفة الإجمالية'] || '0'} جنيه\n`;
+            textToCopy += `*حالة الطلب:* ${order['حالة الطلب'] || 'N/A'}\n`;
+            textToCopy += `*مصدر الطلب:* ${order['مصدر الطلب'] || 'N/A'}`;
+            if (order['مصدر الطلب'] === 'يدوي' && order['تم الإنشاء بواسطة']) {
+                textToCopy += `\n*تم الإنشاء بواسطة:* ${order['تم الإنشاء بواسطة']}`;
+            }
+            textToCopy += `\n------------------------------\n*ملاحظات إضافية:* (هنا يمكنك إضافة أي ملاحظات يدوية)`;
+            
+            const tempInput = document.createElement('textarea');
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const btn = document.getElementById('copyDetailsButton');
+            if (btn) {
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ تم النسخ!';
+                btn.classList.add('copied');
+                setTimeout(() => { 
+                    btn.innerHTML = originalText; 
+                    btn.classList.remove('copied');
+                }, 2000);
+            }
+        }
+        
+        // =======================================================
+        // وظائف الفلاتر
+        // =======================================================
+        function applyFilters() {
+            const fromDateStr = document.getElementById('fromDateFilter').value;
+            const toDateStr = document.getElementById('toDateFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
+            
+            const filteredOrders = allOrdersData.filter(order => {
+                const orderDateTime = new Date(order['وقت وتاريخ الطلب'].replace(' ', 'T'));
+                const clientName = (order['الاسم الكامل'] || '').toLowerCase();
+                const phoneNumber = (order['رقم الموبايل'] || '').toLowerCase();
+                const governorate = (order['المحافظة'] || '').toLowerCase();
+                const currentStatus = (order['حالة الطلب'] || '');
+
+                let dateMatch = true;
+                if (fromDateStr) {
+                    const fromDate = new Date(fromDateStr);
+                    fromDate.setHours(0, 0, 0, 0);
+                    if (orderDateTime < fromDate) {
+                        dateMatch = false;
+                    }
+                }
+                if (toDateStr) {
+                    const toDate = new Date(toDateStr);
+                    toDate.setHours(23, 59, 59, 999);
+                    if (orderDateTime > toDate) {
+                        dateMatch = false;
+                    }
+                }
+
+                const statusMatch = status === '' || currentStatus === status;
+                
+                const searchMatch = searchTerm === '' || 
+                                    clientName.includes(searchTerm) || 
+                                    phoneNumber.includes(searchTerm) || 
+                                    governorate.includes(searchTerm) ||
+                                    (order['العنوان بالتفصيل'] || '').toLowerCase().includes(searchTerm);
+
+                return dateMatch && statusMatch && searchMatch;
+            });
+
+            renderOrders(filteredOrders); // عرض الطلبات بعد الفلترة
+        }
+
+        function clearFilters() {
+            document.getElementById('fromDateFilter').value = '';
+            document.getElementById('toDateFilter').value = '';
+            document.getElementById('statusFilter').value = '';
+            document.getElementById('searchFilter').value = '';
+            renderOrders(allOrdersData); // إعادة عرض جميع الطلبات
+        }
+
+        // =======================================================
+        // وظائف مودال إنشاء/تعديل فاتورة يدوية
+        // =======================================================
+        const manualInvoiceModal = document.getElementById('manualInvoiceModal');
+        const manualInvoiceForm = document.getElementById('manualInvoiceForm');
+        const manualGovernorateSelect = document.getElementById('manualGovernorateSelect');
+        const manualDeliveryMethodSelect = document.getElementById('manualDeliveryMethodSelect');
+        const manualDeliveryMethodLabel = document.getElementById('manualDeliveryMethodLabel');
+        const manualDeliveryNotesDiv = document.getElementById('manualDeliveryNotes');
+        const manualDeliveryText = document.getElementById('manualDeliveryText');
+        const manualDeliveryCitySelectContainer = document.querySelector('.manual-delivery-city-select');
+        const manualDeliveryCitySelect = document.getElementById('manualDeliveryCitySelect');
+        const manualProductPriceInput = document.getElementById('manualProductPrice');
+        const manualShippingCostInput = document.getElementById('manualShippingCost');
+        const manualTotalPriceValueSpan = document.getElementById('manualTotalPriceValue');
+        const manualTotalCostHiddenInput = document.getElementById('manualTotalCostHidden');
+        const manualTotalPriceContainer = document.getElementById('manualTotalPriceContainer');
+        const manualInvoiceModalTitle = document.getElementById('manualInvoiceModalTitle');
+        const manualInvoiceSubmitBtn = document.getElementById('manualInvoiceSubmitBtn');
+        const originalOrderIdInput = document.getElementById('originalOrderId');
+        const manualOrderStatusSelect = document.getElementById('manualOrderStatusSelect');
+        const orderSourceHidden = document.getElementById('orderSourceHidden');
+        const createdByInput = document.getElementById('createdBy');
+
+
+        function openManualInvoiceModal(order = null) {
+            manualInvoiceModal.style.display = 'flex';
+            manualInvoiceForm.reset();
+            manualGovernorateSelect.value = '';
+            manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
+            manualDeliveryMethodSelect.style.display = 'none';
+            manualDeliveryMethodLabel.style.display = 'none';
+            manualDeliveryCitySelectContainer.style.display = 'none';
+            manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
+            manualDeliveryNotesDiv.classList.remove('show');
+            manualDeliveryNotesDiv.style.display = 'none'; // إخفاء مدة التسليم
+            manualTotalPriceContainer.style.display = 'none';
+            
+            originalOrderIdInput.value = ''; // Clear original ID for new invoice
+            manualInvoiceModalTitle.textContent = 'إنشاء فاتورة يدوية';
+            manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
+            orderSourceHidden.value = 'يدوي'; // Default for new manual invoice
+            createdByInput.removeAttribute('readonly'); // Make editable for new invoices
+
+            // Populate status dropdown with default options
+            manualOrderStatusSelect.innerHTML = `
+                <option value="طلب جديد">طلب جديد</option>
+                <option value="قيد التنفيذ">قيد التنفيذ</option>
+                <option value="طلب مكتمل">طلب مكتمل</option>
+                <option value="لم يتم التأكيد">لم يتم التأكيد</option>
+            `;
+            manualOrderStatusSelect.value = 'طلب جديد'; // Default status for new manual invoice
+
+            if (order) { // If an order object is passed, it's an edit operation
+                manualInvoiceModalTitle.textContent = 'تعديل الفاتورة';
+                manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+                originalOrderIdInput.value = order['وقت وتاريخ الطلب'] || ''; // Set original ID for update
+
+                document.getElementById('manualName').value = order['الاسم الكامل'] || '';
+                document.getElementById('manualPhone').value = order['رقم الموبايل'] || '';
+                document.getElementById('manualProducts').value = order['المنتجات المطلوبة'] || '';
+                document.getElementById('manualProductPrice').value = order['سعر المنتجات'] || '';
+                document.getElementById('manualAddress').value = order['العنوان بالتفصيل'] || '';
+                document.getElementById('manualLocationLink').value = order['رابط الموقع'] || '';
+                createdByInput.value = order['تم الإنشاء بواسطة'] || '';
+                // createdByInput.setAttribute('readonly', 'readonly'); // Make readonly for existing invoices
+                orderSourceHidden.value = order['مصدر الطلب'] || 'يدوي'; // Preserve original source
+
+                // Set selected governorate
+                const governorateValue = order['المحافظة'];
+                const deliveryTypeValue = order['نوع التوصيل'];
+
+                if (governorateValue === 'القاهرة والجيزة' || deliveryTypeValue === 'توصيل للمنزل' || deliveryTypeValue === 'أقرب محطة مترو') {
+                    manualGovernorateSelect.value = 'cairo_giza';
+                } else {
+                    manualGovernorateSelect.value = 'other_governorates';
+                }
+                
+                // Populate delivery methods/cities based on selected governorate
+                populateManualDeliveryMethods();
+
+                // Set specific delivery method/city after options are populated
+                setTimeout(() => {
+                    if (manualGovernorateSelect.value === 'cairo_giza') {
+                        manualDeliveryMethodSelect.value = deliveryTypeValue;
+                    } else {
+                        manualDeliveryCitySelect.value = governorateValue; // For other governorates, the city is the governorate
+                    }
+                    updateManualTotal(); // Recalculate total after setting values
+                }, 100); // Small delay to ensure options are rendered
+
+                manualOrderStatusSelect.value = order['حالة الطلب'] || 'طلب جديد'; // Set current status
+            }
+            updateManualTotal(); // Initial total calculation
+        }
+
+        function closeManualInvoiceModal() {
+            document.getElementById('manualInvoiceModal').style.display = 'none';
+            // Reset form and hidden fields when closing
+            manualInvoiceForm.reset();
+            originalOrderIdInput.value = '';
+            manualInvoiceModalTitle.textContent = 'إنشاء فاتورة يدوية';
+            manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
+            orderSourceHidden.value = 'يدوي';
+            createdByInput.removeAttribute('readonly'); // Ensure it's editable for next new invoice
+        }
+
+        function populateManualDeliveryMethods() {
+            const selectedGovernorate = manualGovernorateSelect.value;
+            manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
+            manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
+
+            manualDeliveryNotesDiv.classList.remove('show');
+            manualDeliveryNotesDiv.style.display = 'none'; // إخفاء مدة التسليم
+            manualDeliveryMethodSelect.style.display = 'none';
+            manualDeliveryMethodLabel.style.display = 'none';
+            manualDeliveryCitySelectContainer.style.display = 'none';
+            
+            manualDeliveryMethodSelect.removeAttribute('required');
+            manualDeliveryCitySelect.removeAttribute('required');
+
+            if (selectedGovernorate) {
+                if (selectedGovernorate === 'cairo_giza') {
+                    const options = deliveryOptionsData.cairo_giza;
+                    options.forEach(option => {
+                        const opt = document.createElement('option');
+                        opt.value = option.value;
+                        opt.dataset.cost = option.cost;
+                        opt.textContent = option.text;
+                        manualDeliveryMethodSelect.appendChild(opt);
+                    });
+                    manualDeliveryMethodSelect.style.display = 'block';
+                    manualDeliveryMethodLabel.style.display = 'block';
+                    manualDeliveryMethodSelect.setAttribute('required', 'required');
+                } else if (selectedGovernorate === 'other_governorates') {
+                    const options = deliveryOptionsData.other_governorates;
+                    options.forEach(option => {
+                        const opt = document.createElement('option');
+                        opt.value = option.value;
+                        opt.dataset.cost = option.cost;
+                        opt.textContent = option.text;
+                        manualDeliveryCitySelect.appendChild(opt);
+                    });
+                    manualDeliveryCitySelectContainer.style.display = 'block';
+                    manualDeliveryCitySelect.setAttribute('required', 'required');
+                }
+            }
+            updateManualTotal();
+        }
+
+        function updateManualTotal() {
+            const productPrice = parseFloat(manualProductPriceInput.value) || 0;
+            let shippingCost = 0; // ستبدأ دائماً بـ 0 وسيتم حسابها
+
+            const selectedGovernorate = manualGovernorateSelect.value;
+            const selectedDeliveryMethod = manualDeliveryMethodSelect.value;
+            const selectedDeliveryCity = manualDeliveryCitySelect.value;
+
+            if (selectedGovernorate === 'cairo_giza' && selectedDeliveryMethod) {
+                const selectedOption = manualDeliveryMethodSelect.options[manualDeliveryMethodSelect.selectedIndex];
+                shippingCost = Number(selectedOption.dataset.cost) || 0;
+            } else if (selectedGovernorate === 'other_governorates' && selectedDeliveryCity) {
+                const selectedOption = manualDeliveryCitySelect.options[manualDeliveryCitySelect.selectedIndex];
+                shippingCost = Number(selectedOption.dataset.cost) || 0;
             }
             
-            document.getElementById('whatsappBtn').onclick = () => copyForWhatsapp(order);
-            document.getElementById('detailsModal').classList.add('active');
-        }
-        
-        function openEditModal(event, rowIndex) {
-            event.stopPropagation();
-            const order = allOrders.find(o => o.rowIndex === rowIndex);
-            if (!order) return;
-            document.getElementById('editRowIndex').value = rowIndex;
-            document.getElementById('editName').value = order['الاسم الكامل'];
-            document.getElementById('editPhone').value = order['رقم الموبايل'];
-            document.getElementById('editProducts').value = order['المنتجات المطلوبة'];
-            document.getElementById('editAddress').value = order['العنوان بالتفصيل'];
-            document.getElementById('editStatus').value = order['حالة الطلب'];
-            document.getElementById('editModal').classList.add('active');
+            manualShippingCostInput.value = shippingCost; // تحديث حقل تكلفة الشحن بقيمة محسوبة وتلقائية
+
+            const total = productPrice + shippingCost;
+            manualTotalPriceValueSpan.textContent = total;
+            manualTotalCostHiddenInput.value = total;
+
+            if (productPrice > 0 || shippingCost > 0) {
+                manualTotalPriceContainer.style.display = 'block';
+            } else {
+                manualTotalPriceContainer.style.display = 'none';
+            }
         }
 
-        function saveChanges() {
-            const rowIndex = document.getElementById('editRowIndex').value;
-            const form = new URLSearchParams({
-                action: 'editOrder',
-                rowIndex: rowIndex,
-                name: document.getElementById('editName').value,
-                phone: document.getElementById('editPhone').value,
-                products: document.getElementById('editProducts').value,
-                address: document.getElementById('editAddress').value,
-                status: document.getElementById('editStatus').value
-            });
-            fetch(SCRIPT_URL, { method: 'POST', body: form })
-                .then(res => res.json()).then(data => {
-                    if (data.result === 'success') {
-                        closeModal('editModal');
-                        fetchOrders();
-                    } else { alert('فشل حفظ التعديلات.'); }
+        async function handleManualInvoiceSubmit(event) {
+            event.preventDefault();
+
+            const submitButton = manualInvoiceForm.querySelector('button[type="submit"]');
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...جاري الحفظ';
+
+            const formData = new FormData(this);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            // Determine if it's an update or new creation
+            const isUpdate = originalOrderIdInput.value !== '';
+            if (isUpdate) {
+                data['action'] = 'updateOrder';
+                data['originalOrderId'] = originalOrderIdInput.value;
+            } else {
+                // For new manual invoices, set date/time and default status
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const seconds = String(now.getSeconds()).padStart(2, '0');
+                data['وقت وتاريخ الطلب'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                // No need to set data['حالة الطلب'] here, as it's already picked up from manualOrderStatusSelect.value
+            }
+
+            // Adjust governorate and deliveryType based on selection
+            if (manualGovernorateSelect.value === 'other_governorates') {
+                data['governorate'] = manualDeliveryCitySelect.value;
+                data['deliveryType'] = 'باقي المحافظات';
+            } else {
+                data['governorate'] = manualGovernorateSelect.value === 'cairo_giza' ? 'القاهرة والجيزة' : manualGovernorateSelect.value;
+            }
+            // Ensure orderStatus is always sent
+            data['orderStatus'] = manualOrderStatusSelect.value;
+
+            console.log("Sending data to Google Apps Script:", data);
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    body: new URLSearchParams(data)
                 });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    showGeneralAlert(isUpdate ? 'تم تحديث الفاتورة بنجاح!' : 'تم حفظ الفاتورة اليدوية بنجاح!', 'success');
+                    closeManualInvoiceModal();
+                    fetchOrdersFromGoogleSheet(); // تحديث الطلبات بعد الإضافة/التعديل
+                } else {
+                    showGeneralAlert('حدث خطأ أثناء حفظ الفاتورة: ' + result.message, 'error');
+                    console.error('Error submitting manual invoice:', result.message);
+                }
+            } catch (error) {
+                showGeneralAlert('حدث خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.', 'error');
+                console.error('Network or server error for manual invoice:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.innerHTML = isUpdate ? '<i class="fas fa-save"></i> حفظ التعديلات' : '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
+            }
         }
 
-        function showDeleteConfirmation(event, rowIndex) {
-            event.stopPropagation();
-            const modal = document.getElementById('deleteConfirmationModal');
-            document.getElementById('confirmDeleteBtn').onclick = () => confirmDelete(rowIndex);
-            modal.classList.add('active');
+        // =======================================================
+        // وظائف التعديل والحذف
+        // =======================================================
+        function editOrder(orderId) { // Accept orderId instead of full object
+            const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
+            if (!order) {
+                console.error('Order not found for editing:', orderId);
+                showGeneralAlert('تعذر العثور على الطلب للتعديل.', 'error');
+                return;
+            }
+            openManualInvoiceModal(order); // Pass the found order object to populate the form
         }
 
-        function confirmDelete(rowIndex) {
-            closeModal('deleteConfirmationModal');
-            fetch(`${SCRIPT_URL}?action=deleteOrder&rowIndex=${rowIndex}`, { method: 'POST' })
-                .then(res => res.json()).then(data => {
-                    if (data.result === 'success') fetchOrders();
-                    else alert('فشل حذف الطلب.');
-                });
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function copyForWhatsapp(order) {
-            let textToCopy = `*اوردر جديد - Enjoy The Gifts*\n------------------------------\n*العميل:* ${order['الاسم الكامل']}\n*الموبايل:* ${order['رقم الموبايل']}\n*العنوان:* ${order['العنوان بالتفصيل']}`;
-            if (order['رابط الموقع']) { textToCopy += `\n*رابط الموقع:* ${order['رابط الموقع']}`; }
-            textToCopy += `\n------------------------------\n*المنتجات:*\n${order['المنتجات المطلوبة']}\n------------------------------\n*نوع التوصيل:* ${order['نوع التوصيل']}\n*المبلغ المطلوب:* ${order['التكلفة الإجمالية']} جنيه`;
+        function confirmDeleteOrder(buttonElement, orderId, fullName) { // Pass fullName for message
+            orderToDeleteId = orderId;
+            deleteToastElementRef = buttonElement.closest('.order-card').querySelector('.delete-confirmation-toast');
             
-            navigator.clipboard.writeText(textToCopy).then(() => {
-                const btn = document.getElementById('whatsappBtn');
-                btn.innerText = '✅ تم النسخ!';
-                setTimeout(() => { btn.innerText = 'نسخ للمندوب'; }, 2000);
+            // Close any other open toasts
+            document.querySelectorAll('.delete-confirmation-toast.show').forEach(toast => {
+                if (toast !== deleteToastElementRef) {
+                    toast.classList.remove('show');
+                    toast.style.display = 'none';
+                }
             });
+
+            if (deleteToastElementRef) { // Add null check here
+                const customAlertText = deleteToastElementRef.querySelector('p');
+                const customAlertActions = deleteToastElementRef.querySelector('.toast-actions');
+
+                customAlertText.textContent = `هل أنت متأكد من حذف طلب العميل ${fullName}؟`;
+                customAlertActions.style.display = 'flex';
+                deleteToastElementRef.style.display = 'flex';
+                setTimeout(() => deleteToastElementRef.classList.add('show'), 10);
+            } else {
+                console.error("Delete confirmation toast element not found.");
+                showGeneralAlert("حدث خطأ: لا يمكن عرض تأكيد الحذف.", "error");
+            }
         }
-        
-        window.onclick = e => { 
-            if (e.target.classList.contains('modal-overlay')) {
-                e.target.classList.remove('active');
+
+        async function executeDelete(orderId) {
+            console.log(`Attempting to delete order with ID: ${orderId}`);
+            
+            // إظهار مؤشر التحميل
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            loadingIndicator.style.display = 'flex';
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST', 
+                    body: new URLSearchParams({
+                        action: 'deleteOrder', // بارامتر جديد لتمييز عملية الحذف
+                        orderId: orderId // المعرف الفريد للطلب المراد حذفه
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    showGeneralAlert(`تم حذف طلب العميل بنجاح!`, 'success');
+                    fetchOrdersFromGoogleSheet(); // إعادة جلب الطلبات بعد الحذف الفعلي
+                } else {
+                    showGeneralAlert(`حدث خطأ أثناء الحذف: ${result.message}`, 'error');
+                    console.error('Error during deletion:', result.message);
+                }
+            } catch (error) {
+                showGeneralAlert('حدث خطأ في الاتصال بالخادم أثناء الحذف.', 'error');
+                console.error('Network or server error during delete request:', error);
+            } finally {
+                loadingIndicator.style.display = 'none'; // إخفاء مؤشر التحميل
+                cancelDelete(); // إخفاء توست التأكيد
+            }
+        }
+
+        function cancelDelete() {
+            if (deleteToastElementRef) { // Add null check
+                deleteToastElementRef.classList.remove('show');
+                setTimeout(() => {
+                    deleteToastElementRef.style.display = 'none';
+                    const toastActions = deleteToastElementRef.querySelector('.toast-actions');
+                    if (toastActions) { // Add null check for toastActions
+                        toastActions.style.display = 'none';
+                    }
+                }, 300);
+            }
+            orderToDeleteId = null;
+            deleteToastElementRef = null;
+        }
+
+        // وظيفة تنبيه عامة جديدة
+        function showGeneralAlert(message, type = 'info') {
+            const generalAlertToast = document.getElementById('generalAlertToast');
+            const generalAlertText = document.getElementById('generalAlertText');
+
+            generalAlertText.textContent = message;
+            generalAlertToast.className = 'general-alert-toast ' + type; // Apply class for styling
+
+            generalAlertToast.style.display = 'flex';
+            setTimeout(() => generalAlertToast.classList.add('show'), 10);
+
+            setTimeout(() => {
+                generalAlertToast.classList.remove('show');
+                setTimeout(() => generalAlertToast.style.display = 'none', 300);
+            }, 3000); // Hide after 3 seconds
+        }
+
+
+        // Close modals/panels when clicking outside
+        window.onclick = function(event) {
+            const orderDetailsModal = document.getElementById('orderDetailsModal');
+            const manualInvoiceModal = document.getElementById('manualInvoiceModal');
+            const loginModal = document.getElementById('loginModal');
+            const generalAlertToast = document.getElementById('generalAlertToast');
+
+            if (loginModal.style.display === 'flex') {
+                if (event.target === loginModal) {
+                    return;
+                }
+            }
+
+            if (event.target == orderDetailsModal) {
+                closeOrderDetailsModal();
+            }
+            if (event.target == manualInvoiceModal) {
+                closeManualInvoiceModal();
+            }
+            if (event.target === generalAlertToast && generalAlertToast.classList.contains('show')) {
+                generalAlertToast.classList.remove('show');
+                setTimeout(() => generalAlertToast.style.display = 'none', 300);
             }
         }
     </script>
