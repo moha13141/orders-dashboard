@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Enjoy The Gifts</title>
+    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H288zm-192 0c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32H192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H96zM0 64C0 46.33 14.33 32 32 32h192c17.67 0 32 14.33 32 32v96c0 17.67-14.33 32-32 32H32c-17.67 0-32-14.33-32-32V64z'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1013,6 +1013,9 @@
                 </div>
             </div>
 
+            <!-- Filter Results Count -->
+            <div id="filterResultsCount" style="text-align: center; margin-bottom: 20px; font-weight: bold; color: var(--secondary-color); font-size: 1.2rem; display: none;"></div>
+            
             <!-- Orders Display Area -->
             <div id="ordersGridContainer" class="orders-grid-container">
                 <!-- Order cards will be dynamically loaded here by JavaScript -->
@@ -1028,7 +1031,7 @@
     <!-- Modal for Order Details (now centered) -->
     <div id="orderDetailsModal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-button" onclick="closeOrderDetailsModal()">&times;</span>
+            <span class="close-button" onclick="closeOrderDetailsModal()">×</span>
             <div class="order-details-modal-content">
                 <h3>تفاصيل الطلب</h3>
                 <p><strong>تاريخ ووقت الطلب:</strong> <span id="modalOrderDateTime"></span></p>
@@ -1036,12 +1039,12 @@
                 <p><strong>رقم الموبايل:</strong> <span id="modalPhoneNumber"></span></p>
                 <p><strong>المنتجات المطلوبة:</b> <span id="modalProducts"></span></p>
                 <p><strong>العنوان بالتفصيل:</strong> <span id="modalAddress"></span></p>
-                <p><strong>رابط الموقع:</b> <span id="modalSiteLink"></span></p>
+                <p><strong>رابط الموقع:</strong> <span id="modalSiteLink"></span></p>
                 <p><strong>المحافظة:</strong> <span id="modalGovernorate"></span></p>
-                <p><strong>نوع التوصيل:</b> <span id="modalDeliveryType"></span></p>
+                <p><strong>نوع التوصيل:</strong> <span id="modalDeliveryType"></span></p>
                 <p><strong>تكلفة الشحن:</strong> <span id="modalShippingCost"></span> جنيه</p>
                 <p><strong>سعر المنتجات:</strong> <span id="modalProductPrice"></span> جنيه</p>
-                <p><strong>التكلفة الإجمالية:</b> <span id="modalTotalCost"></span> جنيه</p>
+                <p><strong>التكلفة الإجمالية:</strong> <span id="modalTotalCost"></span> جنيه</p>
                 <p><strong>الحالة:</strong> <span id="modalOrderStatus"></span></p>
                 <p class="made-by" id="modalMadeBy"></p>
             </div>
@@ -1054,7 +1057,7 @@
     <!-- Modal for Manual Invoice Creation / Edit -->
     <div id="manualInvoiceModal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-button" onclick="closeManualInvoiceModal()">&times;</span>
+            <span class="close-button" onclick="closeManualInvoiceModal()">×</span>
             <div class="manual-invoice-form-container">
                 <h2 id="manualInvoiceModalTitle">إنشاء فاتورة يدوية</h2>
                 <form id="manualInvoiceForm" method="POST">
@@ -1125,7 +1128,7 @@
                         <option value="لم يتم التأكيد">لم يتم التأكيد</option>
                     </select>
 
-                    <label for="createdBy"><i class="fas fa-user-edit"></i> تم الإنشاء بواسطة (اسمك):</label>
+                    <label for="createdBy" id="createdByLabel"><i class="fas fa-user-edit"></i> تم الإنشاء بواسطة (اسمك):</label>
                     <input type="text" id="createdBy" name="createdBy" required>
 
                     <button type="submit" class="cta-button" style="width: 100%; margin-top: 20px;" id="manualInvoiceSubmitBtn">
@@ -1142,335 +1145,300 @@
     </div>
 
 
-    <script>
-        // رابط تطبيق الويب الخاص بسكريبت Google Apps Script.
-        // **هام:** هذا هو الرابط الصحيح الذي قدمته، والذي ينتهي بـ "/exec".
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwMqhj68lLTH_UMMzLQ_Yl3eLiWXIs7yse554H24jWSu_zpyny30Fz3-iCuoJNHmheQ/exec"; 
-        const CORRECT_PASSWORD = "12345"; // الرقم السري المطلوب
+<script>
+    // رابط تطبيق الويب الخاص بسكريبت Google Apps Script.
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwMqhj68lLTH_UMMzLQ_Yl3eLiWXIs7yse554H24jWSu_zpyny30Fz3-iCuoJNHmheQ/exec";
+    const CORRECT_PASSWORD = "12345"; // الرقم السري المطلوب
 
-        // بيانات خيارات التوصيل
-        const deliveryOptionsData = {
-            cairo_giza: [
-                { text: 'توصيل للمنزل (60 جنيه)', value: 'توصيل للمنزل', cost: 60 },
-                { text: 'أقرب محطة مترو (40 جنيه)', value: 'أقرب محطة مترو', cost: 40 }
-            ],
-            other_governorates: [
-                { text: 'الإسكندرية: 90 جنيه', value: 'الإسكندرية', cost: 90 },
-                { text: 'القليوبية: 90 جنيه', value: 'القليوبية', cost: 90 },
-                { text: 'البحيرة: 90 جنيه', value: 'البحيرة', cost: 90 },
-                { text: 'الغربية: 90 جنيه', value: 'الغربية', cost: 90 },
-                { text: 'المنصورة: 90 جنيه', value: 'المنصورة', cost: 90 },
-                { text: 'طنطا: 90 جنيه', value: 'طنطا', cost: 90 },
-                { text: 'دمياط: 90 جنيه', value: 'دمياط', cost: 90 },
-                { text: 'كفر الشيخ: 90 جنيه', value: 'كفر الشيخ', cost: 90 },
-                { text: 'الإسماعيلية: 90 جنيه', value: 'الإسماعيلية', cost: 90 },
-                { text: 'بورسعيد: 90 جنيه', value: 'بورسعيد', cost: 90 },
-                { text: 'السويس: 90 جنيه', value: 'السويس', cost: 90 },
-                { text: 'الشرقية: 90 جنيه', value: 'الشرقية', cost: 90 },
-                { text: 'المنوفية: 90 جنيه', value: 'المنوفية', cost: 90 },
-                { text: 'محافظات الصعيد: 150 جنيه', value: 'محافظات الصعيد', cost: 150 },
-                { text: 'دهب: 200 جنيه', value: 'دهب', cost: 200 },
-                { text: 'الغردقة: 200 جنيه', value: 'الغردقة', cost: 200 },
-                { text: 'شرم الشيخ: 200 جنيه', value: 'شرم الشيخ', cost: 200 },
-                { text: 'البحر الأحمر: 180 جنيه', value: 'البحر الأحمر', cost: 180 },
-                { text: 'مرسى مطروح: 150 جنيه', value: 'مرسى مطروح', cost: 150 }
-            ]
+    // بيانات خيارات التوصيل
+    const deliveryOptionsData = {
+        cairo_giza: [
+            { text: 'توصيل للمنزل (60 جنيه)', value: 'توصيل للمنزل', cost: 60 },
+            { text: 'أقرب محطة مترو (40 جنيه)', value: 'أقرب محطة مترو', cost: 40 }
+        ],
+        other_governorates: [
+            { text: 'الإسكندرية: 90 جنيه', value: 'الإسكندرية', cost: 90 },
+            { text: 'القليوبية: 90 جنيه', value: 'القليوبية', cost: 90 },
+            { text: 'البحيرة: 90 جنيه', value: 'البحيرة', cost: 90 },
+            { text: 'الغربية: 90 جنيه', value: 'الغربية', cost: 90 },
+            { text: 'المنصورة: 90 جنيه', value: 'المنصورة', cost: 90 },
+            { text: 'طنطا: 90 جنيه', value: 'طنطا', cost: 90 },
+            { text: 'دمياط: 90 جنيه', value: 'دمياط', cost: 90 },
+            { text: 'كفر الشيخ: 90 جنيه', value: 'كفر الشيخ', cost: 90 },
+            { text: 'الإسماعيلية: 90 جنيه', value: 'الإسماعيلية', cost: 90 },
+            { text: 'بورسعيد: 90 جنيه', value: 'بورسعيد', cost: 90 },
+            { text: 'السويس: 90 جنيه', value: 'السويس', cost: 90 },
+            { text: 'الشرقية: 90 جنيه', value: 'الشرقية', cost: 90 },
+            { text: 'المنوفية: 90 جنيه', value: 'المنوفية', cost: 90 },
+            { text: 'محافظات الصعيد: 150 جنيه', value: 'محافظات الصعيد', cost: 150 },
+            { text: 'دهب: 200 جنيه', value: 'دهب', cost: 200 },
+            { text: 'الغردقة: 200 جنيه', value: 'الغردقة', cost: 200 },
+            { text: 'شرم الشيخ: 200 جنيه', value: 'شرم الشيخ', cost: 200 },
+            { text: 'البحر الأحمر: 180 جنيه', value: 'البحر الأحمر', cost: 180 },
+            { text: 'مرسى مطروح: 150 جنيه', value: 'مرسى مطروح', cost: 150 }
+        ]
+    };
+
+    const statusMap = {
+        'طلب جديد': 'new-order',
+        'قيد التنفيذ': 'in-progress',
+        'طلب مكتمل': 'completed-order',
+        'لم يتم التأكيد': 'not-confirmed'
+    };
+
+    let allOrdersData = [];
+    let currentOrderDetails = null;
+    let deleteToastElementRef = null; // مرجع لعنصر التوست الخاص بالحذف
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('passwordInput').focus();
+
+        document.getElementById('createManualInvoiceBtn').addEventListener('click', () => openManualInvoiceModal(null));
+        document.getElementById('manualInvoiceForm').addEventListener('submit', handleManualInvoiceSubmit);
+        document.getElementById('manualProductPrice').addEventListener('input', updateManualTotal);
+        
+        document.getElementById('manualGovernorateSelect').addEventListener('change', populateManualDeliveryMethods);
+        document.getElementById('manualDeliveryMethodSelect').addEventListener('change', updateManualTotal);
+        document.getElementById('manualDeliveryCitySelect').addEventListener('change', updateManualTotal);
+
+        updateManualTotal();
+    });
+
+    // =======================================================
+    // وظائف تسجيل الدخول
+    // =======================================================
+    function checkPassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const loginError = document.getElementById('loginError');
+        if (passwordInput.value === CORRECT_PASSWORD) {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            fetchOrdersFromGoogleSheet();
+        } else {
+            loginError.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    }
+
+    document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            checkPassword();
+        }
+    });
+
+    // =======================================================
+    // وظائف مساعدة لتنسيق التاريخ والوقت
+    // =======================================================
+    function formatDateTime(dateTimeString) {
+        if (!dateTimeString) return 'N/A';
+        const date = new Date(dateTimeString);
+        if (isNaN(date.getTime())) {
+            return dateTimeString;
+        }
+        const options = {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+            timeZone: 'Africa/Cairo' // عرض الوقت بتوقيت مصر
         };
+        return date.toLocaleString('ar-EG', options).replace(',', '');
+    }
 
-        // تحديث خريطة الحالات لتتناسب مع الطلب الجديد
-        const statusMap = {
-            'طلب جديد': 'new-order',
-            'قيد التنفيذ': 'in-progress',
-            'طلب مكتمل': 'completed-order',
-            'لم يتم التأكيد': 'not-confirmed'
-        };
+    // =======================================================
+    // وظائف جلب البيانات من جوجل شيت وعرضها
+    // =======================================================
+    async function fetchOrdersFromGoogleSheet() {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'flex';
 
-        let allOrdersData = []; // لتخزين جميع بيانات الطلبات التي تم جلبها
-        let currentOrderDetails = null; // متغير لتخزين بيانات الطلب المعروضة حالياً في المودال
-        let orderToDeleteId = null; // متغير لتخزين الـ ID (وقت وتاريخ الطلب) للطلب المراد حذفه
-        let deleteToastElementRef = null; // مرجع لعنصر التوست الخاص بالحذف
+        try {
+            const response = await fetch(WEB_APP_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+             if (data.status === 'error') {
+                throw new Error(data.message);
+            }
+            allOrdersData = data;
 
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('loginModal').style.display = 'flex';
-            document.getElementById('passwordInput').focus();
+            renderOrders(allOrdersData);
+            updateSummaryCards();
+            showGeneralAlert('تم تحديث الطلبات بنجاح!', 'success');
 
-            document.getElementById('createManualInvoiceBtn').addEventListener('click', () => openManualInvoiceModal(null)); // Pass null for new invoice
-            document.getElementById('manualInvoiceForm').addEventListener('submit', handleManualInvoiceSubmit);
-            document.getElementById('manualProductPrice').addEventListener('input', updateManualTotal);
-            
-            document.getElementById('manualGovernorateSelect').addEventListener('change', populateManualDeliveryMethods); // Changed to call populate for options
-            document.getElementById('manualDeliveryMethodSelect').addEventListener('change', updateManualTotal);
-            document.getElementById('manualDeliveryCitySelect').addEventListener('change', updateManualTotal);
+        } catch (error) {
+            console.error('Error fetching orders from Google Sheet:', error);
+            showGeneralAlert('فشل جلب الطلبات: ' + error.message, 'error');
+        } finally {
+            loadingIndicator.style.display = 'none';
+        }
+    }
 
-            updateManualTotal(); // تحديث الإجمالي لضمان القيم الافتراضية عند الفتح لأول مرة
+    function renderOrders(ordersToRender) {
+        const ordersGridContainer = document.getElementById('ordersGridContainer');
+        ordersGridContainer.innerHTML = '';
+
+        const countElement = document.getElementById('filterResultsCount');
+        const totalOrders = allOrdersData.length;
+        const displayedOrders = ordersToRender.length;
+
+        if (displayedOrders < totalOrders) {
+            countElement.textContent = `عرض ${displayedOrders} من إجمالي ${totalOrders} طلبات`;
+            countElement.style.display = 'block';
+        } else {
+            countElement.style.display = 'none';
+        }
+        
+        if (ordersToRender.length === 0) {
+            ordersGridContainer.innerHTML = '<p style="text-align: center; color: var(--light-text); font-size: 1.2rem; margin-top: 50px;">لا توجد طلبات تطابق معايير البحث.</p>';
+            return;
+        }
+
+        ordersToRender.sort((a, b) => new Date(b['وقت وتاريخ الطلب']) - new Date(a['وقت وتاريخ الطلب']));
+
+        ordersToRender.forEach(order => {
+            const orderDateTime = order['وقت وتاريخ الطلب'] || 'N/A';
+            const fullName = order['الاسم الكامل'] || 'N/A';
+            const phoneNumber = order['رقم الموبايل'] || 'N/A';
+            const governorate = order['المحافظة'] || 'N/A';
+            const totalCost = order['التكلفة الإجمالية'] || '0';
+            const orderStatus = order['حالة الطلب'] || 'طلب جديد';
+            const statusClass = statusMap[orderStatus] || 'unknown';
+
+            const orderCard = document.createElement('div');
+            orderCard.className = `order-card status-${statusClass}`;
+            orderCard.dataset.orderId = orderDateTime;
+
+            // ✅ FIX: تم إصلاح مشكلة تمرير البيانات للدوال
+            orderCard.innerHTML = `
+                <div class="order-card-header" onclick="viewOrderDetails('${orderDateTime}')">
+                    <span class="order-date">${formatDateTime(orderDateTime)}</span>
+                    <div class="order-card-actions">
+                        <button class="action-icon edit-icon" onclick="event.stopPropagation(); editOrder('${orderDateTime}')"><i class="fas fa-pen"></i></button>
+                        <button class="action-icon delete-icon" onclick="event.stopPropagation(); confirmDeleteOrder(this, '${orderDateTime}', '${fullName.replace(/'/g, "\\'")}')"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+                <div class="order-card-body" onclick="viewOrderDetails('${orderDateTime}')">
+                    <p><strong>العميل:</strong> ${fullName}</p>
+                    <p><strong>الموبايل:</strong> ${phoneNumber}</p>
+                    <p><strong>المحافظة:</strong> ${governorate}</p>
+                    <p><strong>التكلفة الإجمالية:</strong> ${totalCost} جنيه</p>
+                    <p><strong>الحالة:</strong> <span class="order-status-text ${statusClass}">${orderStatus}</span></p>
+                </div>
+                <div class="delete-confirmation-toast">
+                    <p>هل أنت متأكد من حذف طلب العميل ${fullName}؟</p>
+                    <div class="toast-actions">
+                        <button class="confirm-delete" onclick="executeDelete('${orderDateTime}')">حذف</button>
+                        <button class="cancel-delete" onclick="cancelDelete(this)">إلغاء</button>
+                    </div>
+                </div>
+            `;
+            ordersGridContainer.appendChild(orderCard);
+        });
+    }
+
+
+    // =======================================================
+    // وظائف تحديث بطاقات الملخص
+    // =======================================================
+    function updateSummaryCards() {
+        const counts = { new: 0, processing: 0, completed: 0, 'not-confirmed': 0 };
+        allOrdersData.forEach(order => {
+            const status = order['حالة الطلب'];
+            if (status === 'طلب جديد') counts.new++;
+            else if (status === 'قيد التنفيذ') counts.processing++;
+            else if (status === 'طلب مكتمل') counts.completed++;
+            else if (status === 'لم يتم التأكيد') counts['not-confirmed']++;
         });
 
-        // =======================================================
-        // وظائف تسجيل الدخول
-        // =======================================================
-        function checkPassword() {
-            const passwordInput = document.getElementById('passwordInput');
-            const loginError = document.getElementById('loginError');
-            if (passwordInput.value === CORRECT_PASSWORD) {
-                document.getElementById('loginModal').style.display = 'none';
-                document.getElementById('mainContent').style.display = 'block';
-                fetchOrdersFromGoogleSheet(); // جلب الطلبات بعد تسجيل الدخول
-            } else {
-                loginError.style.display = 'block';
-                passwordInput.value = '';
-                passwordInput.focus();
-            }
+        document.getElementById('totalOrdersCount').textContent = allOrdersData.length;
+        document.getElementById('newOrdersCount').textContent = counts.new;
+        document.getElementById('processingOrdersCount').textContent = counts.processing;
+        document.getElementById('completedOrdersCount').textContent = counts.completed;
+        document.getElementById('notConfirmedOrdersCount').textContent = counts['not-confirmed'];
+    }
+
+
+    // =======================================================
+    // وظائف مودال تفاصيل الطلب
+    // =======================================================
+    function viewOrderDetails(orderId) {
+        const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
+        if (!order) {
+            showGeneralAlert('تعذر العثور على تفاصيل الطلب.', 'error');
+            return;
+        }
+        currentOrderDetails = order;
+
+        document.getElementById('modalOrderDateTime').textContent = formatDateTime(order['وقت وتاريخ الطلب']);
+        document.getElementById('modalFullName').textContent = order['الاسم الكامل'] || 'N/A';
+        document.getElementById('modalPhoneNumber').textContent = order['رقم الموبايل'] || 'N/A';
+        document.getElementById('modalProducts').textContent = order['المنتجات المطلوبة'] || 'N/A';
+        document.getElementById('modalAddress').textContent = order['العنوان بالتفصيل'] || 'N/A';
+        document.getElementById('modalSiteLink').textContent = order['رابط الموقع'] || 'N/A';
+        document.getElementById('modalGovernorate').textContent = order['المحافظة'] || 'N/A';
+        document.getElementById('modalDeliveryType').textContent = order['نوع التوصيل'] || 'N/A';
+        document.getElementById('modalShippingCost').textContent = order['تكلفة الشحن'] || '0';
+        document.getElementById('modalProductPrice').textContent = order['سعر المنتجات'] || '0';
+        document.getElementById('modalTotalCost').textContent = order['التكلفة الإجمالية'] || '0';
+        
+        const statusText = order['حالة الطلب'] || 'N/A';
+        const statusClass = statusMap[statusText] || 'unknown';
+        const statusBadge = document.getElementById('modalOrderStatus');
+        statusBadge.textContent = statusText;
+        statusBadge.className = 'order-status-text ' + statusClass;
+
+        const madeByElement = document.getElementById('modalMadeBy');
+        if (order['مصدر الطلب'] === 'سكريبت') {
+            madeByElement.textContent = 'MADE BY SCRIPT';
+            madeByElement.style.display = 'block';
+        } else if (order['مصدر الطلب'] === 'يدوي' && order['تم الإنشاء بواسطة']) {
+            madeByElement.textContent = `MADE BY ${order['تم الإنشاء بواسطة']}`;
+            madeByElement.style.display = 'block';
+        } else {
+            madeByElement.style.display = 'none';
         }
 
-        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                checkPassword();
-            }
-        });
+        document.getElementById('orderDetailsModal').style.display = 'flex';
+    }
 
-        // =======================================================
-        // وظائف مساعدة لتنسيق التاريخ والوقت
-        // =======================================================
-        function formatDateTime(dateTimeString) {
-            if (!dateTimeString) return 'N/A';
-            const date = new Date(dateTimeString);
-            if (isNaN(date.getTime())) {
-                return dateTimeString;
-            }
-            const options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-            };
-            return date.toLocaleString('ar-EG', options).replace(',', '');
+    function closeOrderDetailsModal() {
+        document.getElementById('orderDetailsModal').style.display = 'none';
+        currentOrderDetails = null;
+        const copyBtn = document.getElementById('copyDetailsButton');
+        if (copyBtn) {
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ تفاصيل الطلب';
+            copyBtn.classList.remove('copied');
         }
+    }
 
-        // =======================================================
-        // وظائف جلب البيانات من جوجل شيت وعرضها
-        // =======================================================
-        async function fetchOrdersFromGoogleSheet() {
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            loadingIndicator.style.display = 'flex'; // إظهار مؤشر التحميل
-
-            try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'GET'
-                });
-                const data = await response.json();
-                allOrdersData = data; // تخزين البيانات التي تم جلبها
-
-                renderOrders(allOrdersData); // عرض الطلبات
-                updateSummaryCards(); // تحديث بطاقات الملخص
-                showGeneralAlert('تم تحديث الطلبات بنجاح!', 'success'); // رسالة نجاح التحديث
-
-            } catch (error) {
-                console.error('Error fetching orders from Google Sheet:', error);
-                showGeneralAlert('حدث خطأ أثناء جلب الطلبات من جوجل شيت. يرجى التأكد من رابط السكريبت.', 'error');
-            } finally {
-                loadingIndicator.style.display = 'none'; // إخفاء مؤشر التحميل
-            }
+    // =======================================================
+    // وظائف نسخ تفاصيل الطلب من المودال
+    // =======================================================
+    function copyOrderDetailsFromModal() {
+        if (!currentOrderDetails) return;
+        const order = currentOrderDetails;
+        let textToCopy = `🧾 Enjoy The Gifts Order\n\n`;
+        textToCopy += `*تاريخ ووقت الطلب:* ${formatDateTime(order['وقت وتاريخ الطلب'])}\n`;
+        textToCopy += `*الاسم الكامل:* ${order['الاسم الكامل'] || 'N/A'}\n`;
+        textToCopy += `*رقم الموبايل:* ${order['رقم الموبايل'] || 'N/A'}\n`;
+        textToCopy += `*المنتجات المطلوبة:*\n${order['المنتجات المطلوبة'] || 'N/A'}\n`;
+        textToCopy += `*العنوان بالتفصيل:* ${order['العنوان بالتفصيل'] || 'N/A'}\n`;
+        if (order['رابط الموقع']) {
+            textToCopy += `*للينك الموقع:* ${order['رابط الموقع']}\n`;
         }
-
-        function renderOrders(ordersToRender) {
-            const ordersGridContainer = document.getElementById('ordersGridContainer');
-            ordersGridContainer.innerHTML = ''; // مسح البطاقات الموجودة
-
-            if (ordersToRender.length === 0) {
-                ordersGridContainer.innerHTML = '<p style="text-align: center; color: var(--light-text); font-size: 1.2rem; margin-top: 50px;">لا توجد طلبات لعرضها.</p>';
-                return;
-            }
-
-            // ترتيب الطلبات من الأحدث للأقدم
-            ordersToRender.sort((a, b) => {
-                const dateA = new Date(a['وقت وتاريخ الطلب']);
-                const dateB = new Date(b['وقت وتاريخ الطلب']);
-                return dateB - dateA; // الأحدث أولاً
-            });
-
-            ordersToRender.forEach(order => {
-                // التأكد من أن جميع الحقول موجودة أو تعيين قيمة افتراضية
-                const orderDateTime = order['وقت وتاريخ الطلب'] || 'N/A';
-                const fullName = order['الاسم الكامل'] || 'N/A';
-                const phoneNumber = order['رقم الموبايل'] || 'N/A';
-                const products = order['المنتجات المطلوبة'] || 'N/A';
-                const address = order['العنوان بالتفصيل'] || 'N/A';
-                const siteLink = order['رابط الموقع'] || '';
-                const governorate = order['المحافظة'] || 'N/A';
-                const deliveryType = order['نوع التوصيل'] || 'N/A';
-                const shippingCost = order['تكلفة الشحن'] || '0';
-                const productPrice = order['سعر المنتجات'] || '0';
-                const totalCost = order['التكلفة الإجمالية'] || '0';
-                const orderStatus = order['حالة الطلب'] || 'طلب جديد'; // افتراضي لطلب جديد
-                const orderSource = order['مصدر الطلب'] || 'N/A';
-                const createdBy = order['تم الإنشاء بواسطة'] || '';
-
-                const statusClass = statusMap[orderStatus] || 'unknown'; // الحصول على الكلاس من الخريطة
-
-                const orderCard = document.createElement('div');
-                orderCard.className = `order-card status-${statusClass}`;
-                orderCard.dataset.orderId = orderDateTime; // استخدام وقت وتاريخ الطلب كمعرف فريد مؤقت
-
-                // Pass only the orderDateTime string to the functions
-                orderCard.setAttribute('onclick', `viewOrderDetails('${orderDateTime}')`);
-
-                orderCard.innerHTML = `
-                    <div class="order-card-header">
-                        <span class="order-date">${formatDateTime(orderDateTime)}</span>
-                        <div class="order-card-actions">
-                            <button class="action-icon edit-icon" onclick="event.stopPropagation(); editOrder('${orderDateTime}')"><i class="fas fa-pen"></i></button>
-                            <button class="action-icon delete-icon" onclick="event.stopPropagation(); confirmDeleteOrder(this, '${orderDateTime}', '${fullName}')"><i class="fas fa-trash-alt"></i></button>
-                        </div>
-                    </div>
-                    <div class="order-card-body">
-                        <p><strong>العميل:</strong> ${fullName}</p>
-                        <p><strong>الموبايل:</strong> ${phoneNumber}</p>
-                        <p><strong>المحافظة:</strong> ${governorate}</p>
-                        <p><strong>التكلفة الإجمالية:</strong> ${totalCost} جنيه</p>
-                        <p><strong>الحالة:</strong> <span class="order-status-text ${statusClass}">${orderStatus}</span></p>
-                    </div>
-                    <div class="delete-confirmation-toast" style="display: none;">
-                        <p></p>
-                        <div class="toast-actions" style="display:none;">
-                            <button class="confirm-delete" onclick="executeDelete('${orderDateTime}')">حذف</button>
-                            <button class="cancel-delete" onclick="cancelDelete()">إلغاء</button>
-                        </div>
-                    </div>
-                `;
-                ordersGridContainer.appendChild(orderCard);
-            });
-        }
-
-
-        // =======================================================
-        // وظائف تحديث بطاقات الملخص
-        // =======================================================
-        function updateSummaryCards() {
-            let totalOrders = 0;
-            let newOrders = 0;
-            let inProgressOrders = 0;
-            let completedOrders = 0;
-            let notConfirmedOrders = 0;
-
-            allOrdersData.forEach(order => {
-                totalOrders++;
-                const status = order['حالة الطلب'];
-
-                switch (status) {
-                    case 'طلب جديد':
-                        newOrders++;
-                        break;
-                    case 'قيد التنفيذ':
-                        inProgressOrders++;
-                        break;
-                    case 'طلب مكتمل':
-                        completedOrders++;
-                        break;
-                    case 'لم يتم التأكيد':
-                        notConfirmedOrders++;
-                        break;
-                }
-            });
-
-            document.getElementById('totalOrdersCount').textContent = totalOrders;
-            document.getElementById('newOrdersCount').textContent = newOrders;
-            document.getElementById('processingOrdersCount').textContent = inProgressOrders;
-            document.getElementById('completedOrdersCount').textContent = completedOrders;
-            document.getElementById('notConfirmedOrdersCount').textContent = notConfirmedOrders;
-        }
-
-
-        // =======================================================
-        // وظائف مودال تفاصيل الطلب
-        // =======================================================
-        function viewOrderDetails(orderId) { // Accept orderId instead of full object
-            const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
-            if (!order) {
-                console.error('Order not found for details:', orderId);
-                showGeneralAlert('تعذر العثور على تفاصيل الطلب.', 'error');
-                return;
-            }
-            currentOrderDetails = order;
-
-            document.getElementById('modalOrderDateTime').textContent = formatDateTime(order['وقت وتاريخ الطلب']);
-            document.getElementById('modalFullName').textContent = order['الاسم الكامل'] || 'N/A';
-            document.getElementById('modalPhoneNumber').textContent = order['رقم الموبايل'] || 'N/A';
-            document.getElementById('modalProducts').textContent = order['المنتجات المطلوبة'] || 'N/A';
-            document.getElementById('modalAddress').textContent = order['العنوان بالتفصيل'] || 'N/A';
-            document.getElementById('modalSiteLink').textContent = order['رابط الموقع'] || 'N/A';
-            document.getElementById('modalGovernorate').textContent = order['المحافظة'] || 'N/A';
-            document.getElementById('modalDeliveryType').textContent = order['نوع التوصيل'] || 'N/A';
-            document.getElementById('modalShippingCost').textContent = order['تكلفة الشحن'] || '0';
-            document.getElementById('modalProductPrice').textContent = order['سعر المنتجات'] || '0';
-            document.getElementById('modalTotalCost').textContent = order['التكلفة الإجمالية'] || '0';
-            
-            const statusText = order['حالة الطلب'] || 'N/A';
-            const statusClass = statusMap[statusText] || 'unknown';
-            const statusBadge = document.getElementById('modalOrderStatus');
-            statusBadge.textContent = statusText;
-            statusBadge.className = 'order-status-text ' + statusClass; // Ensure correct class for styling
-
-            const madeByElement = document.getElementById('modalMadeBy');
-            if (order['مصدر الطلب'] === 'سكريبت') {
-                madeByElement.textContent = 'MADE BY SCRIPT';
-                madeByElement.style.display = 'block';
-            } else if (order['مصدر الطلب'] === 'يدوي' && order['تم الإنشاء بواسطة']) {
-                madeByElement.textContent = `MADE BY ${order['تم الإنشاء بواسطة']}`;
-                madeByElement.style.display = 'block';
-            } else {
-                madeByElement.style.display = 'none';
-            }
-
-            document.getElementById('orderDetailsModal').style.display = 'flex';
-        }
-
-        function closeOrderDetailsModal() {
-            document.getElementById('orderDetailsModal').style.display = 'none';
-            currentOrderDetails = null;
-            const copyBtn = document.getElementById('copyDetailsButton');
-            if (copyBtn) { // Add null check
-                copyBtn.innerHTML = '<i class="fas fa-copy"></i> نسخ تفاصيل الطلب';
-                copyBtn.classList.remove('copied');
-            }
-        }
-
-        // =======================================================
-        // وظائف نسخ تفاصيل الطلب من المودال
-        // =======================================================
-        function copyOrderDetailsFromModal() {
-            if (!currentOrderDetails) return;
-
-            const order = currentOrderDetails;
-            let textToCopy = `*طلب جديد من Enjoy The Gifts*\n\n`;
-            textToCopy += `*تاريخ ووقت الطلب:* ${formatDateTime(order['وقت وتاريخ الطلب'])}\n`;
-            textToCopy += `*الاسم الكامل:* ${order['الاسم الكامل'] || 'N/A'}\n`;
-            textToCopy += `*رقم الموبايل:* ${order['رقم الموبايل'] || 'N/A'}\n`;
-            textToCopy += `*المنتجات المطلوبة:*\n${order['المنتجات المطلوبة'] || 'N/A'}\n`;
-            textToCopy += `*العنوان بالتفصيل:* ${order['العنوان بالتفصيل'] || 'N/A'}\n`;
-            if (order['رابط الموقع']) {
-                textToCopy += `*رابط الموقع:* ${order['رابط الموقع']}\n`;
-            }
-            textToCopy += `*المحافظة:* ${order['المحافظة'] || 'N/A'}\n`;
-            textToCopy += `*نوع التوصيل:* ${order['نوع التوصيل'] || 'N/A'}\n`;
-            textToCopy += `*تكلفة الشحن:* ${order['تكلفة الشحن'] || '0'} جنيه\n`;
-            textToCopy += `*سعر المنتجات:* ${order['سعر المنتجات'] || '0'} جنيه\n`;
-            textToCopy += `*التكلفة الإجمالية:* ${order['التكلفة الإجمالية'] || '0'} جنيه\n`;
-            textToCopy += `*حالة الطلب:* ${order['حالة الطلب'] || 'N/A'}\n`;
-            textToCopy += `*مصدر الطلب:* ${order['مصدر الطلب'] || 'N/A'}`;
-            if (order['مصدر الطلب'] === 'يدوي' && order['تم الإنشاء بواسطة']) {
-                textToCopy += `\n*تم الإنشاء بواسطة:* ${order['تم الإنشاء بواسطة']}`;
-            }
-            textToCopy += `\n------------------------------\n*ملاحظات إضافية:* (هنا يمكنك إضافة أي ملاحظات يدوية)`;
-            
-            const tempInput = document.createElement('textarea');
-            tempInput.value = textToCopy;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-
+        textToCopy += `*المحافظة:* ${order['المحافظة'] || 'N/A'}\n`;
+        textToCopy += `*نوع التوصيل:* ${order['نوع التوصيل'] || 'N/A'}\n`;
+        textToCopy += `*تكلفة الشحن:* ${order['تكلفة الشحن'] || '0'} جنيه\n`;
+        textToCopy += `*سعر المنتجات:* ${order['سعر المنتجات'] || '0'} جنيه\n`;
+        textToCopy += `*التكلفة الإجمالية:* ${order['التكلفة الإجمالية'] || '0'} جنيه\n`;
+        
+        navigator.clipboard.writeText(textToCopy).then(() => {
             const btn = document.getElementById('copyDetailsButton');
             if (btn) {
                 const originalText = btn.innerHTML;
@@ -1481,439 +1449,340 @@
                     btn.classList.remove('copied');
                 }, 2000);
             }
+        });
+    }
+    
+    // =======================================================
+    // وظائف الفلاتر
+    // =======================================================
+    function applyFilters() {
+        const fromDateStr = document.getElementById('fromDateFilter').value;
+        const toDateStr = document.getElementById('toDateFilter').value;
+        const status = document.getElementById('statusFilter').value;
+        const searchTerm = document.getElementById('searchFilter').value.toLowerCase().trim();
+        
+        const filteredOrders = allOrdersData.filter(order => {
+            let dateMatch = true;
+            const orderDateTime = new Date(order['وقت وتاريخ الطلب']);
+            if (fromDateStr) {
+                const fromDate = new Date(fromDateStr);
+                fromDate.setHours(0, 0, 0, 0);
+                if (orderDateTime < fromDate) dateMatch = false;
+            }
+            if (toDateStr) {
+                const toDate = new Date(toDateStr);
+                toDate.setHours(23, 59, 59, 999);
+                if (orderDateTime > toDate) dateMatch = false;
+            }
+
+            const statusMatch = !status || (order['حالة الطلب'] || '') === status;
+            
+            const searchMatch = !searchTerm || 
+                                (order['الاسم الكامل'] || '').toLowerCase().includes(searchTerm) || 
+                                (order['رقم الموبايل'] || '').toLowerCase().includes(searchTerm) || 
+                                (order['العنوان بالتفصيل'] || '').toLowerCase().includes(searchTerm);
+
+            return dateMatch && statusMatch && searchMatch;
+        });
+        renderOrders(filteredOrders);
+    }
+
+    function clearFilters() {
+        document.getElementById('fromDateFilter').value = '';
+        document.getElementById('toDateFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('searchFilter').value = '';
+        document.getElementById('filterResultsCount').style.display = 'none';
+        renderOrders(allOrdersData);
+    }
+
+    // =======================================================
+    // وظائف مودال إنشاء/تعديل فاتورة يدوية
+    // =======================================================
+    const manualInvoiceModal = document.getElementById('manualInvoiceModal');
+    const manualInvoiceForm = document.getElementById('manualInvoiceForm');
+    const manualGovernorateSelect = document.getElementById('manualGovernorateSelect');
+    const manualDeliveryMethodSelect = document.getElementById('manualDeliveryMethodSelect');
+    const manualDeliveryMethodLabel = document.getElementById('manualDeliveryMethodLabel');
+    const manualDeliveryCitySelectContainer = document.querySelector('.manual-delivery-city-select');
+    const manualDeliveryCitySelect = document.getElementById('manualDeliveryCitySelect');
+    const manualProductPriceInput = document.getElementById('manualProductPrice');
+    const manualShippingCostInput = document.getElementById('manualShippingCost');
+    const manualTotalPriceValueSpan = document.getElementById('manualTotalPriceValue');
+    const manualTotalCostHiddenInput = document.getElementById('manualTotalCostHidden');
+    const manualTotalPriceContainer = document.getElementById('manualTotalPriceContainer');
+    const manualInvoiceModalTitle = document.getElementById('manualInvoiceModalTitle');
+    const manualInvoiceSubmitBtn = document.getElementById('manualInvoiceSubmitBtn');
+    const originalOrderIdInput = document.getElementById('originalOrderId');
+    const manualOrderStatusSelect = document.getElementById('manualOrderStatusSelect');
+    const orderSourceHidden = document.getElementById('orderSourceHidden');
+    const createdByInput = document.getElementById('createdBy');
+    const createdByLabel = document.getElementById('createdByLabel');
+
+    function openManualInvoiceModal(order = null) {
+        manualInvoiceModal.style.display = 'flex';
+        manualInvoiceForm.reset();
+        manualGovernorateSelect.value = '';
+        manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
+        manualDeliveryMethodSelect.style.display = 'none';
+        manualDeliveryMethodLabel.style.display = 'none';
+        manualDeliveryCitySelectContainer.style.display = 'none';
+        manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
+        manualTotalPriceContainer.style.display = 'none';
+        
+        originalOrderIdInput.value = '';
+        manualInvoiceModalTitle.textContent = 'إنشاء فاتورة يدوية';
+        manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
+        orderSourceHidden.value = 'يدوي';
+        
+        manualOrderStatusSelect.innerHTML = `<option value="طلب جديد">طلب جديد</option><option value="قيد التنفيذ">قيد التنفيذ</option><option value="طلب مكتمل">طلب مكتمل</option><option value="لم يتم التأكيد">لم يتم التأكيد</option>`;
+        manualOrderStatusSelect.value = 'طلب جديد';
+
+        if (order) { // Edit mode
+            manualInvoiceModalTitle.textContent = 'تعديل الفاتورة';
+            manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+            originalOrderIdInput.value = order['وقت وتاريخ الطلب'] || '';
+
+            document.getElementById('manualName').value = order['الاسم الكامل'] || '';
+            document.getElementById('manualPhone').value = order['رقم الموبايل'] || '';
+            document.getElementById('manualProducts').value = order['المنتجات المطلوبة'] || '';
+            document.getElementById('manualProductPrice').value = order['سعر المنتجات'] || '';
+            document.getElementById('manualAddress').value = order['العنوان بالتفصيل'] || '';
+            document.getElementById('manualLocationLink').value = order['رابط الموقع'] || '';
+            
+            createdByInput.style.display = 'none';
+            createdByLabel.style.display = 'none';
+            createdByInput.removeAttribute('required');
+            orderSourceHidden.value = order['مصدر الطلب'] || 'يدوي';
+
+            const governorateValue = order['المحافظة'];
+            const deliveryTypeValue = order['نوع التوصيل'];
+            if (governorateValue === 'القاهرة والجيزة' || deliveryTypeValue === 'توصيل للمنزل' || deliveryTypeValue === 'أقرب محطة مترو') {
+                manualGovernorateSelect.value = 'cairo_giza';
+            } else {
+                manualGovernorateSelect.value = 'other_governorates';
+            }
+            
+            populateManualDeliveryMethods();
+            setTimeout(() => {
+                if (manualGovernorateSelect.value === 'cairo_giza') {
+                    manualDeliveryMethodSelect.value = deliveryTypeValue;
+                } else {
+                    manualDeliveryCitySelect.value = governorateValue; 
+                }
+                updateManualTotal(); 
+            }, 100); 
+
+            manualOrderStatusSelect.value = order['حالة الطلب'] || 'طلب جديد';
+        } else { // New invoice mode
+            createdByInput.style.display = 'block';
+            createdByLabel.style.display = 'block';
+        }
+        updateManualTotal();
+    }
+
+    function closeManualInvoiceModal() {
+        manualInvoiceModal.style.display = 'none';
+    }
+
+    function populateManualDeliveryMethods() {
+        const selectedGovernorate = manualGovernorateSelect.value;
+        manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
+        manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
+
+        manualDeliveryMethodSelect.style.display = 'none';
+        manualDeliveryMethodLabel.style.display = 'none';
+        manualDeliveryCitySelectContainer.style.display = 'none';
+        
+        manualDeliveryMethodSelect.removeAttribute('required');
+        manualDeliveryCitySelect.removeAttribute('required');
+
+        if (selectedGovernorate === 'cairo_giza') {
+            deliveryOptionsData.cairo_giza.forEach(option => {
+                const opt = new Option(option.text, option.value);
+                opt.dataset.cost = option.cost;
+                manualDeliveryMethodSelect.add(opt);
+            });
+            manualDeliveryMethodSelect.style.display = 'block';
+            manualDeliveryMethodLabel.style.display = 'block';
+            manualDeliveryMethodSelect.setAttribute('required', 'required');
+        } else if (selectedGovernorate === 'other_governorates') {
+            deliveryOptionsData.other_governorates.forEach(option => {
+                const opt = new Option(option.text, option.value);
+                opt.dataset.cost = option.cost;
+                manualDeliveryCitySelect.add(opt);
+            });
+            manualDeliveryCitySelectContainer.style.display = 'block';
+            manualDeliveryCitySelect.setAttribute('required', 'required');
+        }
+        updateManualTotal();
+    }
+
+    function updateManualTotal() {
+        const productPrice = parseFloat(manualProductPriceInput.value) || 0;
+        let shippingCost = 0;
+        const selectedGovernorate = manualGovernorateSelect.value;
+
+        if (selectedGovernorate === 'cairo_giza') {
+            const selectedOption = manualDeliveryMethodSelect.options[manualDeliveryMethodSelect.selectedIndex];
+            shippingCost = Number(selectedOption?.dataset.cost) || 0;
+        } else if (selectedGovernorate === 'other_governorates') {
+            const selectedOption = manualDeliveryCitySelect.options[manualDeliveryCitySelect.selectedIndex];
+            shippingCost = Number(selectedOption?.dataset.cost) || 0;
         }
         
-        // =======================================================
-        // وظائف الفلاتر
-        // =======================================================
-        function applyFilters() {
-            const fromDateStr = document.getElementById('fromDateFilter').value;
-            const toDateStr = document.getElementById('toDateFilter').value;
-            const status = document.getElementById('statusFilter').value;
-            const searchTerm = document.getElementById('searchFilter').value.toLowerCase();
-            
-            const filteredOrders = allOrdersData.filter(order => {
-                const orderDateTime = new Date(order['وقت وتاريخ الطلب'].replace(' ', 'T'));
-                const clientName = (order['الاسم الكامل'] || '').toLowerCase();
-                const phoneNumber = (order['رقم الموبايل'] || '').toLowerCase();
-                const governorate = (order['المحافظة'] || '').toLowerCase();
-                const currentStatus = (order['حالة الطلب'] || '');
+        manualShippingCostInput.value = shippingCost;
+        const total = productPrice + shippingCost;
+        manualTotalPriceValueSpan.textContent = total;
+        manualTotalCostHiddenInput.value = total;
 
-                let dateMatch = true;
-                if (fromDateStr) {
-                    const fromDate = new Date(fromDateStr);
-                    fromDate.setHours(0, 0, 0, 0);
-                    if (orderDateTime < fromDate) {
-                        dateMatch = false;
-                    }
-                }
-                if (toDateStr) {
-                    const toDate = new Date(toDateStr);
-                    toDate.setHours(23, 59, 59, 999);
-                    if (orderDateTime > toDate) {
-                        dateMatch = false;
-                    }
-                }
+        manualTotalPriceContainer.style.display = (total > 0) ? 'block' : 'none';
+    }
 
-                const statusMatch = status === '' || currentStatus === status;
-                
-                const searchMatch = searchTerm === '' || 
-                                    clientName.includes(searchTerm) || 
-                                    phoneNumber.includes(searchTerm) || 
-                                    governorate.includes(searchTerm) ||
-                                    (order['العنوان بالتفصيل'] || '').toLowerCase().includes(searchTerm);
+    async function handleManualInvoiceSubmit(event) {
+        event.preventDefault();
 
-                return dateMatch && statusMatch && searchMatch;
+        const submitButton = manualInvoiceForm.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...جاري الحفظ';
+
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+        const isUpdate = originalOrderIdInput.value !== '';
+        
+        if (isUpdate) {
+            data['action'] = 'updateOrder';
+            data['originalOrderId'] = originalOrderIdInput.value;
+            delete data['createdBy'];
+        } else {
+            // ✅ FIX: استخدام toISOString لإنشاء ID متوافق
+            data['وقت وتاريخ الطلب'] = new Date().toISOString();
+        }
+
+        if (manualGovernorateSelect.value === 'other_governorates') {
+            data['governorate'] = manualDeliveryCitySelect.value;
+            data['deliveryType'] = 'باقي المحافظات';
+        } else {
+            data['governorate'] = manualGovernorateSelect.value === 'cairo_giza' ? 'القاهرة والجيزة' : manualGovernorateSelect.value;
+        }
+
+        try {
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                body: new URLSearchParams(data)
             });
-
-            renderOrders(filteredOrders); // عرض الطلبات بعد الفلترة
-        }
-
-        function clearFilters() {
-            document.getElementById('fromDateFilter').value = '';
-            document.getElementById('toDateFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            document.getElementById('searchFilter').value = '';
-            renderOrders(allOrdersData); // إعادة عرض جميع الطلبات
-        }
-
-        // =======================================================
-        // وظائف مودال إنشاء/تعديل فاتورة يدوية
-        // =======================================================
-        const manualInvoiceModal = document.getElementById('manualInvoiceModal');
-        const manualInvoiceForm = document.getElementById('manualInvoiceForm');
-        const manualGovernorateSelect = document.getElementById('manualGovernorateSelect');
-        const manualDeliveryMethodSelect = document.getElementById('manualDeliveryMethodSelect');
-        const manualDeliveryMethodLabel = document.getElementById('manualDeliveryMethodLabel');
-        const manualDeliveryNotesDiv = document.getElementById('manualDeliveryNotes');
-        const manualDeliveryText = document.getElementById('manualDeliveryText');
-        const manualDeliveryCitySelectContainer = document.querySelector('.manual-delivery-city-select');
-        const manualDeliveryCitySelect = document.getElementById('manualDeliveryCitySelect');
-        const manualProductPriceInput = document.getElementById('manualProductPrice');
-        const manualShippingCostInput = document.getElementById('manualShippingCost');
-        const manualTotalPriceValueSpan = document.getElementById('manualTotalPriceValue');
-        const manualTotalCostHiddenInput = document.getElementById('manualTotalCostHidden');
-        const manualTotalPriceContainer = document.getElementById('manualTotalPriceContainer');
-        const manualInvoiceModalTitle = document.getElementById('manualInvoiceModalTitle');
-        const manualInvoiceSubmitBtn = document.getElementById('manualInvoiceSubmitBtn');
-        const originalOrderIdInput = document.getElementById('originalOrderId');
-        const manualOrderStatusSelect = document.getElementById('manualOrderStatusSelect');
-        const orderSourceHidden = document.getElementById('orderSourceHidden');
-        const createdByInput = document.getElementById('createdBy');
-
-
-        function openManualInvoiceModal(order = null) {
-            manualInvoiceModal.style.display = 'flex';
-            manualInvoiceForm.reset();
-            manualGovernorateSelect.value = '';
-            manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
-            manualDeliveryMethodSelect.style.display = 'none';
-            manualDeliveryMethodLabel.style.display = 'none';
-            manualDeliveryCitySelectContainer.style.display = 'none';
-            manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
-            manualDeliveryNotesDiv.classList.remove('show');
-            manualDeliveryNotesDiv.style.display = 'none'; // إخفاء مدة التسليم
-            manualTotalPriceContainer.style.display = 'none';
+            const result = await response.json();
+            if (result.status !== 'success') throw new Error(result.message);
             
-            originalOrderIdInput.value = ''; // Clear original ID for new invoice
-            manualInvoiceModalTitle.textContent = 'إنشاء فاتورة يدوية';
-            manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
-            orderSourceHidden.value = 'يدوي'; // Default for new manual invoice
-            createdByInput.removeAttribute('readonly'); // Make editable for new invoices
+            showGeneralAlert(isUpdate ? 'تم تحديث الفاتورة بنجاح!' : 'تم حفظ الفاتورة اليدوية بنجاح!', 'success');
+            closeManualInvoiceModal();
+            fetchOrdersFromGoogleSheet();
+        } catch (error) {
+            showGeneralAlert('فشل الحفظ: ' + error.message, 'error');
+            console.error('Error submitting invoice:', error);
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML = isUpdate ? '<i class="fas fa-save"></i> حفظ التعديلات' : '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
+        }
+    }
 
-            // Populate status dropdown with default options
-            manualOrderStatusSelect.innerHTML = `
-                <option value="طلب جديد">طلب جديد</option>
-                <option value="قيد التنفيذ">قيد التنفيذ</option>
-                <option value="طلب مكتمل">طلب مكتمل</option>
-                <option value="لم يتم التأكيد">لم يتم التأكيد</option>
-            `;
-            manualOrderStatusSelect.value = 'طلب جديد'; // Default status for new manual invoice
+    // =======================================================
+    // وظائف التعديل والحذف
+    // =======================================================
+    // ✅ FIX: تم إصلاح وظيفة التعديل لتعمل بشكل صحيح
+    function editOrder(orderId) { 
+        const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
+        if (order) {
+            openManualInvoiceModal(order); 
+        } else {
+            showGeneralAlert('تعذر العثور على الطلب للتعديل.', 'error');
+        }
+    }
 
-            if (order) { // If an order object is passed, it's an edit operation
-                manualInvoiceModalTitle.textContent = 'تعديل الفاتورة';
-                manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
-                originalOrderIdInput.value = order['وقت وتاريخ الطلب'] || ''; // Set original ID for update
-
-                document.getElementById('manualName').value = order['الاسم الكامل'] || '';
-                document.getElementById('manualPhone').value = order['رقم الموبايل'] || '';
-                document.getElementById('manualProducts').value = order['المنتجات المطلوبة'] || '';
-                document.getElementById('manualProductPrice').value = order['سعر المنتجات'] || '';
-                document.getElementById('manualAddress').value = order['العنوان بالتفصيل'] || '';
-                document.getElementById('manualLocationLink').value = order['رابط الموقع'] || '';
-                createdByInput.value = order['تم الإنشاء بواسطة'] || '';
-                // createdByInput.setAttribute('readonly', 'readonly'); // Make readonly for existing invoices
-                orderSourceHidden.value = order['مصدر الطلب'] || 'يدوي'; // Preserve original source
-
-                // Set selected governorate
-                const governorateValue = order['المحافظة'];
-                const deliveryTypeValue = order['نوع التوصيل'];
-
-                if (governorateValue === 'القاهرة والجيزة' || deliveryTypeValue === 'توصيل للمنزل' || deliveryTypeValue === 'أقرب محطة مترو') {
-                    manualGovernorateSelect.value = 'cairo_giza';
-                } else {
-                    manualGovernorateSelect.value = 'other_governorates';
-                }
-                
-                // Populate delivery methods/cities based on selected governorate
-                populateManualDeliveryMethods();
-
-                // Set specific delivery method/city after options are populated
-                setTimeout(() => {
-                    if (manualGovernorateSelect.value === 'cairo_giza') {
-                        manualDeliveryMethodSelect.value = deliveryTypeValue;
-                    } else {
-                        manualDeliveryCitySelect.value = governorateValue; // For other governorates, the city is the governorate
-                    }
-                    updateManualTotal(); // Recalculate total after setting values
-                }, 100); // Small delay to ensure options are rendered
-
-                manualOrderStatusSelect.value = order['حالة الطلب'] || 'طلب جديد'; // Set current status
-            }
-            updateManualTotal(); // Initial total calculation
+    function confirmDeleteOrder(buttonElement, orderId, fullName) {
+        // إخفاء أي توست آخر مفتوح
+        document.querySelectorAll('.delete-confirmation-toast.show').forEach(t => t.classList.remove('show'));
+        
+        const toast = buttonElement.closest('.order-card').querySelector('.delete-confirmation-toast');
+        if (toast) {
+            toast.classList.add('show');
+        }
+    }
+    
+    // ✅ FIX: تم تحسين وظيفة الحذف لتكون أكثر قوة
+    async function executeDelete(orderId) {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        loadingIndicator.style.display = 'flex';
+        
+        // إخفاء التوست فوراً
+        const card = document.querySelector(`.order-card[data-order-id="${orderId}"]`);
+        if(card){
+            const toast = card.querySelector('.delete-confirmation-toast');
+            if(toast) toast.classList.remove('show');
         }
 
-        function closeManualInvoiceModal() {
-            document.getElementById('manualInvoiceModal').style.display = 'none';
-            // Reset form and hidden fields when closing
-            manualInvoiceForm.reset();
-            originalOrderIdInput.value = '';
-            manualInvoiceModalTitle.textContent = 'إنشاء فاتورة يدوية';
-            manualInvoiceSubmitBtn.innerHTML = '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
-            orderSourceHidden.value = 'يدوي';
-            createdByInput.removeAttribute('readonly'); // Ensure it's editable for next new invoice
-        }
-
-        function populateManualDeliveryMethods() {
-            const selectedGovernorate = manualGovernorateSelect.value;
-            manualDeliveryMethodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
-            manualDeliveryCitySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
-
-            manualDeliveryNotesDiv.classList.remove('show');
-            manualDeliveryNotesDiv.style.display = 'none'; // إخفاء مدة التسليم
-            manualDeliveryMethodSelect.style.display = 'none';
-            manualDeliveryMethodLabel.style.display = 'none';
-            manualDeliveryCitySelectContainer.style.display = 'none';
-            
-            manualDeliveryMethodSelect.removeAttribute('required');
-            manualDeliveryCitySelect.removeAttribute('required');
-
-            if (selectedGovernorate) {
-                if (selectedGovernorate === 'cairo_giza') {
-                    const options = deliveryOptionsData.cairo_giza;
-                    options.forEach(option => {
-                        const opt = document.createElement('option');
-                        opt.value = option.value;
-                        opt.dataset.cost = option.cost;
-                        opt.textContent = option.text;
-                        manualDeliveryMethodSelect.appendChild(opt);
-                    });
-                    manualDeliveryMethodSelect.style.display = 'block';
-                    manualDeliveryMethodLabel.style.display = 'block';
-                    manualDeliveryMethodSelect.setAttribute('required', 'required');
-                } else if (selectedGovernorate === 'other_governorates') {
-                    const options = deliveryOptionsData.other_governorates;
-                    options.forEach(option => {
-                        const opt = document.createElement('option');
-                        opt.value = option.value;
-                        opt.dataset.cost = option.cost;
-                        opt.textContent = option.text;
-                        manualDeliveryCitySelect.appendChild(opt);
-                    });
-                    manualDeliveryCitySelectContainer.style.display = 'block';
-                    manualDeliveryCitySelect.setAttribute('required', 'required');
-                }
-            }
-            updateManualTotal();
-        }
-
-        function updateManualTotal() {
-            const productPrice = parseFloat(manualProductPriceInput.value) || 0;
-            let shippingCost = 0; // ستبدأ دائماً بـ 0 وسيتم حسابها
-
-            const selectedGovernorate = manualGovernorateSelect.value;
-            const selectedDeliveryMethod = manualDeliveryMethodSelect.value;
-            const selectedDeliveryCity = manualDeliveryCitySelect.value;
-
-            if (selectedGovernorate === 'cairo_giza' && selectedDeliveryMethod) {
-                const selectedOption = manualDeliveryMethodSelect.options[manualDeliveryMethodSelect.selectedIndex];
-                shippingCost = Number(selectedOption.dataset.cost) || 0;
-            } else if (selectedGovernorate === 'other_governorates' && selectedDeliveryCity) {
-                const selectedOption = manualDeliveryCitySelect.options[manualDeliveryCitySelect.selectedIndex];
-                shippingCost = Number(selectedOption.dataset.cost) || 0;
-            }
-            
-            manualShippingCostInput.value = shippingCost; // تحديث حقل تكلفة الشحن بقيمة محسوبة وتلقائية
-
-            const total = productPrice + shippingCost;
-            manualTotalPriceValueSpan.textContent = total;
-            manualTotalCostHiddenInput.value = total;
-
-            if (productPrice > 0 || shippingCost > 0) {
-                manualTotalPriceContainer.style.display = 'block';
-            } else {
-                manualTotalPriceContainer.style.display = 'none';
-            }
-        }
-
-        async function handleManualInvoiceSubmit(event) {
-            event.preventDefault();
-
-            const submitButton = manualInvoiceForm.querySelector('button[type="submit"]');
-            submitButton.disabled = true;
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ...جاري الحفظ';
-
-            const formData = new FormData(this);
-            const data = {};
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-
-            // Determine if it's an update or new creation
-            const isUpdate = originalOrderIdInput.value !== '';
-            if (isUpdate) {
-                data['action'] = 'updateOrder';
-                data['originalOrderId'] = originalOrderIdInput.value;
-            } else {
-                // For new manual invoices, set date/time and default status
-                const now = new Date();
-                const year = now.getFullYear();
-                const month = String(now.getMonth() + 1).padStart(2, '0');
-                const day = String(now.getDate()).padStart(2, '0');
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-                const seconds = String(now.getSeconds()).padStart(2, '0');
-                data['وقت وتاريخ الطلب'] = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-                // No need to set data['حالة الطلب'] here, as it's already picked up from manualOrderStatusSelect.value
-            }
-
-            // Adjust governorate and deliveryType based on selection
-            if (manualGovernorateSelect.value === 'other_governorates') {
-                data['governorate'] = manualDeliveryCitySelect.value;
-                data['deliveryType'] = 'باقي المحافظات';
-            } else {
-                data['governorate'] = manualGovernorateSelect.value === 'cairo_giza' ? 'القاهرة والجيزة' : manualGovernorateSelect.value;
-            }
-            // Ensure orderStatus is always sent
-            data['orderStatus'] = manualOrderStatusSelect.value;
-
-            console.log("Sending data to Google Apps Script:", data);
-
-            try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST',
-                    body: new URLSearchParams(data)
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    showGeneralAlert(isUpdate ? 'تم تحديث الفاتورة بنجاح!' : 'تم حفظ الفاتورة اليدوية بنجاح!', 'success');
-                    closeManualInvoiceModal();
-                    fetchOrdersFromGoogleSheet(); // تحديث الطلبات بعد الإضافة/التعديل
-                } else {
-                    showGeneralAlert('حدث خطأ أثناء حفظ الفاتورة: ' + result.message, 'error');
-                    console.error('Error submitting manual invoice:', result.message);
-                }
-            } catch (error) {
-                showGeneralAlert('حدث خطأ في الاتصال بالخادم. يرجى المحاولة مرة أخرى.', 'error');
-                console.error('Network or server error for manual invoice:', error);
-            } finally {
-                submitButton.disabled = false;
-                submitButton.innerHTML = isUpdate ? '<i class="fas fa-save"></i> حفظ التعديلات' : '<i class="fas fa-save"></i> حفظ الفاتورة اليدوية';
-            }
-        }
-
-        // =======================================================
-        // وظائف التعديل والحذف
-        // =======================================================
-        function editOrder(orderId) { // Accept orderId instead of full object
-            const order = allOrdersData.find(o => o['وقت وتاريخ الطلب'] === orderId);
-            if (!order) {
-                console.error('Order not found for editing:', orderId);
-                showGeneralAlert('تعذر العثور على الطلب للتعديل.', 'error');
-                return;
-            }
-            openManualInvoiceModal(order); // Pass the found order object to populate the form
-        }
-
-        function confirmDeleteOrder(buttonElement, orderId, fullName) { // Pass fullName for message
-            orderToDeleteId = orderId;
-            deleteToastElementRef = buttonElement.closest('.order-card').querySelector('.delete-confirmation-toast');
-            
-            // Close any other open toasts
-            document.querySelectorAll('.delete-confirmation-toast.show').forEach(toast => {
-                if (toast !== deleteToastElementRef) {
-                    toast.classList.remove('show');
-                    toast.style.display = 'none';
-                }
+        try {
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST', 
+                body: new URLSearchParams({ action: 'deleteOrder', orderId: orderId })
             });
+            const result = await response.json();
+            if (result.status !== 'success') throw new Error(result.message);
 
-            if (deleteToastElementRef) { // Add null check here
-                const customAlertText = deleteToastElementRef.querySelector('p');
-                const customAlertActions = deleteToastElementRef.querySelector('.toast-actions');
-
-                customAlertText.textContent = `هل أنت متأكد من حذف طلب العميل ${fullName}؟`;
-                customAlertActions.style.display = 'flex';
-                deleteToastElementRef.style.display = 'flex';
-                setTimeout(() => deleteToastElementRef.classList.add('show'), 10);
-            } else {
-                console.error("Delete confirmation toast element not found.");
-                showGeneralAlert("حدث خطأ: لا يمكن عرض تأكيد الحذف.", "error");
-            }
-        }
-
-        async function executeDelete(orderId) {
-            console.log(`Attempting to delete order with ID: ${orderId}`);
-            
-            // إظهار مؤشر التحميل
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            loadingIndicator.style.display = 'flex';
-
-            try {
-                const response = await fetch(WEB_APP_URL, {
-                    method: 'POST', 
-                    body: new URLSearchParams({
-                        action: 'deleteOrder', // بارامتر جديد لتمييز عملية الحذف
-                        orderId: orderId // المعرف الفريد للطلب المراد حذفه
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.status === 'success') {
-                    showGeneralAlert(`تم حذف طلب العميل بنجاح!`, 'success');
-                    fetchOrdersFromGoogleSheet(); // إعادة جلب الطلبات بعد الحذف الفعلي
-                } else {
-                    showGeneralAlert(`حدث خطأ أثناء الحذف: ${result.message}`, 'error');
-                    console.error('Error during deletion:', result.message);
-                }
-            } catch (error) {
-                showGeneralAlert('حدث خطأ في الاتصال بالخادم أثناء الحذف.', 'error');
-                console.error('Network or server error during delete request:', error);
-            } finally {
-                loadingIndicator.style.display = 'none'; // إخفاء مؤشر التحميل
-                cancelDelete(); // إخفاء توست التأكيد
-            }
-        }
-
-        function cancelDelete() {
-            if (deleteToastElementRef) { // Add null check
-                deleteToastElementRef.classList.remove('show');
+            showGeneralAlert(`تم حذف الطلب بنجاح!`, 'success');
+            // إزالة الكارت من الواجهة فوراً لتجربة أفضل
+            if(card) {
+                card.style.transition = 'opacity 0.5s ease';
+                card.style.opacity = '0';
                 setTimeout(() => {
-                    deleteToastElementRef.style.display = 'none';
-                    const toastActions = deleteToastElementRef.querySelector('.toast-actions');
-                    if (toastActions) { // Add null check for toastActions
-                        toastActions.style.display = 'none';
-                    }
-                }, 300);
+                    card.remove();
+                    fetchOrdersFromGoogleSheet(); // تحديث البيانات في الخلفية
+                }, 500);
+            } else {
+                fetchOrdersFromGoogleSheet();
             }
-            orderToDeleteId = null;
-            deleteToastElementRef = null;
+
+        } catch (error) {
+            showGeneralAlert(`فشل الحذف: ${error.message}`, 'error');
+            console.error('Error during deletion:', error);
+        } finally {
+            loadingIndicator.style.display = 'none';
         }
+    }
 
-        // وظيفة تنبيه عامة جديدة
-        function showGeneralAlert(message, type = 'info') {
-            const generalAlertToast = document.getElementById('generalAlertToast');
-            const generalAlertText = document.getElementById('generalAlertText');
-
-            generalAlertText.textContent = message;
-            generalAlertToast.className = 'general-alert-toast ' + type; // Apply class for styling
-
-            generalAlertToast.style.display = 'flex';
-            setTimeout(() => generalAlertToast.classList.add('show'), 10);
-
-            setTimeout(() => {
-                generalAlertToast.classList.remove('show');
-                setTimeout(() => generalAlertToast.style.display = 'none', 300);
-            }, 3000); // Hide after 3 seconds
+    // ✅ FIX: تم تحسين وظيفة الإلغاء
+    function cancelDelete(buttonElement) {
+        const toast = buttonElement.closest('.delete-confirmation-toast');
+        if (toast) {
+            toast.classList.remove('show');
         }
-
-
-        // Close modals/panels when clicking outside
-        window.onclick = function(event) {
-            const orderDetailsModal = document.getElementById('orderDetailsModal');
-            const manualInvoiceModal = document.getElementById('manualInvoiceModal');
-            const loginModal = document.getElementById('loginModal');
-            const generalAlertToast = document.getElementById('generalAlertToast');
-
-            if (loginModal.style.display === 'flex') {
-                if (event.target === loginModal) {
-                    return;
-                }
-            }
-
-            if (event.target == orderDetailsModal) {
-                closeOrderDetailsModal();
-            }
-            if (event.target == manualInvoiceModal) {
-                closeManualInvoiceModal();
-            }
-            if (event.target === generalAlertToast && generalAlertToast.classList.contains('show')) {
-                generalAlertToast.classList.remove('show');
-                setTimeout(() => generalAlertToast.style.display = 'none', 300);
-            }
+    }
+    
+    // وظيفة تنبيه عامة
+    function showGeneralAlert(message, type = 'info') {
+        const generalAlertToast = document.getElementById('generalAlertToast');
+        const generalAlertText = document.getElementById('generalAlertText');
+        generalAlertText.textContent = message;
+        generalAlertToast.className = 'general-alert-toast ' + type;
+        generalAlertToast.style.display = 'flex';
+        setTimeout(() => generalAlertToast.classList.add('show'), 10);
+        setTimeout(() => {
+            generalAlertToast.classList.remove('show');
+            setTimeout(() => generalAlertToast.style.display = 'none', 300);
+        }, 3000);
+    }
+    
+    // إغلاق المودال عند الضغط في الخارج
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('orderDetailsModal')) {
+            closeOrderDetailsModal();
         }
-    </script>
+        if (event.target == document.getElementById('manualInvoiceModal')) {
+            closeManualInvoiceModal();
+        }
+    }
+</script>
 </body>
 </html>
+
+
