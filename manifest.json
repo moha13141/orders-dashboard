@@ -1,5 +1,5 @@
 {
-  "name": "لوحة تحكم الطلبات - Enjoy The Gifts",
+  "name": "Admin - Enjoy The Gifts",
   "short_name": "طلبات Gifts",
   "start_url": ".",
   "display": "standalone",
@@ -8,7 +8,7 @@
   "description": "لوحة تحكم لإدارة طلبات متجر Enjoy The Gifts.",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "icon-512",
       "sizes": "512x512",
       "type": "image/png"
     }
