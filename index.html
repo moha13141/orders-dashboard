@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
+    <title> Admin - Enjoy The Gifts</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H288zm-192 0c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32H192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H96zM0 64C0 46.33 14.33 32 32 32h192c17.67 0 32 14.33 32 32v96c0 17.67-14.33 32-32 32H32c-17.67 0-32-14.33-32-32V64z'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
             --new-order-color: #007bff; --in-progress-color: #ffc107; --not-confirmed-color: #6c757d;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; direction: rtl; text-align: right; overflow-x: hidden; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--background-color ); color: var(--text-color); line-height: 1.6; direction: rtl; text-align: right; overflow-x: hidden; }
         .container { max-width: 1300px; margin: 20px auto; padding: 0 20px; }
         header { background-color: var(--card-background); padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
         header .container { display: flex; justify-content: space-between; align-items: center; }
@@ -83,7 +83,7 @@
             border-radius: 5px; 
             font-family: 'Cairo', sans-serif; 
         }
-        .manual-invoice-form-container .modern-select { -webkit-appearance: none; appearance: none; background: var(--background-color) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%20viewBox%3D%220%200%20292%20292%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.7%200-13.3%202.7-17.5%207c-4.3%204.3-6.9%2010.8-6.9%2017.5s2.7%2013.3%207%2017.5l128%20128c4.2%204.2%2010.8%206.9%2017.5%206.9s13.3-2.7%2017.5-6.9l128-128c4.2-4.2%206.9-10.8%206.9-17.5s-2.7-13.3-7-17.5z%22%2F%3E%3C%2Fsvg%3E') no-repeat right 15px center; background-size: 12px; padding-right: 45px; }
+        .manual-invoice-form-container .modern-select { -webkit-appearance: none; appearance: none; background: var(--background-color) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%20viewBox%3D%220%200%20292%20292%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.7%200-13.3%202.7-17.5%207c-4.3%204.3-6.9%2010.8-6.9%2017.5s2.7%2013.3%207%2017.5l128%20128c4.2%204.2%2010.8%206.9%2017.5%206.9s13.3-2.7%2017.5-6.9l128-128c4.2-4.2%206.9-10.8%206.9-17.5s-2.7-13.3-7-17.5z%22%2F%3E%3C%2Fsvg%3E' ) no-repeat right 15px center; background-size: 12px; padding-right: 45px; }
         .manual-invoice-form-container .total-price-display { background-color: var(--background-color); border: 2px dashed var(--primary-color); padding: 15px; text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
         .manual-invoice-form-container .total-price-display span { color: var(--success-color); }
         .delete-confirmation-toast { position: absolute; bottom: 10px; right: 10px; background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; display: none; flex-direction: column; gap: 10px; text-align: center; }
@@ -308,9 +308,9 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .status-badge.new { background-color: var(--new-order-color); color: white; }
-        .status-badge.processing { background-color: var(--in-progress-color); color: white; }
-        .status-badge.completed { background-color: var(--success-color); color: white; }
+        .status-badge.new-order { background-color: var(--new-order-color); color: white; }
+        .status-badge.in-progress { background-color: var(--in-progress-color); color: white; }
+        .status-badge.completed-order { background-color: var(--success-color); color: white; }
         .status-badge.not-confirmed { background-color: var(--not-confirmed-color); color: white; }
 
         /* Enhanced action buttons */
@@ -349,11 +349,12 @@
             gap: 10px;
         }
         
-        .order-details-list {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
+    .order-details-list {
+    list-style-type: none; /* <-- هذا هو الشكل الصحيح */
+    padding: 0;
+    margin: 0;
+}
+
         
         .order-details-list li {
             margin-bottom: 12px;
@@ -389,7 +390,6 @@
     </style>
 </head>
 <body>
-    <!-- Login Modal -->
     <div id="loginModal" class="modal-overlay" style="display: flex;">
         <div class="login-content">
             <h2><i class="fas fa-gift"></i> لوحة تحكم Enjoy The Gifts</h2>
@@ -400,7 +400,6 @@
         </div>
     </div>
 
-    <!-- Name Input Modal -->
     <div id="namePromptModal" class="modal-overlay">
         <div class="login-content">
             <h2><i class="fas fa-user"></i> مرحباً بك!</h2>
@@ -411,7 +410,6 @@
         </div>
     </div>
     
-    <!-- Admin Password Modal -->
     <div id="adminPasswordModal" class="modal-overlay">
         <div class="login-content">
             <button class="close-login" onclick="document.getElementById('adminPasswordModal').style.display='none'">×</button>
@@ -423,7 +421,6 @@
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
     <div id="deleteConfirmationModal" class="delete-confirmation-modal">
         <div class="delete-confirmation-content">
             <h3 style="margin-bottom: 20px; color: var(--danger-color);"><i class="fas fa-exclamation-triangle"></i> تأكيد الحذف</h3>
@@ -435,13 +432,11 @@
         </div>
     </div>
 
-    <!-- Image Zoom Overlay -->
     <div class="image-zoom-overlay" onclick="this.style.display='none'">
         <span class="close-zoom">×</span>
         <img src="" class="zoomed-image">
     </div>
 
-    <!-- Main Content -->
     <div id="mainContent" style="display:none;">
         <header>
             <div class="container">
@@ -467,17 +462,14 @@
         </div>
     </div>
 
-    <!-- Order Details Modal -->
     <div id="orderDetailsModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button" onclick="this.closest('.modal-overlay').style.display = 'none'">×</button>
             <div id="orderDetailsContent" class="order-details-modal-content">
-                <!-- Order details will be populated here -->
-            </div>
+                </div>
         </div>
     </div>
 
-    <!-- Enhanced Manual Invoice Modal -->
     <div id="manualInvoiceModal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-button" onclick="this.closest('.modal-overlay').style.display = 'none'">×</button>
@@ -487,7 +479,6 @@
                 </div>
                 
                 <form id="manualInvoiceForm">
-                    <!-- Hidden input to store original order ID for updates -->
                     <input type="hidden" id="originalOrderId" name="originalOrderId">
                     
                     <div class="form-group">
@@ -533,16 +524,14 @@
                         <label><i class="fas fa-city"></i> اختر المدينة/المحافظة:</label>
                         <select id="manualDeliveryCitySelect" class="modern-select" onchange="updateManualTotal()">
                             <option value="" disabled selected>-- اختر المدينة/المحافظة --</option>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
+                            </select>
                     </div>
                     
                     <div class="form-group" id="manualDeliveryMethodGroup" style="display:none;">
                         <label><i class="fas fa-truck"></i> طريقة التوصيل:</label>
                         <select id="manualDeliveryMethodSelect" class="modern-select" onchange="updateManualTotal()">
                             <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
-                            <!-- Options will be populated by JavaScript -->
-                        </select>
+                            </select>
                     </div>
                     
                     <div class="form-group">
@@ -582,7 +571,6 @@
         </div>
     </div>
     
-    <!-- Enhanced Admin Panel -->
     <div id="adminPanel" style="display:none;">
         <header>
             <div class="container">
@@ -663,16 +651,13 @@
         </div>
     </div>
 
-    <!-- Loading Indicator -->
     <div id="loadingIndicator" class="loading-indicator">
         <div class="loading-spinner"></div>
     </div>
-
 <script>
     // =======================================================
     // Configuration & Global Variables
     // =======================================================
-    // !!! انتبه: تأكد من وضع رابط الـ Web App الجديد هنا بعد نشره في الخطوة الثالثة
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwMqhj68lLTH_UMMzLQ_Yl3eLiWXIs7yse554H24jWSu_zpyny30Fz3-iCuoJNHmheQ/exec";
     const CORRECT_PASSWORD = "12345";
     const ADMIN_PASSWORD = "admin123";
@@ -694,7 +679,7 @@
 
     const deliveryOptionsData = {
         cairo_giza: [
-            { text: 'توصيل للمنزل (60 جنيه)', value: 'توصيل للمنزل', cost: 60 },
+            { text: 'توصيل للمنزل (60 جنيه )', value: 'توصيل للمنزل', cost: 60 },
             { text: 'أقرب محطة مترو (40 جنيه)', value: 'أقرب محطة مترو', cost: 40 }
         ],
         other_governorates: [
@@ -795,7 +780,6 @@
             adminPasswordInput.focus();
         }
     }
-
     // =======================================================
     // Data Fetching & Rendering
     // =======================================================
@@ -803,7 +787,9 @@
         if (!isAuthenticated) return;
         showLoading(true);
         try {
-            const response = await fetch(`${WEB_APP_URL}?action=getOrders`);
+            const response = await fetch(`${WEB_APP_URL}?action=getOrders`, {
+                mode: 'cors'
+            });
             const result = await response.json();
             if (result.status === 'error') throw new Error(result.message);
             
@@ -845,9 +831,9 @@
             <div class="order-card-header">
                 <span class="order-date"><i class="fas fa-calendar-alt"></i> ${formatDateTime(order['وقت وتاريخ الطلب'])}</span>
                 <div class="order-card-actions">
-                    <button class="action-btn view" onclick="viewOrderDetails('${order['معرف الطلب']}')" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
-                    <button class="action-btn edit" onclick="editOrder('${order['معرف الطلب']}')" title="تعديل"><i class="fas fa-edit"></i></button>
-                    <button class="action-btn delete" onclick="confirmDelete('${order['معرف الطلب']}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
+                    <button class="action-btn view" onclick="event.stopPropagation(); viewOrderDetails('${order['معرف الطلب']}')" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn edit" onclick="event.stopPropagation(); editOrder('${order['معرف الطلب']}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="event.stopPropagation(); confirmDelete('${order['معرف الطلب']}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </div>
             <div class="order-card-body">
@@ -855,9 +841,10 @@
                 <p><strong><i class="fas fa-phone"></i> الهاتف:</strong> ${order['رقم الهاتف'] || 'غير محدد'}</p>
                 <p><strong><i class="fas fa-gift"></i> المنتج:</strong> ${order['المنتج'] || 'غير محدد'}</p>
                 <p><strong><i class="fas fa-money-bill-wave"></i> التكلفة:</strong> ${order['التكلفة الإجمالية'] || '0'} ج.م</p>
-                <p><strong><i class="fas fa-tasks"></i> الحالة:</strong> <span class="status-badge ${statusClass.replace('-', '')}">${order['حالة الطلب'] || 'غير محدد'}</span></p>
+                <p><strong><i class="fas fa-tasks"></i> الحالة:</strong> <span class="status-badge ${statusClass}">${order['حالة الطلب'] || 'غير محدد'}</span></p>
                 ${order['تم الإنشاء بواسطة'] ? `<p class="made-by"><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة: ${order['تم الإنشاء بواسطة']}</p>` : ''}
             </div>`;
+        card.addEventListener('click', () => viewOrderDetails(order['معرف الطلب']));
         return card;
     }
 
@@ -898,24 +885,26 @@
         document.getElementById('notConfirmedOrdersCount').textContent = counts['not-confirmed'];
     }
 
-    async function fetchLogs() {
-        const updateContent = document.getElementById('updateLogContent');
-        const deleteContent = document.getElementById('deleteLogContent');
-        updateContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
-        deleteContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
-        try {
-            const response = await fetch(`${WEB_APP_URL}?action=getLogs`);
-            const result = await response.json();
-            if (result.status !== 'success') throw new Error(result.message);
-            updateLogs = result.data.updates || [];
-            deleteLogs = result.data.deletes || [];
-            renderLogTable('update', updateLogs);
-            renderLogTable('delete', deleteLogs);
-        } catch(error) {
-            console.error('Error fetching logs:', error);
-            updateContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل التعديلات</p>';
-            deleteContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل المحذوفات</p>';
-        }
+   async function fetchLogs() {
+      const updateContent = document.getElementById('updateLogContent');
+      const deleteContent = document.getElementById('deleteLogContent');
+      updateContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
+      deleteContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
+      try {
+        const response = await fetch(`${WEB_APP_URL}?action=getLogs`, {
+          mode: 'cors'
+        });
+        const result = await response.json();
+        if (result.status !== 'success') throw new Error(result.message);
+        updateLogs = result.data.updates || [];
+        deleteLogs = result.data.deletes || [];
+        renderLogTable('update', updateLogs);
+        renderLogTable('delete', deleteLogs);
+      } catch(error) {
+        console.error('Error fetching logs:', error);
+        updateContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل التعديلات</p>';
+        deleteContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل المحذوفات</p>';
+      }
     }
 
     function switchLogTab(tabElement, contentId) {
@@ -933,21 +922,21 @@
         const fromDate = fromDateStr ? new Date(fromDateStr) : null;
         const toDate = toDateStr ? new Date(new Date(toDateStr).setHours(23, 59, 59)) : null;
 
-        const dateFilter = (timestamp) => (!fromDate || timestamp >= fromDate) && (!toDate || timestamp <= toDate);
+        const dateFilter = (timestamp) => (!fromDate || new Date(timestamp) >= fromDate) && (!toDate || new Date(timestamp) <= toDate);
         const statusFilterFunc = (order) => !statusFilter || order['حالة الطلب'] === statusFilter;
 
         renderLogTable('update', updateLogs.filter(log => 
-            dateFilter(new Date(log['توقيت التعديل'])) && 
+            dateFilter(log['توقيت التعديل']) && 
             JSON.stringify(log).toLowerCase().includes(searchTerm)
         ));
         
         renderLogTable('delete', deleteLogs.filter(log => 
-            dateFilter(new Date(log['توقيت الحذف'])) && 
+            dateFilter(log['توقيت الحذف']) && 
             JSON.stringify(log).toLowerCase().includes(searchTerm)
         ));
         
         const filteredOrders = allOrdersData.filter(order => 
-            dateFilter(new Date(order['وقت وتاريخ الطلب'])) && 
+            dateFilter(order['وقت وتاريخ الطلب']) && 
             statusFilterFunc(order) &&
             [order['الاسم الكامل'], order['رقم الهاتف'], order['المنتج'], order['حالة الطلب'], order['تم الإنشاء بواسطة']].join(' ').toLowerCase().includes(searchTerm)
         );
@@ -1015,7 +1004,7 @@
     }
 
     // =======================================================
-    // Manual Invoice Creation
+    // Manual Invoice Creation & Editing
     // =======================================================
     function openManualInvoiceModal(orderData = null) {
         const modal = document.getElementById('manualInvoiceModal');
@@ -1023,42 +1012,39 @@
         form.reset();
         document.getElementById('createdBy').value = currentUser;
         
-        // Reset fields
         document.getElementById('manualGovernorateSelect').value = '';
         document.getElementById('manualDeliveryCitySelectContainer').style.display = 'none';
         document.getElementById('manualDeliveryMethodGroup').style.display = 'none';
         document.getElementById('manualShippingCost').value = '0';
         document.getElementById('manualTotalPriceValue').textContent = '0';
-        document.getElementById('manualTotalPriceContainer').style.display = 'block';
         
-        // Set editing mode if order data exists
         if (orderData) {
+            form.dataset.editingOrderId = orderData['معرف الطلب'];
             document.getElementById('manualName').value = orderData['الاسم الكامل'] || '';
             document.getElementById('manualPhone').value = orderData['رقم الهاتف'] || '';
             document.getElementById('manualProducts').value = orderData['المنتج'] || '';
             document.getElementById('manualProductPrice').value = orderData['سعر المنتجات'] || '0';
             document.getElementById('manualAddress').value = orderData['العنوان'] || '';
             document.getElementById('manualLocationLink').value = orderData['رابط الموقع'] || '';
-            
-            // Set governorate and delivery method
+            document.getElementById('manualOrderStatusSelect').value = orderData['حالة الطلب'] || 'طلب جديد';
+
             if (orderData['المنطقة'] === 'القاهرة والجيزة') {
                 document.getElementById('manualGovernorateSelect').value = 'cairo_giza';
-                populateManualDeliveryMethods();
-                setTimeout(() => {
-                    document.getElementById('manualDeliveryMethodSelect').value = orderData['طريقة التوصيل'] || '';
-                    updateManualTotal();
-                }, 100);
-            } else {
+            } else if (orderData['المنطقة']) {
                 document.getElementById('manualGovernorateSelect').value = 'other_governorates';
-                populateManualDeliveryMethods();
-                setTimeout(() => {
-                    document.getElementById('manualDeliveryCitySelect').value = orderData['المنطقة'] || '';
-                    updateManualTotal();
-                }, 100);
             }
             
-            document.getElementById('manualOrderStatusSelect').value = orderData['حالة الطلب'] || 'طلب جديد';
-            form.dataset.editingOrderId = orderData['معرف الطلب'];
+            populateManualDeliveryMethods();
+
+            setTimeout(() => {
+                if (orderData['المنطقة'] === 'القاهرة والجيزة') {
+                    document.getElementById('manualDeliveryMethodSelect').value = orderData['طريقة التوصيل'] || '';
+                } else if (orderData['المنطقة']) {
+                    document.getElementById('manualDeliveryCitySelect').value = orderData['المنطقة'] || '';
+                }
+                updateManualTotal();
+            }, 100);
+
         } else {
             delete form.dataset.editingOrderId;
         }
@@ -1068,14 +1054,16 @@
 
     function populateManualDeliveryMethods() {
         const governorate = document.getElementById('manualGovernorateSelect').value;
+        const citySelectContainer = document.getElementById('manualDeliveryCitySelectContainer');
+        const methodSelectContainer = document.getElementById('manualDeliveryMethodGroup');
         const citySelect = document.getElementById('manualDeliveryCitySelect');
         const methodSelect = document.getElementById('manualDeliveryMethodSelect');
         
         citySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
         methodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
         
-        document.getElementById('manualDeliveryCitySelectContainer').style.display = 'none';
-        document.getElementById('manualDeliveryMethodGroup').style.display = 'none';
+        citySelectContainer.style.display = 'none';
+        methodSelectContainer.style.display = 'none';
         
         if (governorate === 'cairo_giza') {
             deliveryOptionsData.cairo_giza.forEach(option => {
@@ -1085,7 +1073,7 @@
                 opt.dataset.cost = option.cost;
                 methodSelect.appendChild(opt);
             });
-            document.getElementById('manualDeliveryMethodGroup').style.display = 'block';
+            methodSelectContainer.style.display = 'block';
         } else if (governorate === 'other_governorates') {
             deliveryOptionsData.other_governorates.forEach(option => {
                 const opt = document.createElement('option');
@@ -1094,7 +1082,7 @@
                 opt.dataset.cost = option.cost;
                 citySelect.appendChild(opt);
             });
-            document.getElementById('manualDeliveryCitySelectContainer').style.display = 'block';
+            citySelectContainer.style.display = 'block';
         }
         
         updateManualTotal();
@@ -1128,14 +1116,12 @@
         const form = event.target;
         const isEditing = !!form.dataset.editingOrderId;
         
-        // *** التعديل الرئيسي هنا ***
-        // تم تجميع بيانات الطلب بشكل كامل وصحيح
         const orderData = {
             'الاسم الكامل': document.getElementById('manualName').value.trim(),
             'رقم الهاتف': document.getElementById('manualPhone').value.trim(),
             'المنتج': document.getElementById('manualProducts').value.trim(),
             'سعر المنتجات': parseFloat(document.getElementById('manualProductPrice').value) || 0,
-            'تكلفة الشحن': parseFloat(document.getElementById('manualShippingCost').value) || 0, // <-- تم إضافة هذا السطر المهم
+            'تكلفة الشحن': parseFloat(document.getElementById('manualShippingCost').value) || 0,
             'العنوان': document.getElementById('manualAddress').value.trim(),
             'رابط الموقع': document.getElementById('manualLocationLink').value.trim(),
             'التكلفة الإجمالية': parseFloat(document.getElementById('manualTotalCostHidden').value) || 0,
@@ -1149,49 +1135,50 @@
             orderData['طريقة التوصيل'] = document.getElementById('manualDeliveryMethodSelect').value;
         } else if (governorate === 'other_governorates') {
             orderData['المنطقة'] = document.getElementById('manualDeliveryCitySelect').value;
-            orderData['طريقة التوصيل'] = 'توصيل خارج القاهرة';
+            orderData['طريقة التوصيل'] = 'باقي المحافظات'; // قيمة ثابتة
         }
         
         showLoading(true);
         try {
+            // *** START CORRECTION ***
+            // تم تحويل البيانات إلى كائن مسطح وإرسالها كـ URLSearchParams
+            // بدلاً من JSON.stringify الذي كان يسبب المشكلة
             const payload = { 
-                action: isEditing ? 'updateOrder' : 'createOrder', 
-                orderData: orderData, // تم تغيير اسم المفتاح إلى orderData ليتوافق مع السكريبت الجديد
-                user: currentUser 
+              action: isEditing ? 'updateOrder' : 'createOrder', 
+              orderData: JSON.stringify(orderData), // يتم تحويل كائن البيانات إلى نص
+              user: currentUser 
             };
             
-            if (isEditing) payload.orderId = form.dataset.editingOrderId;
+            if (isEditing) {
+                payload.orderId = form.dataset.editingOrderId;
+            }
             
             const response = await fetch(WEB_APP_URL, { 
                 method: 'POST', 
-                mode: 'cors', // مهم لإرسال الطلبات بين المواقع
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify(payload) 
+                mode: 'cors',
+                // تم حذف الهيدر الخاص بـ Content-Type
+                body: new URLSearchParams(payload) // يتم استخدام URLSearchParams
             });
+            // *** END CORRECTION ***
+
             const result = await response.json();
             
             if (result.status === 'success') {
                 document.getElementById('manualInvoiceModal').style.display = 'none';
                 showNotification(isEditing ? 'تم تحديث الطلب بنجاح!' : 'تم إنشاء الفاتورة بنجاح!', 'success');
-                // تحديث البيانات في الواجهة مباشرةً بدلاً من إعادة الجلب الكامل
-                if (isEditing) {
-                    const index = allOrdersData.findIndex(o => o['معرف الطلب'] === payload.orderId);
-                    if (index !== -1) {
-                        allOrdersData[index] = { ...allOrdersData[index], ...orderData };
-                    }
-                } else {
-                     // لإعادة جلب كل شيء بعد الإضافة لضمان التحديث الكامل
-                    await fetchOrdersFromGoogleSheet(false);
-                }
-                // إعادة عرض الطلبات
-                renderOrders(staffVisibleOrders);
+                await fetchOrdersFromGoogleSheet(false);
                 if (document.getElementById('adminPanel').style.display === 'block') {
-                    renderAllOrdersCards(allOrdersData);
-                    updateAdminSummaryCards(allOrdersData);
+                    await fetchLogs();
+                    // تحديث بيانات الطلبات بالكامل بعد التعديل أو الإنشاء
+                    const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                    const fullDataResult = await fullDataResponse.json();
+                    if(fullDataResult.status === 'success') {
+                        allOrdersData = fullDataResult.data || [];
+                        filterAdminContent();
+                    }
                 }
-
             } else { 
-                throw new Error(result.message); 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
             }
         } catch (error) {
             console.error('Submit Error:', error);
@@ -1200,7 +1187,6 @@
             showLoading(false); 
         }
     }
-
     // =======================================================
     // Order Operations (View, Edit, Delete, Restore)
     // =======================================================
@@ -1217,78 +1203,22 @@
             <div class="invoice-header">
                 <h2><i class="fas fa-file-invoice"></i> 🧾 فاتورة Enjoy The Gifts</h2>
             </div>
-            
             <ul class="order-details-list">
-                <li>
-                    <span class="label"><i class="fas fa-calendar-alt"></i> تاريخ ووقت الطلب:</span>
-                    <span class="value">${formatDateTime(order['وقت وتاريخ الطلب'])}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-user"></i> الاسم الكامل:</span>
-                    <span class="value">${order['الاسم الكامل'] || 'غير محدد'}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-phone"></i> رقم الموبايل:</span>
-                    <span class="value">${order['رقم الهاتف'] || 'غير محدد'}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-gift"></i> المنتجات المطلوبة:</span>
-                    <span class="value">
-                        ${formatProducts(order['المنتج'])}
-                    </span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</span>
-                    <span class="value">${order['العنوان'] || 'غير محدد'}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-link"></i> للينك الموقع:</span>
-                    <span class="value">
-                        ${order['رابط الموقع'] ? 
-                            `<a href="${order['رابط الموقع']}" target="_blank" style="color: var(--primary-color);">
-                                <i class="fas fa-external-link-alt"></i> ${order['رابط الموقع']}
-                            </a>` : 
-                            'غير محدد'}
-                    </span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-map"></i> المحافظة:</span>
-                    <span class="value">${order['المنطقة'] || 'غير محدد'}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-truck"></i> نوع التوصيل:</span>
-                    <span class="value">${order['طريقة التوصيل'] || 'غير محدد'}</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-shipping-fast"></i> تكلفة الشحن:</span>
-                    <span class="value">${order['تكلفة الشحن'] || '0'} جنيه</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-tag"></i> سعر المنتجات:</span>
-                    <span class="value">${order['سعر المنتجات'] || '0'} جنيه</span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-money-bill-wave"></i> التكلفة الإجمالية:</span>
-                    <span class="value" style="font-weight: bold; color: var(--success-color);">
-                        ${order['التكلفة الإجمالية'] || '0'} جنيه
-                    </span>
-                </li>
-                <li>
-                    <span class="label"><i class="fas fa-tasks"></i> حالة الطلب:</span>
-                    <span class="value"><span class="status-badge ${statusMap[order['حالة الطلب']]}">${order['حالة الطلب'] || 'غير محدد'}</span></span>
-                </li>
-                ${order['تم الإنشاء بواسطة'] ? `
-                <li>
-                    <span class="label"><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة:</span>
-                    <span class="value">${order['تم الإنشاء بواسطة']}</span>
-                </li>` : ''}
+                <li><span class="label"><i class="fas fa-calendar-alt"></i> تاريخ ووقت الطلب:</span><span class="value">${formatDateTime(order['وقت وتاريخ الطلب'])}</span></li>
+                <li><span class="label"><i class="fas fa-user"></i> الاسم الكامل:</span><span class="value">${order['الاسم الكامل'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-phone"></i> رقم الموبايل:</span><span class="value">${order['رقم الهاتف'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-gift"></i> المنتجات المطلوبة:</span><span class="value">${formatProducts(order['المنتج'])}</span></li>
+                <li><span class="label"><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</span><span class="value">${order['العنوان'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-link"></i> للينك الموقع:</span><span class="value">${order['رابط الموقع'] ? `<a href="${order['رابط الموقع']}" target="_blank" style="color: var(--primary-color);"><i class="fas fa-external-link-alt"></i> ${order['رابط الموقع']}</a>` : 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-map"></i> المحافظة:</span><span class="value">${order['المنطقة'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-truck"></i> نوع التوصيل:</span><span class="value">${order['طريقة التوصيل'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-shipping-fast"></i> تكلفة الشحن:</span><span class="value">${order['تكلفة الشحن'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-tag"></i> سعر المنتجات:</span><span class="value">${order['سعر المنتجات'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-money-bill-wave"></i> التكلفة الإجمالية:</span><span class="value" style="font-weight: bold; color: var(--success-color);">${order['التكلفة الإجمالية'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-tasks"></i> حالة الطلب:</span><span class="value"><span class="status-badge ${statusMap[order['حالة الطلب']]}">${order['حالة الطلب'] || 'غير محدد'}</span></span></li>
+                ${order['تم الإنشاء بواسطة'] ? `<li><span class="label"><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة:</span><span class="value">${order['تم الإنشاء بواسطة']}</span></li>` : ''}
             </ul>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="copy-btn" onclick="copyOrderDetails('${orderId}')">
-                    <i class="fas fa-copy"></i> نسخ التفاصيل
-                </button>
-            </div>`;
+            <div style="text-align: center; margin-top: 30px;"><button class="copy-btn" onclick="copyOrderDetails('${orderId}')"><i class="fas fa-copy"></i> نسخ التفاصيل</button></div>`;
         document.getElementById('orderDetailsModal').style.display = 'flex';
     }
     
@@ -1359,25 +1289,34 @@ ${formatProductsForCopy(order['المنتج'])}
         if (!orderId) return;
         showLoading(true);
         try {
+            // *** START CORRECTION ***
+            // تم تغيير جسم الطلب ليتم إرساله كـ URLSearchParams
             const response = await fetch(WEB_APP_URL, { 
-                method: 'POST', 
-                mode: 'cors',
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
-                    action: 'deleteOrder', 
-                    orderId: orderId, 
-                    user: currentUser 
-                }) 
+              method: 'POST', 
+              mode: 'cors', 
+              body: new URLSearchParams({ // استخدام URLSearchParams
+                action: 'deleteOrder', 
+                orderId: orderId, 
+                user: currentUser 
+              }) 
             });
+            // *** END CORRECTION ***
+        
             const result = await response.json();
             if (result.status === 'success') {
                 showNotification('تم حذف الطلب بنجاح!', 'success');
-                await fetchOrdersFromGoogleSheet(false); // Refresh data
+                await fetchOrdersFromGoogleSheet(false); 
                 if (document.getElementById('adminPanel').style.display === 'block') {
-                    await fetchLogs(); // Refresh logs if admin panel is open
+                    await fetchLogs();
+                    const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                    const fullDataResult = await fullDataResponse.json();
+                    if(fullDataResult.status === 'success') {
+                        allOrdersData = fullDataResult.data || [];
+                        filterAdminContent();
+                    }
                 }
             } else { 
-                throw new Error(result.message); 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
             }
         } catch (error) {
             showNotification(`فشل حذف الطلب: ${error.message}`, 'error');
@@ -1391,23 +1330,32 @@ ${formatProductsForCopy(order['المنتج'])}
         buttonElement.disabled = true;
         buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
         try {
+            // *** START CORRECTION ***
+            // تم تغيير جسم الطلب ليتم إرساله كـ URLSearchParams
             const response = await fetch(WEB_APP_URL, { 
                 method: 'POST', 
                 mode: 'cors',
-                headers: { 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ 
+                body: new URLSearchParams({ // استخدام URLSearchParams
                     action: 'restoreOrder', 
                     logId: logId,
                     user: currentUser 
                 }) 
             });
+            // *** END CORRECTION ***
+
             const result = await response.json();
             if (result.status === 'success') {
                 showNotification('تم استرجاع الطلب بنجاح!', 'success');
                 await fetchLogs();
                 await fetchOrdersFromGoogleSheet(false);
+                const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                const fullDataResult = await fullDataResponse.json();
+                if(fullDataResult.status === 'success') {
+                   allOrdersData = fullDataResult.data || [];
+                   filterAdminContent();
+                }
             } else { 
-                throw new Error(result.message); 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
             }
         } catch (error) {
             showNotification(`فشل استرجاع الطلب: ${error.message}`, 'error');
