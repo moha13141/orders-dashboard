@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Admin - Enjoy The Gifts</title>
+    <title>لوحة تحكم الطلبات - Enjoy The Gifts</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H288zm-192 0c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32H192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H96zM0 64C0 46.33 14.33 32 32 32h192c17.67 0 32 14.33 32 32v96c0 17.67-14.33 32-32 32H32c-17.67 0-32-14.33-32-32V64z'/%3E%3C/svg%3E">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,13 +75,13 @@
         .order-details-modal-content h3 { margin-bottom: 20px; font-size: 2rem; }
         .order-details-modal-content .made-by { font-size: 0.85rem; color: #999; margin-top: 20px; font-weight: bold; }
         .manual-invoice-form-container label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 700; }
-        .manual-invoice-form-container input, .manual-invoice-form-container textarea, .manual-invoice-form-container select { 
-            width: 100%; 
-            padding: 12px; 
-            margin-bottom: 20px; 
-            border: 1px solid #ccc; 
-            border-radius: 5px; 
-            font-family: 'Cairo', sans-serif; 
+        .manual-invoice-form-container input, .manual-invoice-form-container textarea, .manual-invoice-form-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Cairo', sans-serif;
         }
         .manual-invoice-form-container .modern-select { -webkit-appearance: none; appearance: none; background: var(--background-color) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%20viewBox%3D%220%200%20292%20292%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.7%200-13.3%202.7-17.5%207c-4.3%204.3-6.9%2010.8-6.9%2017.5s2.7%2013.3%207%2017.5l128%20128c4.2%204.2%2010.8%206.9%2017.5%206.9s13.3-2.7%2017.5-6.9l128-128c4.2-4.2%206.9-10.8%206.9-17.5s-2.7-13.3-7-17.5z%22%2F%3E%3C%2Fsvg%3E' ) no-repeat right 15px center; background-size: 12px; padding-right: 45px; }
         .manual-invoice-form-container .total-price-display { background-color: var(--background-color); border: 2px dashed var(--primary-color); padding: 15px; text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
@@ -99,7 +99,7 @@
         .loading-indicator { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 6000; }
         .loading-spinner { border: 8px solid #f3f3f3; border-top: 8px solid var(--primary-color); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
+
         /* Fullscreen Admin Panel */
         #adminLogModal.modal-overlay { align-items: stretch; justify-content: stretch; }
         #adminLogModal .modal-content { max-width: 100%; width: 100%; height: 100%; border-radius: 0; display: flex; flex-direction: column; padding: 20px; }
@@ -119,16 +119,16 @@
         .restore-btn { background-color: var(--success-color); color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease; }
         .restore-btn:hover { background-color: #218838; }
         .restore-btn:disabled { background-color: var(--light-text); cursor: not-allowed; }
-        
+
         /* Enhanced form styling */
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--secondary-color); }
-        .form-group input, .form-group select, .form-group textarea { 
-            width: 100%; 
-            padding: 12px; 
-            border: 2px solid var(--border-color); 
-            border-radius: 8px; 
-            font-family: 'Cairo', sans-serif; 
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
             transition: border-color 0.3s ease;
         }
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -139,7 +139,7 @@
             background-color: var(--background-color);
             color: var(--light-text);
         }
-        
+
         /* Delete Confirmation Modal */
         .delete-confirmation-modal {
             position: fixed;
@@ -167,7 +167,7 @@
             gap: 15px;
             margin-top: 25px;
         }
-        
+
         /* Order Image Zoom */
         .order-image-container {
             margin: 20px 0;
@@ -209,7 +209,7 @@
             font-size: 2rem;
             cursor: pointer;
         }
-        
+
         /* Copy Button */
         .copy-btn {
             background-color: var(--info-color);
@@ -228,7 +228,7 @@
             background-color: #138496;
             transform: translateY(-2px);
         }
-        
+
         /* Responsive design improvements */
         @media (max-width: 768px) {
             .dashboard-header { flex-direction: column; text-align: center; }
@@ -241,12 +241,12 @@
             .modal-content { padding: 25px 15px; }
             .delete-confirmation-buttons { flex-direction: column; }
         }
-        
+
         /* Admin panel orders grid */
-        .admin-orders-grid-container { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
-            gap: 20px; 
+        .admin-orders-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
             padding: 15px;
         }
 
@@ -288,14 +288,14 @@
         .notification.error { background-color: var(--danger-color); }
         .notification.info { background-color: var(--info-color); }
         .notification.warning { background-color: var(--warning-color); }
-        
-        @keyframes slideInRight { 
-            from { transform: translateX(100%); opacity: 0; } 
-            to { transform: translateX(0); opacity: 1; } 
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
-        @keyframes slideOutRight { 
-            from { transform: translateX(0); opacity: 1; } 
-            to { transform: translateX(100%); opacity: 0; } 
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
         }
 
         /* Enhanced status badges */
@@ -331,7 +331,7 @@
             background-color: rgba(255,255,255,0.1);
             transform: scale(1.1);
         }
-        
+
         /* Invoice Styles */
         .invoice-header {
             text-align: center;
@@ -339,7 +339,7 @@
             padding-bottom: 15px;
             border-bottom: 2px solid var(--primary-color);
         }
-        
+
         .invoice-header h2 {
             font-size: 1.8rem;
             color: var(--secondary-color);
@@ -348,14 +348,14 @@
             justify-content: center;
             gap: 10px;
         }
-        
+
     .order-details-list {
     list-style-type: none; /* <-- هذا هو الشكل الصحيح */
     padding: 0;
     margin: 0;
 }
 
-        
+
         .order-details-list li {
             margin-bottom: 12px;
             padding-bottom: 12px;
@@ -363,7 +363,7 @@
             display: flex;
             align-items: flex-start;
         }
-        
+
         .order-details-list .label {
             font-weight: bold;
             color: var(--secondary-color);
@@ -372,16 +372,16 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .order-details-list .value {
             flex: 1;
         }
-        
+
         .products-list {
             padding: 0;
             margin: 5px 0 0 20px;
         }
-        
+
         .products-list li {
             margin-bottom: 5px;
             border-bottom: none;
@@ -409,7 +409,7 @@
             <p id="nameError" class="error-message">الرجاء إدخال اسم صحيح (على الأقل حرفين).</p>
         </div>
     </div>
-    
+
     <div id="adminPasswordModal" class="modal-overlay">
         <div class="login-content">
             <button class="close-login" onclick="document.getElementById('adminPasswordModal').style.display='none'">×</button>
@@ -477,40 +477,40 @@
                 <div class="invoice-header">
                     <h2><i class="fas fa-file-invoice-dollar"></i> إنشاء فاتورة جديدة</h2>
                 </div>
-                
+
                 <form id="manualInvoiceForm">
                     <input type="hidden" id="originalOrderId" name="originalOrderId">
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-user"></i> الاسم الكامل:</label>
                         <input type="text" id="manualName" required placeholder="أدخل الاسم الكامل للعميل">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-phone"></i> رقم الهاتف:</label>
                         <input type="tel" id="manualPhone" required placeholder="01xxxxxxxxx">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-gift"></i> المنتجات المطلوبة:</label>
                         <textarea id="manualProducts" rows="3" required placeholder="وصف تفصيلي للمنتجات"></textarea>
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-tag"></i> سعر المنتجات (بدون الشحن):</label>
                         <input type="number" id="manualProductPrice" min="0" value="0" required oninput="updateManualTotal()">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</label>
                         <input type="text" id="manualAddress" required placeholder="مثال: حدائق القبة، شارع الجمهورية، عمارة 15، شقة 3">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-map-pin"></i> رابط موقعك على الخريطة (اختياري):</label>
                         <input type="url" id="manualLocationLink" placeholder="انسخ رابط موقعك من خرائط جوجل هنا">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-building"></i> اختر المحافظة:</label>
                         <select id="manualGovernorateSelect" class="modern-select" required onchange="populateManualDeliveryMethods()">
@@ -519,33 +519,33 @@
                             <option value="other_governorates">باقي المحافظات</option>
                         </select>
                     </div>
-                    
+
                     <div id="manualDeliveryCitySelectContainer" class="form-group" style="display:none;">
                         <label><i class="fas fa-city"></i> اختر المدينة/المحافظة:</label>
                         <select id="manualDeliveryCitySelect" class="modern-select" onchange="updateManualTotal()">
                             <option value="" disabled selected>-- اختر المدينة/المحافظة --</option>
                             </select>
                     </div>
-                    
+
                     <div class="form-group" id="manualDeliveryMethodGroup" style="display:none;">
                         <label><i class="fas fa-truck"></i> طريقة التوصيل:</label>
                         <select id="manualDeliveryMethodSelect" class="modern-select" onchange="updateManualTotal()">
                             <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
                             </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-truck-loading"></i> تكلفة الشحن:</label>
                         <input type="number" id="manualShippingCost" min="0" value="0" readonly>
                     </div>
-                    
+
                     <div class="form-group" id="manualTotalPriceContainer">
                         <div class="total-price-display">
                             <i class="fas fa-money-bill-wave"></i> السعر الإجمالي (شامل التوصيل): <span id="manualTotalPriceValue">0</span> جنيه
                         </div>
                         <input type="hidden" id="manualTotalCostHidden" name="totalCost">
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-tasks"></i> حالة الطلب:</label>
                         <select id="manualOrderStatusSelect" class="modern-select" required>
@@ -555,12 +555,12 @@
                             <option value="لم يتم التأكيد">لم يتم التأكيد</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                         <label><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة:</label>
                         <input type="text" id="createdBy" readonly value="">
                     </div>
-                    
+
                     <div style="text-align: center; margin-top: 30px;">
                         <button type="submit" class="invoice-btn">
                             <i class="fas fa-save"></i> حفظ الفاتورة
@@ -570,7 +570,6 @@
             </div>
         </div>
     </div>
-    
     <div id="adminPanel" style="display:none;">
         <header>
             <div class="container">
@@ -586,10 +585,7 @@
             <div class="log-panel-container">
                 <div class="log-panel-header">
                     <h2><i class="fas fa-tachometer-alt"></i> لوحة الإدارة الكاملة</h2>
-                    <button class="cta-button" onclick="closeAdminPanel()">
-                        <i class="fas fa-times"></i> إغلاق
-                    </button>
-                </div>
+                    </div>
                 
                 <div id="adminSummarySection" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
                     <h3 style="margin-bottom: 20px; color: var(--secondary-color); text-align: center;">
@@ -653,8 +649,9 @@
 
     <div id="loadingIndicator" class="loading-indicator">
         <div class="loading-spinner"></div>
+    
     </div>
-<script>
+    <script>
     // =======================================================
     // Configuration & Global Variables
     // =======================================================
@@ -1242,7 +1239,7 @@
         const order = getOrderById(orderId);
         if (!order) return;
         
-        const details = `🧾 فاتورة Enjoy The Gifts
+        const details = `*🧾 فاتورة Enjoy The Gifts*
 
 📅 تاريخ ووقت الطلب: ${formatDateTime(order['وقت وتاريخ الطلب'])}
 👤 الاسم الكامل: ${order['الاسم الكامل']}
