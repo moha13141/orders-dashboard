@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Enjoy The Gifts</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23667eea' d='M507.73 103.04l-63.02-63.02c-6.24-6.25-16.38-6.25-22.62 0l-22.62 22.62c-6.25 6.25-6.25 16.38 0 22.62l63.02 63.02c6.25 6.25 16.38 6.25 22.62 0l22.62-22.62c6.25-6.24 6.25-16.37 0-22.62zM288 192c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32h192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H288zm-192 0c-17.67 0-32 14.33-32 32v224c0 17.67 14.33 32 32 32H192c17.67 0 32-14.33 32-32V224c0-17.67-14.33-32-32-32H96zM0 64C0 46.33 14.33 32 32 32h192c17.67 0 32 14.33 32 32v96c0 17.67-14.33 32-32 32H32c-17.67 0-32-14.33-32-32V64z'/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <style>
+        :root {
+            --primary-color: #667eea; --secondary-color: #764ba2; --accent-color: #a276e8;
+            --background-color: #f4f7f6; --card-background: #ffffff; --text-color: #333333;
+            --light-text: #666666; --border-color: #e0e0e0; --success-color: #28a745;
+            --danger-color: #dc3545; --info-color: #17a2b8; --warning-color: #ffc107;
+            --new-order-color: #007bff; --in-progress-color: #ffc107; --not-confirmed-color: #6c757d;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--background-color ); color: var(--text-color); line-height: 1.6; direction: rtl; text-align: right; overflow-x: hidden; }
+        .container { max-width: 1300px; margin: 20px auto; padding: 0 20px; }
+        header { background-color: var(--card-background); padding: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 900; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .header-actions { display: flex; gap: 15px; align-items: center; }
+        .admin-btn { background-color: var(--danger-color); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; border: none; transition: all 0.3s ease; }
+        .admin-btn:hover { background-color: #c82333; transform: translateY(-2px); }
+        .welcome-message { font-size: 1rem; font-weight: 700; color: var(--secondary-color); }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
+        .dashboard-header h1 { font-size: 2.5rem; color: var(--secondary-color); }
+        .cta-button { background-color: var(--primary-color); color: var(--card-background); padding: 12px 25px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .cta-button:hover { background-color: #5a6fd8; transform: translateY(-2px); }
+        .summary-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .summary-card { background-color: var(--card-background); padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .summary-card .icon { font-size: 2.5rem; }
+        .summary-card .details h3 { font-size: 1.1rem; color: var(--light-text); }
+        .summary-card .details .count { font-size: 2rem; font-weight: 900; }
+        .summary-card.profit .icon, .summary-card.profit .details .count { color: var(--success-color); }
+        .summary-card.total .icon, .summary-card.total .details .count { color: var(--primary-color); }
+        .summary-card.new .icon, .summary-card.new .details .count { color: var(--new-order-color); }
+        .summary-card.processing .icon, .summary-card.processing .details .count { color: var(--in-progress-color); }
+        .summary-card.completed .icon, .summary-card.completed .details .count { color: var(--success-color); }
+        .summary-card.not-confirmed .icon, .summary-card.not-confirmed .details .count { color: var(--not-confirmed-color); }
+        .filters-card { background-color: var(--card-background); padding: 25px; border-radius: 12px; margin-bottom: 30px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; align-items: flex-end; }
+        .filter-group { flex: 1; }
+        .filters-card label { display: block; margin-bottom: 8px; font-weight: 700; }
+        .filters-card input, .filters-card select { width: 100%; padding: 10px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Cairo', sans-serif; }
+        .orders-grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; margin-top: 20px; }
+        .order-card { background-color: var(--card-background); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); padding: 20px; position: relative; cursor: pointer; border-right: 8px solid var(--border-color); transition: all 0.3s ease; }
+        .order-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .order-card.status-new-order { border-right-color: var(--new-order-color); }
+        .order-card.status-in-progress { border-right-color: var(--in-progress-color); }
+        .order-card.status-completed-order { border-right-color: var(--success-color); }
+        .order-card.status-not-confirmed { border-right-color: var(--not-confirmed-color); }
+        .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .order-card-header .order-date { color: var(--light-text); font-weight: 600; }
+        .order-card-actions { display: flex; gap: 10px; }
+        .order-card-actions .action-icon { background: none; border: none; font-size: 1.2rem; color: var(--light-text); cursor: pointer; padding: 5px; transition: all 0.3s ease; }
+        .order-card-actions .action-icon:hover { color: var(--primary-color); transform: scale(1.2); }
+        .order-card-body p { margin-bottom: 8px; }
+        .order-card-body strong { color: var(--secondary-color); }
+        .order-card-body .order-status-text { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; color: #fff; }
+        .order-card-body .order-status-text.new-order { background-color: var(--new-order-color); }
+        .order-card-body .order-status-text.in-progress { background-color: var(--in-progress-color); }
+        .order-card-body .order-status-text.completed-order { background-color: var(--success-color); }
+        .order-card-body .order-status-text.not-confirmed { background-color: var(--not-confirmed-color); }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 3000; display: none; justify-content: center; align-items: center; animation: fadeIn 0.3s; }
+        .modal-content { background: var(--card-background); padding: 40px; border-radius: 15px; text-align: center; max-width: 600px; width: 90%; position: relative; animation: slideIn 0.4s; max-height: 90vh; overflow-y: auto; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideIn { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-content .close-button { position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 2rem; color: var(--light-text); cursor: pointer; z-index: 10; transition: all 0.3s ease; }
+        .modal-content .close-button:hover { color: var(--danger-color); transform: scale(1.2); }
+        .order-details-modal-content { text-align: right; }
+        .order-details-modal-content h3 { margin-bottom: 20px; font-size: 2rem; }
+        .order-details-modal-content .made-by { font-size: 0.85rem; color: #999; margin-top: 20px; font-weight: bold; }
+        .manual-invoice-form-container label { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 700; }
+        .manual-invoice-form-container input, .manual-invoice-form-container textarea, .manual-invoice-form-container select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Cairo', sans-serif;
+        }
+        .manual-invoice-form-container .modern-select { -webkit-appearance: none; appearance: none; background: var(--background-color) url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292%22%20height%3D%22292%22%20viewBox%3D%220%200%20292%20292%22%3E%3Cpath%20fill%3D%22%23667eea%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.7%200-13.3%202.7-17.5%207c-4.3%204.3-6.9%2010.8-6.9%2017.5s2.7%2013.3%207%2017.5l128%20128c4.2%204.2%2010.8%206.9%2017.5%206.9s13.3-2.7%2017.5-6.9l128-128c4.2-4.2%206.9-10.8%206.9-17.5s-2.7-13.3-7-17.5z%22%2F%3E%3C%2Fsvg%3E' ) no-repeat right 15px center; background-size: 12px; padding-right: 45px; }
+        .manual-invoice-form-container .total-price-display { background-color: var(--background-color); border: 2px dashed var(--primary-color); padding: 15px; text-align: center; font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; }
+        .manual-invoice-form-container .total-price-display span { color: var(--success-color); }
+        .delete-confirmation-toast { position: absolute; bottom: 10px; right: 10px; background-color: var(--card-background); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; display: none; flex-direction: column; gap: 10px; text-align: center; }
+        .delete-confirmation-toast.show { display: flex; }
+        .login-content { background: var(--card-background); padding: 40px; border-radius: 15px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        .login-content h2 { margin-bottom: 25px; color: var(--secondary-color); }
+        .login-content input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 8px; text-align: center; font-family: 'Cairo', sans-serif; }
+        .login-content button { background-color: var(--primary-color); color: var(--card-background); padding: 12px 30px; border-radius: 8px; border: none; cursor: pointer; font-weight: 700; transition: all 0.3s ease; }
+        .login-content button:hover { background-color: #5a6fd8; transform: translateY(-2px); }
+        .login-content .error-message { color: var(--danger-color); margin-top: 15px; font-weight: 600; display: none; }
+        .login-content .close-login { position: absolute; top: 15px; left: 15px; background: none; border: none; font-size: 1.5rem; color: var(--light-text); cursor: pointer; transition: all 0.3s ease; }
+        .login-content .close-login:hover { color: var(--danger-color); transform: scale(1.2); }
+        .loading-indicator { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 6000; }
+        .loading-spinner { border: 8px solid #f3f3f3; border-top: 8px solid var(--primary-color); border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Fullscreen Admin Panel */
+        #adminLogModal.modal-overlay { align-items: stretch; justify-content: stretch; }
+        #adminLogModal .modal-content { max-width: 100%; width: 100%; height: 100%; border-radius: 0; display: flex; flex-direction: column; padding: 20px; }
+        .log-panel-container { display: flex; flex-direction: column; height: 100%; }
+        .log-panel-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 2px solid var(--border-color); margin-bottom: 15px; }
+        .log-panel-header h2 { display: flex; align-items: center; gap: 10px; color: var(--secondary-color); }
+        .log-tabs { display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); margin-bottom: 15px; }
+        .log-tab { padding: 10px 20px; cursor: pointer; font-weight: 700; border: none; background: none; border-bottom: 3px solid transparent; transition: all 0.3s ease; }
+        .log-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+        .log-tab:hover { color: var(--primary-color); }
+        .log-content { display: none; flex-grow: 1; overflow-y: auto; }
+        .log-content.active { display: block; }
+        .log-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .log-table th, .log-table td { padding: 12px 8px; border: 1px solid var(--border-color); text-align: right; }
+        .log-table th { background-color: var(--background-color); font-weight: 700; position: sticky; top: 0; }
+        .log-details { white-space: pre-wrap; max-height: 150px; overflow-y: auto; display: block; background: #efefef; padding: 5px; border-radius: 4px; font-size: 0.8rem; }
+        .restore-btn { background-color: var(--success-color); color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.3s ease; }
+        .restore-btn:hover { background-color: #218838; }
+        .restore-btn:disabled { background-color: var(--light-text); cursor: not-allowed; }
+
+        /* Enhanced form styling */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--secondary-color); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        .form-group input[readonly] {
+            background-color: var(--background-color);
+            color: var(--light-text);
+        }
+
+        /* Delete Confirmation Modal */
+        .delete-confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 4000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .delete-confirmation-content {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+        .delete-confirmation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        /* Order Image Zoom */
+        .order-image-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .order-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .order-image:hover {
+            transform: scale(1.05);
+        }
+        .image-zoom-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 5000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .zoomed-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            background-color: var(--info-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 15px auto;
+            transition: all 0.3s ease;
+        }
+        .copy-btn:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive design improvements */
+        @media (max-width: 768px) {
+            .dashboard-header { flex-direction: column; text-align: center; }
+            .dashboard-header h1 { font-size: 2rem; }
+            .header-actions { flex-direction: column; gap: 10px; }
+            .summary-cards-grid { grid-template-columns: 1fr; }
+            .orders-grid-container { grid-template-columns: 1fr; }
+            .filters-card { grid-template-columns: 1fr; }
+            .log-tabs { flex-wrap: wrap; }
+            .modal-content { padding: 25px 15px; }
+            .delete-confirmation-buttons { flex-direction: column; }
+        }
+
+        /* Admin panel orders grid */
+        .admin-orders-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 15px;
+        }
+
+        /* Enhanced Invoice Button Styling */
+        .invoice-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .invoice-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Enhanced notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 9999;
+            max-width: 350px;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .notification.success { background-color: var(--success-color); }
+        .notification.error { background-color: var(--danger-color); }
+        .notification.info { background-color: var(--info-color); }
+        .notification.warning { background-color: var(--warning-color); }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* Enhanced status badges */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .status-badge.new-order { background-color: var(--new-order-color); color: white; }
+        .status-badge.in-progress { background-color: var(--in-progress-color); color: white; }
+        .status-badge.completed-order { background-color: var(--success-color); color: white; }
+        .status-badge.not-confirmed { background-color: var(--not-confirmed-color); color: white; }
+
+        /* Enhanced action buttons */
+        .action-btn {
+            background: none;
+            border: 2px solid transparent;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .action-btn.view { color: var(--info-color); }
+        .action-btn.edit { color: var(--warning-color); }
+        .action-btn.delete { color: var(--danger-color); }
+        .action-btn:hover {
+            border-color: currentColor;
+            background-color: rgba(255,255,255,0.1);
+            transform: scale(1.1);
+        }
+
+        /* Invoice Styles */
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .invoice-header h2 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+    .order-details-list {
+    list-style-type: none; /* <-- هذا هو الشكل الصحيح */
+    padding: 0;
+    margin: 0;
+}
+
+
+        .order-details-list li {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--border-color);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .order-details-list .label {
+            font-weight: bold;
+            color: var(--secondary-color);
+            min-width: 150px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-details-list .value {
+            flex: 1;
+        }
+
+        .products-list {
+            padding: 0;
+            margin: 5px 0 0 20px;
+        }
+
+        .products-list li {
+            margin-bottom: 5px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginModal" class="modal-overlay" style="display: flex;">
+        <div class="login-content">
+            <h2><i class="fas fa-gift"></i> لوحة تحكم Enjoy The Gifts</h2>
+            <p style="margin-bottom: 20px; color: var(--light-text);">يرجى إدخال كلمة المرور للوصول إلى النظام</p>
+            <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور" autofocus>
+            <button onclick="checkPassword()"><i class="fas fa-sign-in-alt"></i> دخول</button>
+            <p id="loginError" class="error-message">كلمة المرور غير صحيحة. يرجى المحاولة مرة أخرى.</p>
+        </div>
+    </div>
+
+    <div id="namePromptModal" class="modal-overlay">
+        <div class="login-content">
+            <h2><i class="fas fa-user"></i> مرحباً بك!</h2>
+            <p style="margin-bottom: 20px; color: var(--light-text);">يرجى إدخال اسمك لتوثيق العمليات في النظام</p>
+            <input type="text" id="nameInput" placeholder="أدخل اسمك الكامل هنا" maxlength="50">
+            <button onclick="setCurrentUserAndContinue()"><i class="fas fa-arrow-right"></i> متابعة</button>
+            <p id="nameError" class="error-message">الرجاء إدخال اسم صحيح (على الأقل حرفين).</p>
+        </div>
+    </div>
+
+    <div id="adminPasswordModal" class="modal-overlay">
+        <div class="login-content">
+            <button class="close-login" onclick="document.getElementById('adminPasswordModal').style.display='none'">×</button>
+            <h2><i class="fas fa-user-shield"></i> الدخول لقسم الإدارة</h2>
+            <p style="margin-bottom: 20px; color: var(--light-text);">هذا القسم مخصص للمديرين فقط</p>
+            <input type="password" id="adminPasswordInput" placeholder="أدخل كلمة مرور المدير">
+            <button onclick="checkAdminPassword()"><i class="fas fa-unlock"></i> تأكيد</button>
+            <p id="adminLoginError" class="error-message">كلمة المرور غير صحيحة.</p>
+        </div>
+    </div>
+
+    <div id="deleteConfirmationModal" class="delete-confirmation-modal">
+        <div class="delete-confirmation-content">
+            <h3 style="margin-bottom: 20px; color: var(--danger-color);"><i class="fas fa-exclamation-triangle"></i> تأكيد الحذف</h3>
+            <p>هل أنت متأكد من حذف هذا الطلب؟ سيتم نقله إلى سجل المحذوفات ويمكن استرجاعه لاحقاً.</p>
+            <div class="delete-confirmation-buttons">
+                <button id="confirmDeleteBtn" class="cta-button" style="background-color: var(--danger-color);">نعم، احذف</button>
+                <button onclick="document.getElementById('deleteConfirmationModal').style.display='none'" class="cta-button" style="background-color: var(--light-text);">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="image-zoom-overlay" onclick="this.style.display='none'">
+        <span class="close-zoom">×</span>
+        <img src="" class="zoomed-image">
+    </div>
+
+    <div id="mainContent" style="display:none;">
+        <header>
+            <div class="container">
+                <a href="#" class="logo"><i class="fas fa-gift"></i>Enjoy The Gifts</a>
+                <div class="header-actions">
+                    <span id="welcomeMessage" class="welcome-message"></span>
+                    <button id="adminPanelBtn" class="admin-btn"><i class="fas fa-user-shield"></i> قسم الإدارة</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="dashboard-header">
+                <h1><i class="fas fa-clock"></i> الطلبات الحديثة (آخر 48 ساعة)</h1>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <button id="createManualInvoiceBtn" class="invoice-btn"><i class="fas fa-file-invoice-dollar"></i> إنشاء فاتورة</button>
+                    <button class="cta-button" onclick="fetchOrdersFromGoogleSheet(true)"><i class="fas fa-sync-alt"></i> تحديث</button>
+                </div>
+            </div>
+
+            <div id="filterResultsCount" style="text-align: center; margin-bottom: 20px; font-weight: bold; display: none; color: var(--primary-color);"></div>
+            <div id="ordersGridContainer" class="orders-grid-container"></div>
+        </div>
+    </div>
+
+    <div id="orderDetailsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button" onclick="this.closest('.modal-overlay').style.display = 'none'">×</button>
+            <div id="orderDetailsContent" class="order-details-modal-content">
+                </div>
+        </div>
+    </div>
+
+    <div id="manualInvoiceModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-button" onclick="this.closest('.modal-overlay').style.display = 'none'">×</button>
+            <div class="manual-invoice-form-container">
+                <div class="invoice-header">
+                    <h2><i class="fas fa-file-invoice-dollar"></i> إنشاء فاتورة جديدة</h2>
+                </div>
+
+                <form id="manualInvoiceForm">
+                    <input type="hidden" id="originalOrderId" name="originalOrderId">
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> الاسم الكامل:</label>
+                        <input type="text" id="manualName" required placeholder="أدخل الاسم الكامل للعميل">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> رقم الهاتف:</label>
+                        <input type="tel" id="manualPhone" required placeholder="01xxxxxxxxx">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-gift"></i> المنتجات المطلوبة:</label>
+                        <textarea id="manualProducts" rows="3" required placeholder="وصف تفصيلي للمنتجات"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> سعر المنتجات (بدون الشحن):</label>
+                        <input type="number" id="manualProductPrice" min="0" value="0" required oninput="updateManualTotal()">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</label>
+                        <input type="text" id="manualAddress" required placeholder="مثال: حدائق القبة، شارع الجمهورية، عمارة 15، شقة 3">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-pin"></i> رابط موقعك على الخريطة (اختياري):</label>
+                        <input type="url" id="manualLocationLink" placeholder="انسخ رابط موقعك من خرائط جوجل هنا">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> اختر المحافظة:</label>
+                        <select id="manualGovernorateSelect" class="modern-select" required onchange="populateManualDeliveryMethods()">
+                            <option value="" disabled selected>-- اختر المحافظة --</option>
+                            <option value="cairo_giza">القاهرة والجيزة</option>
+                            <option value="other_governorates">باقي المحافظات</option>
+                        </select>
+                    </div>
+
+                    <div id="manualDeliveryCitySelectContainer" class="form-group" style="display:none;">
+                        <label><i class="fas fa-city"></i> اختر المدينة/المحافظة:</label>
+                        <select id="manualDeliveryCitySelect" class="modern-select" onchange="updateManualTotal()">
+                            <option value="" disabled selected>-- اختر المدينة/المحافظة --</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group" id="manualDeliveryMethodGroup" style="display:none;">
+                        <label><i class="fas fa-truck"></i> طريقة التوصيل:</label>
+                        <select id="manualDeliveryMethodSelect" class="modern-select" onchange="updateManualTotal()">
+                            <option value="" disabled selected>-- اختر طريقة التوصيل --</option>
+                            </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-truck-loading"></i> تكلفة الشحن:</label>
+                        <input type="number" id="manualShippingCost" min="0" value="0" readonly>
+                    </div>
+
+                    <div class="form-group" id="manualTotalPriceContainer">
+                        <div class="total-price-display">
+                            <i class="fas fa-money-bill-wave"></i> السعر الإجمالي (شامل التوصيل): <span id="manualTotalPriceValue">0</span> جنيه
+                        </div>
+                        <input type="hidden" id="manualTotalCostHidden" name="totalCost">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-tasks"></i> حالة الطلب:</label>
+                        <select id="manualOrderStatusSelect" class="modern-select" required>
+                            <option value="طلب جديد">طلب جديد</option>
+                            <option value="قيد التنفيذ">قيد التنفيذ</option>
+                            <option value="طلب مكتمل">طلب مكتمل</option>
+                            <option value="لم يتم التأكيد">لم يتم التأكيد</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة:</label>
+                        <input type="text" id="createdBy" readonly value="">
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        <button type="submit" class="invoice-btn">
+                            <i class="fas fa-save"></i> حفظ الفاتورة
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="adminPanel" style="display:none;">
+        <header>
+            <div class="container">
+                <a href="#" class="logo"><i class="fas fa-gift"></i>Enjoy The Gifts - لوحة الإدارة</a>
+                <div class="header-actions">
+                    <span id="adminWelcomeMessage" class="welcome-message"></span>
+                    <button class="admin-btn" onclick="closeAdminPanel()"><i class="fas fa-sign-out-alt"></i> خروج</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="log-panel-container">
+                <div class="log-panel-header">
+                    <h2><i class="fas fa-tachometer-alt"></i> لوحة الإدارة الكاملة</h2>
+                    </div>
+                
+                <div id="adminSummarySection" style="padding: 20px; border: 2px solid var(--border-color); border-radius: 12px; margin-bottom: 20px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                    <h3 style="margin-bottom: 20px; color: var(--secondary-color); text-align: center;">
+                        <i class="fas fa-chart-pie"></i> نظرة عامة على جميع الطلبات
+                    </h3>
+                    <div class="summary-cards-grid">
+                        <div class="summary-card profit"><div class="icon"><i class="fas fa-sack-dollar"></i></div><div class="details"><h3>إجمالي الربح</h3><span class="count" id="totalProfitCount">0 ج.م</span></div></div>
+                        <div class="summary-card total"><div class="icon"><i class="fas fa-box"></i></div><div class="details"><h3>إجمالي الطلبات</h3><span class="count" id="totalOrdersCount">0</span></div></div>
+                        <div class="summary-card new"><div class="icon"><i class="fas fa-bell"></i></div><div class="details"><h3>طلبات جديدة</h3><span class="count" id="newOrdersCount">0</span></div></div>
+                        <div class="summary-card processing"><div class="icon"><i class="fas fa-shipping-fast"></i></div><div class="details"><h3>قيد التنفيذ</h3><span class="count" id="processingOrdersCount">0</span></div></div>
+                        <div class="summary-card completed"><div class="icon"><i class="fas fa-check-circle"></i></div><div class="details"><h3>طلبات مكتملة</h3><span class="count" id="completedOrdersCount">0</span></div></div>
+                        <div class="summary-card not-confirmed"><div class="icon"><i class="fas fa-times-circle"></i></div><div class="details"><h3>لم يتم التأكيد</h3><span class="count" id="notConfirmedOrdersCount">0</span></div></div>
+                    </div>
+                </div>
+
+                <div class="filters-card" style="margin-top: 15px; padding: 15px;">
+                    <div class="filter-group">
+                        <label><i class="fas fa-search"></i> بحث في السجل:</label>
+                        <input type="text" id="logSearchFilter" onkeyup="filterAdminContent()" placeholder="ابحث بالاسم أو التفاصيل...">
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar-alt"></i> من تاريخ:</label>
+                        <input type="date" id="logFromDateFilter" onchange="filterAdminContent()">
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-calendar-alt"></i> إلى تاريخ:</label>
+                        <input type="date" id="logToDateFilter" onchange="filterAdminContent()">
+                    </div>
+                    <div class="filter-group">
+                        <label><i class="fas fa-filter"></i> حالة الطلب:</label>
+                        <select id="statusFilter" onchange="filterAdminContent()">
+                            <option value="">جميع الحالات</option>
+                            <option value="طلب جديد">طلب جديد</option>
+                            <option value="قيد التنفيذ">قيد التنفيذ</option>
+                            <option value="طلب مكتمل">طلب مكتمل</option>
+                            <option value="لم يتم التأكيد">لم يتم التأكيد</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="log-tabs">
+                    <button class="log-tab active" onclick="switchLogTab(this, 'allOrdersContent')"><i class="fas fa-boxes"></i> كافة الطلبات</button>
+                    <button class="log-tab" onclick="switchLogTab(this, 'updateLogContent')"><i class="fas fa-edit"></i> سجل التعديلات</button>
+                    <button class="log-tab" onclick="switchLogTab(this, 'deleteLogContent')"><i class="fas fa-trash-alt"></i> سجل المحذوفات</button>
+                </div>
+
+                <div id="allOrdersContent" class="log-content active">
+                    <div class="admin-orders-grid-container">
+                        <p style="text-align: center; color: var(--light-text);"><i class="fas fa-spinner fa-spin"></i> جاري تحميل كافة الطلبات...</p>
+                    </div>
+                </div>
+                <div id="updateLogContent" class="log-content">
+                    <p style="text-align: center; color: var(--light-text);"><i class="fas fa-spinner fa-spin"></i> جاري تحميل سجل التعديلات...</p>
+                </div>
+                <div id="deleteLogContent" class="log-content">
+                    <p style="text-align: center; color: var(--light-text);"><i class="fas fa-spinner fa-spin"></i> جاري تحميل سجل المحذوفات...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loadingIndicator" class="loading-indicator">
+        <div class="loading-spinner"></div>
+    
+    </div>
+    <script>
+    // =======================================================
+    // Configuration & Global Variables
+    // =======================================================
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwMqhj68lLTH_UMMzLQ_Yl3eLiWXIs7yse554H24jWSu_zpyny30Fz3-iCuoJNHmheQ/exec";
+    const CORRECT_PASSWORD = "12345";
+    const ADMIN_PASSWORD = "admin123";
+    
+    let allOrdersData = [];
+    let staffVisibleOrders = [];
+    let currentUser = '';
+    let updateLogs = [];
+    let deleteLogs = [];
+    let isAuthenticated = false;
+    let currentOrderToDelete = null;
+    
+    const statusMap = {
+        "طلب جديد": "new-order",
+        "قيد التنفيذ": "in-progress", 
+        "طلب مكتمل": "completed-order",
+        "لم يتم التأكيد": "not-confirmed"
+    };
+
+    const deliveryOptionsData = {
+        cairo_giza: [
+            { text: 'توصيل للمنزل (60 جنيه )', value: 'توصيل للمنزل', cost: 60 },
+            { text: 'أقرب محطة مترو (40 جنيه)', value: 'أقرب محطة مترو', cost: 40 }
+        ],
+        other_governorates: [
+            { text: 'الإسكندرية: 90 جنيه', value: 'الإسكندرية', cost: 90 },
+            { text: 'القليوبية: 90 جنيه', value: 'القليوبية', cost: 90 },
+            { text: 'البحيرة: 90 جنيه', value: 'البحيرة', cost: 90 },
+            { text: 'الغربية: 90 جنيه', value: 'الغربية', cost: 90 },
+            { text: 'المنصورة: 90 جنيه', value: 'المنصورة', cost: 90 },
+            { text: 'طنطا: 90 جنيه', value: 'طنطا', cost: 90 },
+            { text: 'دمياط: 90 جنيه', value: 'دمياط', cost: 90 },
+            { text: 'كفر الشيخ: 90 جنيه', value: 'كفر الشيخ', cost: 90 },
+            { text: 'الإسماعيلية: 90 جنيه', value: 'الإسماعيلية', cost: 90 },
+            { text: 'بورسعيد: 90 جنيه', value: 'بورسعيد', cost: 90 },
+            { text: 'السويس: 90 جنيه', value: 'السويس', cost: 90 },
+            { text: 'الشرقية: 90 جنيه', value: 'الشرقية', cost: 90 },
+            { text: 'المنوفية: 90 جنيه', value: 'المنوفية', cost: 90 },
+            { text: 'محافظات الصعيد: 150 جنيه', value: 'محافظات الصعيد', cost: 150 },
+            { text: 'دهب: 200 جنيه', value: 'دهب', cost: 200 },
+            { text: 'الغردقة: 200 جنيه', value: 'الغردقة', cost: 200 },
+            { text: 'شرم الشيخ: 200 جنيه', value: 'شرم الشيخ', cost: 200 },
+            { text: 'البحر الأحمر: 180 جنيه', value: 'البحر الأحمر', cost: 180 },
+            { text: 'مرسى مطروح: 150 جنيه', value: 'مرسى مطروح', cost: 150 }
+        ]
+    };
+
+    // =======================================================
+    // Initial Setup & Event Listeners
+    // =======================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        preventDirectAccess();
+        document.getElementById('adminPanelBtn').addEventListener('click', () => document.getElementById('adminPasswordModal').style.display = 'flex');
+        document.getElementById('createManualInvoiceBtn').addEventListener('click', () => openManualInvoiceModal(null));
+        document.getElementById('passwordInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
+        document.getElementById('nameInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') setCurrentUserAndContinue(); });
+        document.getElementById('adminPasswordInput').addEventListener('keypress', (e) => { if (e.key === 'Enter') checkAdminPassword(); });
+        document.getElementById('manualInvoiceForm').addEventListener('submit', handleManualInvoiceSubmit);
+        document.getElementById('confirmDeleteBtn').addEventListener('click', () => executeDelete(currentOrderToDelete));
+    });
+
+    // =======================================================
+    // Security & Access Control
+    // =======================================================
+    function preventDirectAccess() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    // =======================================================
+    // Authentication Flow
+    // =======================================================
+    function checkPassword() {
+        const passwordInput = document.getElementById('passwordInput');
+        const loginError = document.getElementById('loginError');
+        if (passwordInput.value === CORRECT_PASSWORD) {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('namePromptModal').style.display = 'flex';
+            document.getElementById('nameInput').focus();
+            loginError.style.display = 'none';
+            passwordInput.value = '';
+        } else {
+            loginError.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+        }
+    }
+
+    function setCurrentUserAndContinue() {
+        const nameInput = document.getElementById('nameInput');
+        const nameError = document.getElementById('nameError');
+        const name = nameInput.value.trim();
+        
+        if (name && name.length >= 2 && /^[a-zA-Zأ-ي\s]+$/.test(name)) {
+            currentUser = name;
+            document.getElementById('welcomeMessage').textContent = `مرحباً, ${currentUser}`;
+            document.getElementById('namePromptModal').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            isAuthenticated = true;
+            fetchOrdersFromGoogleSheet(false);
+            nameError.style.display = 'none';
+        } else {
+            nameError.style.display = 'block';
+            nameInput.focus();
+        }
+    }
+
+    function checkAdminPassword() {
+        const adminPasswordInput = document.getElementById('adminPasswordInput');
+        const adminLoginError = document.getElementById('adminLoginError');
+        if (adminPasswordInput.value === ADMIN_PASSWORD) {
+            document.getElementById('adminPasswordModal').style.display = 'none';
+            adminPasswordInput.value = '';
+            adminLoginError.style.display = 'none';
+            openAdminPanel();
+        } else {
+            adminLoginError.style.display = 'block';
+            adminPasswordInput.value = '';
+            adminPasswordInput.focus();
+        }
+    }
+    // =======================================================
+    // Data Fetching & Rendering
+    // =======================================================
+    async function fetchOrdersFromGoogleSheet(showSuccess = false) {
+        if (!isAuthenticated) return;
+        showLoading(true);
+        try {
+            const response = await fetch(`${WEB_APP_URL}?action=getOrders`, {
+                mode: 'cors'
+            });
+            const result = await response.json();
+            if (result.status === 'error') throw new Error(result.message);
+            
+            allOrdersData = result.data || [];
+            const twoDaysAgo = new Date(Date.now() - 2 * 24 * 60 * 60 * 1000);
+            staffVisibleOrders = allOrdersData.filter(order => new Date(order['وقت وتاريخ الطلب']) > twoDaysAgo);
+
+            renderOrders(staffVisibleOrders);
+            if (showSuccess) showNotification('تم تحديث الطلبات بنجاح!', 'success');
+        } catch (error) {
+            console.error('Error fetching orders:', error);
+            showNotification(`فشل جلب الطلبات: ${error.message}`, 'error');
+        } finally {
+            showLoading(false);
+        }
+    }
+
+    function renderOrders(orders) {
+        const container = document.getElementById('ordersGridContainer');
+        const countElement = document.getElementById('filterResultsCount');
+        container.innerHTML = '';
+        countElement.textContent = `عرض ${orders.length} طلب من آخر 48 ساعة`;
+        countElement.style.display = 'block';
+
+        if (orders.length === 0) {
+            container.innerHTML = `<div style="text-align: center; margin-top: 50px; color: var(--light-text);"><i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 20px;"></i><p style="font-size: 1.2rem;">لا توجد طلبات حديثة في آخر 48 ساعة</p></div>`;
+            return;
+        }
+
+        orders.sort((a, b) => new Date(b['وقت وتاريخ الطلب']) - new Date(a['وقت وتاريخ الطلب']));
+        orders.forEach(order => container.appendChild(createOrderCard(order)));
+    }
+
+    function createOrderCard(order) {
+        const card = document.createElement('div');
+        const statusClass = statusMap[order['حالة الطلب']] || 'new-order';
+        card.className = `order-card status-${statusClass}`;
+        card.innerHTML = `
+            <div class="order-card-header">
+                <span class="order-date"><i class="fas fa-calendar-alt"></i> ${formatDateTime(order['وقت وتاريخ الطلب'])}</span>
+                <div class="order-card-actions">
+                    <button class="action-btn view" onclick="event.stopPropagation(); viewOrderDetails('${order['معرف الطلب']}')" title="عرض التفاصيل"><i class="fas fa-eye"></i></button>
+                    <button class="action-btn edit" onclick="event.stopPropagation(); editOrder('${order['معرف الطلب']}')" title="تعديل"><i class="fas fa-edit"></i></button>
+                    <button class="action-btn delete" onclick="event.stopPropagation(); confirmDelete('${order['معرف الطلب']}')" title="حذف"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+            <div class="order-card-body">
+                <p><strong><i class="fas fa-user"></i> العميل:</strong> ${order['الاسم الكامل'] || 'غير محدد'}</p>
+                <p><strong><i class="fas fa-phone"></i> الهاتف:</strong> ${order['رقم الهاتف'] || 'غير محدد'}</p>
+                <p><strong><i class="fas fa-gift"></i> المنتج:</strong> ${order['المنتج'] || 'غير محدد'}</p>
+                <p><strong><i class="fas fa-money-bill-wave"></i> التكلفة:</strong> ${order['التكلفة الإجمالية'] || '0'} ج.م</p>
+                <p><strong><i class="fas fa-tasks"></i> الحالة:</strong> <span class="status-badge ${statusClass}">${order['حالة الطلب'] || 'غير محدد'}</span></p>
+                ${order['تم الإنشاء بواسطة'] ? `<p class="made-by"><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة: ${order['تم الإنشاء بواسطة']}</p>` : ''}
+            </div>`;
+        card.addEventListener('click', () => viewOrderDetails(order['معرف الطلب']));
+        return card;
+    }
+
+    // =======================================================
+    // Admin Panel & Logs Management
+    // =======================================================
+    function openAdminPanel() {
+        document.getElementById('mainContent').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('adminWelcomeMessage').textContent = `مرحباً, ${currentUser}`;
+        updateAdminSummaryCards(allOrdersData);
+        renderAllOrdersCards(allOrdersData);
+        fetchLogs();
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminPanel').style.display = 'none';
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('mainContent').style.display = 'block';
+    }
+
+    function updateAdminSummaryCards(data) {
+        const totalProfit = data.reduce((sum, order) => sum + (parseFloat(order['التكلفة الإجمالية']) || 0), 0);
+        document.getElementById('totalProfitCount').textContent = totalProfit.toLocaleString('ar-EG') + ' ج.م';
+        
+        const counts = { new: 0, processing: 0, completed: 0, 'not-confirmed': 0 };
+        data.forEach(order => {
+            if (order['حالة الطلب'] === 'طلب جديد') counts.new++;
+            else if (order['حالة الطلب'] === 'قيد التنفيذ') counts.processing++;
+            else if (order['حالة الطلب'] === 'طلب مكتمل') counts.completed++;
+            else if (order['حالة الطلب'] === 'لم يتم التأكيد') counts['not-confirmed']++;
+        });
+        
+        document.getElementById('totalOrdersCount').textContent = data.length;
+        document.getElementById('newOrdersCount').textContent = counts.new;
+        document.getElementById('processingOrdersCount').textContent = counts.processing;
+        document.getElementById('completedOrdersCount').textContent = counts.completed;
+        document.getElementById('notConfirmedOrdersCount').textContent = counts['not-confirmed'];
+    }
+
+   async function fetchLogs() {
+      const updateContent = document.getElementById('updateLogContent');
+      const deleteContent = document.getElementById('deleteLogContent');
+      updateContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
+      deleteContent.innerHTML = '<p style="text-align: center;"><i class="fas fa-spinner fa-spin"></i> جاري التحميل...</p>';
+      try {
+        const response = await fetch(`${WEB_APP_URL}?action=getLogs`, {
+          mode: 'cors'
+        });
+        const result = await response.json();
+        if (result.status !== 'success') throw new Error(result.message);
+        updateLogs = result.data.updates || [];
+        deleteLogs = result.data.deletes || [];
+        renderLogTable('update', updateLogs);
+        renderLogTable('delete', deleteLogs);
+      } catch(error) {
+        console.error('Error fetching logs:', error);
+        updateContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل التعديلات</p>';
+        deleteContent.innerHTML = '<p style="text-align: center; color: var(--danger-color);">فشل تحميل سجل المحذوفات</p>';
+      }
+    }
+
+    function switchLogTab(tabElement, contentId) {
+        document.querySelectorAll('.log-tab').forEach(tab => tab.classList.remove('active'));
+        tabElement.classList.add('active');
+        document.querySelectorAll('.log-content').forEach(content => content.classList.remove('active'));
+        document.getElementById(contentId).classList.add('active');
+    }
+
+    function filterAdminContent() {
+        const searchTerm = document.getElementById('logSearchFilter').value.toLowerCase();
+        const fromDateStr = document.getElementById('logFromDateFilter').value;
+        const toDateStr = document.getElementById('logToDateFilter').value;
+        const statusFilter = document.getElementById('statusFilter').value;
+        const fromDate = fromDateStr ? new Date(fromDateStr) : null;
+        const toDate = toDateStr ? new Date(new Date(toDateStr).setHours(23, 59, 59)) : null;
+
+        const dateFilter = (timestamp) => (!fromDate || new Date(timestamp) >= fromDate) && (!toDate || new Date(timestamp) <= toDate);
+        const statusFilterFunc = (order) => !statusFilter || order['حالة الطلب'] === statusFilter;
+
+        renderLogTable('update', updateLogs.filter(log => 
+            dateFilter(log['توقيت التعديل']) && 
+            JSON.stringify(log).toLowerCase().includes(searchTerm)
+        ));
+        
+        renderLogTable('delete', deleteLogs.filter(log => 
+            dateFilter(log['توقيت الحذف']) && 
+            JSON.stringify(log).toLowerCase().includes(searchTerm)
+        ));
+        
+        const filteredOrders = allOrdersData.filter(order => 
+            dateFilter(order['وقت وتاريخ الطلب']) && 
+            statusFilterFunc(order) &&
+            [order['الاسم الكامل'], order['رقم الهاتف'], order['المنتج'], order['حالة الطلب'], order['تم الإنشاء بواسطة']].join(' ').toLowerCase().includes(searchTerm)
+        );
+        
+        renderAllOrdersCards(filteredOrders);
+        updateAdminSummaryCards(filteredOrders);
+    }
+
+    function renderAllOrdersCards(orders) {
+        const container = document.querySelector('#allOrdersContent .admin-orders-grid-container');
+        container.innerHTML = '';
+        
+        if (!orders || orders.length === 0) {
+            container.innerHTML = `<p style="text-align: center; color: var(--light-text); margin-top: 50px;"><i class="fas fa-inbox"></i> لا توجد أي طلبات تطابق البحث.</p>`;
+            return;
+        }
+
+        orders.sort((a, b) => new Date(b['وقت وتاريخ الطلب']) - new Date(a['وقت وتاريخ الطلب']));
+        orders.forEach(order => {
+            container.appendChild(createOrderCard(order));
+        });
+    }
+
+    function renderLogTable(type, logs) {
+        const container = type === 'update' ? document.getElementById('updateLogContent') : document.getElementById('deleteLogContent');
+        const headers = type === 'update' 
+            ? ['توقيت التعديل', 'تم بواسطة', 'العميل', 'بيانات (قبل التعديل)', 'بيانات (بعد التعديل)']
+            : ['توقيت الحذف', 'تم بواسطة', 'العميل', 'بيانات محذوفة', 'الإجراء'];
+
+        if (!logs || logs.length === 0) {
+            container.innerHTML = `<p style="text-align: center; color: var(--light-text); margin-top: 50px;"><i class="fas fa-inbox"></i> لا توجد سجلات تطابق البحث</p>`;
+            return;
+        }
+        
+        let tableHTML = `<div style="overflow-x:auto;"><table class="log-table"><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>`;
+        
+        logs.slice().reverse().forEach(log => {
+            const dataField = log['بيانات الطلب (قبل)'] || log['بيانات الطلب المحذوف'];
+            const newDataField = log['بيانات الطلب (بعد)'];
+            
+            let data, newData;
+            try {
+                data = JSON.parse(dataField);
+                newData = newDataField ? JSON.parse(newDataField) : null;
+            } catch (e) {
+                data = { error: 'خطأ في تحليل البيانات' };
+                newData = null;
+            }
+            
+            const details = Object.entries(data).map(([key, value]) => `${key}: ${value || 'N/A'}`).join('\n');
+            const newDetails = newData ? Object.entries(newData).map(([key, value]) => `${key}: ${value || 'N/A'}`).join('\n') : '';
+            
+            const restoreBtn = type === 'delete' ? (log['تم الاسترجاع'] === 'نعم' ? '<span style="color: var(--success-color); font-weight: bold;"><i class="fas fa-check"></i> تم الاسترجاع</span>' : `<button class="restore-btn" onclick="restoreDeletedOrder('${log['توقيت الحذف']}', this)"><i class="fas fa-undo"></i> استرجاع</button>`) : '';
+            
+            tableHTML += `<tr>
+                <td>${formatDateTime(log['توقيت التعديل'] || log['توقيت الحذف'])}</td>
+                <td>${log['تم التعديل بواسطة'] || log['تم الحذف بواسطة']}</td>
+                <td>${data['الاسم الكامل'] || 'N/A'}</td>
+                <td><pre class="log-details">${details}</pre></td>
+                ${type === 'update' ? `<td><pre class="log-details">${newDetails}</pre></td>` : `<td>${restoreBtn}</td>`}
+            </tr>`;
+        });
+        
+        container.innerHTML = tableHTML + '</tbody></table></div>';
+    }
+
+    // =======================================================
+    // Manual Invoice Creation & Editing
+    // =======================================================
+    function openManualInvoiceModal(orderData = null) {
+        const modal = document.getElementById('manualInvoiceModal');
+        const form = document.getElementById('manualInvoiceForm');
+        form.reset();
+        document.getElementById('createdBy').value = currentUser;
+        
+        document.getElementById('manualGovernorateSelect').value = '';
+        document.getElementById('manualDeliveryCitySelectContainer').style.display = 'none';
+        document.getElementById('manualDeliveryMethodGroup').style.display = 'none';
+        document.getElementById('manualShippingCost').value = '0';
+        document.getElementById('manualTotalPriceValue').textContent = '0';
+        
+        if (orderData) {
+            form.dataset.editingOrderId = orderData['معرف الطلب'];
+            document.getElementById('manualName').value = orderData['الاسم الكامل'] || '';
+            document.getElementById('manualPhone').value = orderData['رقم الهاتف'] || '';
+            document.getElementById('manualProducts').value = orderData['المنتج'] || '';
+            document.getElementById('manualProductPrice').value = orderData['سعر المنتجات'] || '0';
+            document.getElementById('manualAddress').value = orderData['العنوان'] || '';
+            document.getElementById('manualLocationLink').value = orderData['رابط الموقع'] || '';
+            document.getElementById('manualOrderStatusSelect').value = orderData['حالة الطلب'] || 'طلب جديد';
+
+            if (orderData['المنطقة'] === 'القاهرة والجيزة') {
+                document.getElementById('manualGovernorateSelect').value = 'cairo_giza';
+            } else if (orderData['المنطقة']) {
+                document.getElementById('manualGovernorateSelect').value = 'other_governorates';
+            }
+            
+            populateManualDeliveryMethods();
+
+            setTimeout(() => {
+                if (orderData['المنطقة'] === 'القاهرة والجيزة') {
+                    document.getElementById('manualDeliveryMethodSelect').value = orderData['طريقة التوصيل'] || '';
+                } else if (orderData['المنطقة']) {
+                    document.getElementById('manualDeliveryCitySelect').value = orderData['المنطقة'] || '';
+                }
+                updateManualTotal();
+            }, 100);
+
+        } else {
+            delete form.dataset.editingOrderId;
+        }
+        
+        modal.style.display = 'flex';
+    }
+
+    function populateManualDeliveryMethods() {
+        const governorate = document.getElementById('manualGovernorateSelect').value;
+        const citySelectContainer = document.getElementById('manualDeliveryCitySelectContainer');
+        const methodSelectContainer = document.getElementById('manualDeliveryMethodGroup');
+        const citySelect = document.getElementById('manualDeliveryCitySelect');
+        const methodSelect = document.getElementById('manualDeliveryMethodSelect');
+        
+        citySelect.innerHTML = '<option value="" disabled selected>-- اختر المدينة/المحافظة --</option>';
+        methodSelect.innerHTML = '<option value="" disabled selected>-- اختر طريقة التوصيل --</option>';
+        
+        citySelectContainer.style.display = 'none';
+        methodSelectContainer.style.display = 'none';
+        
+        if (governorate === 'cairo_giza') {
+            deliveryOptionsData.cairo_giza.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.text;
+                opt.dataset.cost = option.cost;
+                methodSelect.appendChild(opt);
+            });
+            methodSelectContainer.style.display = 'block';
+        } else if (governorate === 'other_governorates') {
+            deliveryOptionsData.other_governorates.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option.value;
+                opt.textContent = option.text;
+                opt.dataset.cost = option.cost;
+                citySelect.appendChild(opt);
+            });
+            citySelectContainer.style.display = 'block';
+        }
+        
+        updateManualTotal();
+    }
+
+    function updateManualTotal() {
+        const productPrice = parseFloat(document.getElementById('manualProductPrice').value) || 0;
+        const governorate = document.getElementById('manualGovernorateSelect').value;
+        let shippingCost = 0;
+        
+        if (governorate === 'cairo_giza') {
+            const methodSelect = document.getElementById('manualDeliveryMethodSelect');
+            if (methodSelect.selectedIndex > 0) {
+                shippingCost = parseFloat(methodSelect.options[methodSelect.selectedIndex].dataset.cost) || 0;
+            }
+        } else if (governorate === 'other_governorates') {
+            const citySelect = document.getElementById('manualDeliveryCitySelect');
+            if (citySelect.selectedIndex > 0) {
+                shippingCost = parseFloat(citySelect.options[citySelect.selectedIndex].dataset.cost) || 0;
+            }
+        }
+        
+        document.getElementById('manualShippingCost').value = shippingCost;
+        const total = productPrice + shippingCost;
+        document.getElementById('manualTotalPriceValue').textContent = total;
+        document.getElementById('manualTotalCostHidden').value = total;
+    }
+
+    async function handleManualInvoiceSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const isEditing = !!form.dataset.editingOrderId;
+        
+        const orderData = {
+            'الاسم الكامل': document.getElementById('manualName').value.trim(),
+            'رقم الهاتف': document.getElementById('manualPhone').value.trim(),
+            'المنتج': document.getElementById('manualProducts').value.trim(),
+            'سعر المنتجات': parseFloat(document.getElementById('manualProductPrice').value) || 0,
+            'تكلفة الشحن': parseFloat(document.getElementById('manualShippingCost').value) || 0,
+            'العنوان': document.getElementById('manualAddress').value.trim(),
+            'رابط الموقع': document.getElementById('manualLocationLink').value.trim(),
+            'التكلفة الإجمالية': parseFloat(document.getElementById('manualTotalCostHidden').value) || 0,
+            'حالة الطلب': document.getElementById('manualOrderStatusSelect').value,
+            'تم الإنشاء بواسطة': document.getElementById('createdBy').value
+        };
+        
+        const governorate = document.getElementById('manualGovernorateSelect').value;
+        if (governorate === 'cairo_giza') {
+            orderData['المنطقة'] = 'القاهرة والجيزة';
+            orderData['طريقة التوصيل'] = document.getElementById('manualDeliveryMethodSelect').value;
+        } else if (governorate === 'other_governorates') {
+            orderData['المنطقة'] = document.getElementById('manualDeliveryCitySelect').value;
+            orderData['طريقة التوصيل'] = 'باقي المحافظات'; // قيمة ثابتة
+        }
+        
+        showLoading(true);
+        try {
+            // *** START CORRECTION ***
+            // تم تحويل البيانات إلى كائن مسطح وإرسالها كـ URLSearchParams
+            // بدلاً من JSON.stringify الذي كان يسبب المشكلة
+            const payload = { 
+              action: isEditing ? 'updateOrder' : 'createOrder', 
+              orderData: JSON.stringify(orderData), // يتم تحويل كائن البيانات إلى نص
+              user: currentUser 
+            };
+            
+            if (isEditing) {
+                payload.orderId = form.dataset.editingOrderId;
+            }
+            
+            const response = await fetch(WEB_APP_URL, { 
+                method: 'POST', 
+                mode: 'cors',
+                // تم حذف الهيدر الخاص بـ Content-Type
+                body: new URLSearchParams(payload) // يتم استخدام URLSearchParams
+            });
+            // *** END CORRECTION ***
+
+            const result = await response.json();
+            
+            if (result.status === 'success') {
+                document.getElementById('manualInvoiceModal').style.display = 'none';
+                showNotification(isEditing ? 'تم تحديث الطلب بنجاح!' : 'تم إنشاء الفاتورة بنجاح!', 'success');
+                await fetchOrdersFromGoogleSheet(false);
+                if (document.getElementById('adminPanel').style.display === 'block') {
+                    await fetchLogs();
+                    // تحديث بيانات الطلبات بالكامل بعد التعديل أو الإنشاء
+                    const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                    const fullDataResult = await fullDataResponse.json();
+                    if(fullDataResult.status === 'success') {
+                        allOrdersData = fullDataResult.data || [];
+                        filterAdminContent();
+                    }
+                }
+            } else { 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
+            }
+        } catch (error) {
+            console.error('Submit Error:', error);
+            showNotification(`فشل في ${isEditing ? 'تحديث' : 'إنشاء'} الطلب: ${error.message}`, 'error');
+        } finally { 
+            showLoading(false); 
+        }
+    }
+    // =======================================================
+    // Order Operations (View, Edit, Delete, Restore)
+    // =======================================================
+    function getOrderById(orderId) {
+        return allOrdersData.find(o => o['معرف الطلب'] === orderId);
+    }
+
+    function viewOrderDetails(orderId) {
+        const order = getOrderById(orderId);
+        if (!order) { showNotification('لم يتم العثور على الطلب!', 'error'); return; }
+        
+        const content = document.getElementById('orderDetailsContent');
+        content.innerHTML = `
+            <div class="invoice-header">
+                <h2><i class="fas fa-file-invoice"></i> 🧾 فاتورة Enjoy The Gifts</h2>
+            </div>
+            <ul class="order-details-list">
+                <li><span class="label"><i class="fas fa-calendar-alt"></i> تاريخ ووقت الطلب:</span><span class="value">${formatDateTime(order['وقت وتاريخ الطلب'])}</span></li>
+                <li><span class="label"><i class="fas fa-user"></i> الاسم الكامل:</span><span class="value">${order['الاسم الكامل'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-phone"></i> رقم الموبايل:</span><span class="value">${order['رقم الهاتف'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-gift"></i> المنتجات المطلوبة:</span><span class="value">${formatProducts(order['المنتج'])}</span></li>
+                <li><span class="label"><i class="fas fa-map-marker-alt"></i> العنوان بالتفصيل:</span><span class="value">${order['العنوان'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-link"></i> للينك الموقع:</span><span class="value">${order['رابط الموقع'] ? `<a href="${order['رابط الموقع']}" target="_blank" style="color: var(--primary-color);"><i class="fas fa-external-link-alt"></i> ${order['رابط الموقع']}</a>` : 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-map"></i> المحافظة:</span><span class="value">${order['المنطقة'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-truck"></i> نوع التوصيل:</span><span class="value">${order['طريقة التوصيل'] || 'غير محدد'}</span></li>
+                <li><span class="label"><i class="fas fa-shipping-fast"></i> تكلفة الشحن:</span><span class="value">${order['تكلفة الشحن'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-tag"></i> سعر المنتجات:</span><span class="value">${order['سعر المنتجات'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-money-bill-wave"></i> التكلفة الإجمالية:</span><span class="value" style="font-weight: bold; color: var(--success-color);">${order['التكلفة الإجمالية'] || '0'} جنيه</span></li>
+                <li><span class="label"><i class="fas fa-tasks"></i> حالة الطلب:</span><span class="value"><span class="status-badge ${statusMap[order['حالة الطلب']]}">${order['حالة الطلب'] || 'غير محدد'}</span></span></li>
+                ${order['تم الإنشاء بواسطة'] ? `<li><span class="label"><i class="fas fa-user-tag"></i> تم الإنشاء بواسطة:</span><span class="value">${order['تم الإنشاء بواسطة']}</span></li>` : ''}
+            </ul>
+            <div style="text-align: center; margin-top: 30px;"><button class="copy-btn" onclick="copyOrderDetails('${orderId}')"><i class="fas fa-copy"></i> نسخ التفاصيل</button></div>`;
+        document.getElementById('orderDetailsModal').style.display = 'flex';
+    }
+    
+    function formatProducts(productsText) {
+        if (!productsText) return 'غير محدد';
+        
+        const productsArray = productsText.split('\n').filter(p => p.trim());
+        
+        if (productsArray.length === 0) return productsText;
+        
+        let html = '<ul class="products-list">';
+        productsArray.forEach(product => {
+            html += `<li><i class="fas fa-circle" style="font-size: 8px; color: var(--accent-color);"></i> ${product}</li>`;
+        });
+        html += '</ul>';
+        
+        return html;
+    }
+    
+    function copyOrderDetails(orderId) {
+        const order = getOrderById(orderId);
+        if (!order) return;
+        
+        const details = `🧾 فاتورة Enjoy The Gifts
+
+📅 تاريخ ووقت الطلب: ${formatDateTime(order['وقت وتاريخ الطلب'])}
+👤 الاسم الكامل: ${order['الاسم الكامل']}
+📱 رقم الموبايل: ${order['رقم الهاتف']}
+🎁 المنتجات المطلوبة:
+${formatProductsForCopy(order['المنتج'])}
+📍 العنوان بالتفصيل: ${order['العنوان']}
+🔗 للينك الموقع: ${order['رابط الموقع'] || 'غير محدد'}
+🗺️ المحافظة: ${order['المنطقة'] || 'غير محدد'}
+🚚 نوع التوصيل: ${order['طريقة التوصيل'] || 'غير محدد'}
+💰 تكلفة الشحن: ${order['تكلفة الشحن'] || '0'} جنيه
+🏷️ سعر المنتجات: ${order['سعر المنتجات'] || '0'} جنيه
+💵 التكلفة الإجمالية: ${order['التكلفة الإجمالية'] || '0'} جنيه
+📊 حالة الطلب: ${order['حالة الطلب'] || 'غير محدد'}
+👤 تم الإنشاء بواسطة: ${order['تم الإنشاء بواسطة'] || 'غير محدد'}`;
+        
+        navigator.clipboard.writeText(details)
+            .then(() => showNotification('تم نسخ تفاصيل الطلب بنجاح!', 'success'))
+            .catch(() => showNotification('فشل نسخ التفاصيل', 'error'));
+    }
+    
+    function formatProductsForCopy(productsText) {
+        if (!productsText) return 'غير محدد';
+        
+        const productsArray = productsText.split('\n').filter(p => p.trim());
+        if (productsArray.length === 0) return productsText;
+        
+        return productsArray.map(p => `   • ${p}`).join('\n');
+    }
+
+    function editOrder(orderId) {
+        const order = getOrderById(orderId);
+        if (!order) { showNotification('لم يتم العثور على الطلب!', 'error'); return; }
+        openManualInvoiceModal(order);
+    }
+
+    function confirmDelete(orderId) {
+        currentOrderToDelete = orderId;
+        document.getElementById('deleteConfirmationModal').style.display = 'flex';
+    }
+
+    async function executeDelete(orderId) {
+        document.getElementById('deleteConfirmationModal').style.display = 'none';
+        if (!orderId) return;
+        showLoading(true);
+        try {
+            // *** START CORRECTION ***
+            // تم تغيير جسم الطلب ليتم إرساله كـ URLSearchParams
+            const response = await fetch(WEB_APP_URL, { 
+              method: 'POST', 
+              mode: 'cors', 
+              body: new URLSearchParams({ // استخدام URLSearchParams
+                action: 'deleteOrder', 
+                orderId: orderId, 
+                user: currentUser 
+              }) 
+            });
+            // *** END CORRECTION ***
+        
+            const result = await response.json();
+            if (result.status === 'success') {
+                showNotification('تم حذف الطلب بنجاح!', 'success');
+                await fetchOrdersFromGoogleSheet(false); 
+                if (document.getElementById('adminPanel').style.display === 'block') {
+                    await fetchLogs();
+                    const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                    const fullDataResult = await fullDataResponse.json();
+                    if(fullDataResult.status === 'success') {
+                        allOrdersData = fullDataResult.data || [];
+                        filterAdminContent();
+                    }
+                }
+            } else { 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
+            }
+        } catch (error) {
+            showNotification(`فشل حذف الطلب: ${error.message}`, 'error');
+        } finally { 
+            showLoading(false); 
+        }
+    }
+
+    async function restoreDeletedOrder(logId, buttonElement) {
+        if (!confirm('هل أنت متأكد من استرجاع هذا الطلب؟')) return;
+        buttonElement.disabled = true;
+        buttonElement.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري...';
+        try {
+            // *** START CORRECTION ***
+            // تم تغيير جسم الطلب ليتم إرساله كـ URLSearchParams
+            const response = await fetch(WEB_APP_URL, { 
+                method: 'POST', 
+                mode: 'cors',
+                body: new URLSearchParams({ // استخدام URLSearchParams
+                    action: 'restoreOrder', 
+                    logId: logId,
+                    user: currentUser 
+                }) 
+            });
+            // *** END CORRECTION ***
+
+            const result = await response.json();
+            if (result.status === 'success') {
+                showNotification('تم استرجاع الطلب بنجاح!', 'success');
+                await fetchLogs();
+                await fetchOrdersFromGoogleSheet(false);
+                const fullDataResponse = await fetch(`${WEB_APP_URL}?action=getOrders`, { mode: 'cors' });
+                const fullDataResult = await fullDataResponse.json();
+                if(fullDataResult.status === 'success') {
+                   allOrdersData = fullDataResult.data || [];
+                   filterAdminContent();
+                }
+            } else { 
+                throw new Error(result.message || 'حدث خطأ غير معروف'); 
+            }
+        } catch (error) {
+            showNotification(`فشل استرجاع الطلب: ${error.message}`, 'error');
+            buttonElement.disabled = false;
+            buttonElement.innerHTML = '<i class="fas fa-undo"></i> استرجاع';
+        }
+    }
+
+    // =======================================================
+    // Utility Functions
+    // =======================================================
+    function formatDateTime(dateString) {
+        if (!dateString) return 'غير محدد';
+        try {
+            return new Date(dateString).toLocaleDateString('ar-EG', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: true });
+        } catch (e) {
+            return dateString;
+        }
+    }
+
+    function showLoading(show) {
+        document.getElementById('loadingIndicator').style.display = show ? 'flex' : 'none';
+    }
+
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        
+        const icons = { success: 'fa-check-circle', error: 'fa-exclamation-circle', info: 'fa-info-circle', warning: 'fa-exclamation-triangle' };
+        notification.innerHTML = `<i class="fas ${icons[type]}"></i> ${message}`;
+        
+        document.body.appendChild(notification);
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => { if (notification.parentNode) notification.parentNode.removeChild(notification); }, 300);
+        }, 4000);
+    }
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('service-worker.js');
+  });
+}
+
+
+</script>
+
+</body>
+</html>
