@@ -2,24 +2,19 @@
   "name": "Enjoy The Gifts",
   "short_name": "ETG",
   "start_url": "/index-final.html",
-  "display": "standalone",
+  "display": "standalone",  // هذا السطر يجعل التطبيق يفتح كتطبيق مستقل
   "background_color": "#667eea",
   "theme_color": "#667eea",
-  "description": "Admin - Enjoy The Gifts",
   "icons": [
     {
       "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
-  ],
-  "dir": "rtl",
-  "lang": "ar"
+  ]
 }
