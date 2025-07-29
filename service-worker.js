@@ -1,10 +1,10 @@
 const CACHE_NAME = 'etg-cache-v1';
 const ASSETS_TO_CACHE = [
+  '/',
   '/index-final.html',
-  '/icon-512.png',
-  '/icon-192.png',
   '/manifest.json',
-  // أضف هنا أي ملفات أخرى يحتاجها تطبيقك
+  '/icon-512.png',
+  '/icon-192.png'
 ];
 
 self.addEventListener('install', (event) => {
