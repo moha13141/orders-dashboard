@@ -1396,17 +1396,17 @@ ${formatProductsForCopy(order['المنتج'])}
             setTimeout(() => { if (notification.parentNode) notification.parentNode.removeChild(notification); }, 300);
         }, 4000);
     }
-        if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => {
-                    console.log('ServiceWorker registration successful');
-                })
-                .catch(err => {
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-        });
-    }
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/orders-dashboard/service-worker.js')
+            .then(registration => {
+                console.log('ServiceWorker registered');
+            })
+            .catch(err => {
+                console.log('ServiceWorker registration failed: ', err);
+            });
+    });
+}
 
 </script>
 
