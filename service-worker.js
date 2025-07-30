@@ -66,4 +66,4 @@ self.addEventListener('fetch', function(event) {
             })
     );
 });
-navigator.serviceWorker.register('/orders-dashboard/service-worker.js', { scope: '/orders-dashboard/' });
+
