@@ -1,10 +1,10 @@
 const CACHE_NAME = 'enjoy-gifts-v1';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/manifest.json',
-    '/images/icons/icon-192x192.png',
-    '/images/icons/icon-512x512.png',
+    '/orders-dashboard/',
+    '/orders-dashboard/index.html',
+    '/orders-dashboard/manifest.json',
+    '/orders-dashboard/images/icons/icon-192x192.png',
+    '/orders-dashboard/images/icons/icon-512x512.png',
     'https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css'
 ];
@@ -66,3 +66,4 @@ self.addEventListener('fetch', function(event) {
             })
     );
 });
+navigator.serviceWorker.register('/orders-dashboard/service-worker.js', { scope: '/orders-dashboard/' });
